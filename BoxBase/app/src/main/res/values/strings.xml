@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">BoxBase</string>
-    <string name="hint_username">Username</string>
-    <string name="hint_password">Password</string>
     <string name="button_next">Next</string>
     <string name="button_cancel">Cancel</string>
     <string name="error_password">Password must contain at least 8 characters.</string>
