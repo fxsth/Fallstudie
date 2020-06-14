@@ -11,4 +11,8 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#878787</item>
+    </style>
 </resources>
