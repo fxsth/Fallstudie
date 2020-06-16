@@ -5,22 +5,32 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorBackground"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.login.LoginActivity">
 
+    <ImageView
+        android:id="@+id/boxbase_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/boxbase_logo"
+        android:contentDescription="TODO" />
+
     <EditText
         android:id="@+id/username"
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="343dp"
         android:layout_height="41dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="328dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/box"
+        android:layout_marginBottom="53dp"
+        android:background="@drawable/inputbox_shape"
         android:hapticFeedbackEnabled="false"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
@@ -32,23 +42,24 @@
         android:selectAllOnFocus="false"
         android:singleLine="true"
         android:textAppearance="@style/text"
-        android:textColor="@color/textColor"
-        android:textColorHint="@color/textColor"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorTextHint"
         android:textIsSelectable="false"
         android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/boxbase_logo"
+        android:importantForAutofill="no" />
 
     <EditText
         android:id="@+id/password"
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="343dp"
         android:layout_height="41dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="24dp"
-        android:background="@drawable/box"
+        android:background="@drawable/inputbox_shape"
         android:fontFamily="@font/roboto"
         android:hapticFeedbackEnabled="false"
         android:hint="@string/prompt_password"
@@ -61,13 +72,53 @@
         android:selectAllOnFocus="false"
         android:singleLine="true"
         android:textAppearance="@style/text"
-        android:textColor="@color/textColor"
-        android:textColorHint="@color/textColor"
+        android:textColor="@color/colorText"
+        android:textColorHint="@color/colorTextHint"
         android:textIsSelectable="false"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toBottomOf="@+id/username"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/createAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="create account"
+        android:textColor="@color/colorTextHint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+
+    <TextView
+        android:id="@+id/resetPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="reset password"
+        android:textColor="@color/colorTextHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createAccount" />
+
+    <ImageButton
+        android:id="@+id/loginButton"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintBottom_toTopOf="@+id/createAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:srcCompat="@drawable/log_in_button" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -83,55 +134,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
-
-    <ImageView
-        android:id="@+id/Logo"
-        android:layout_width="130dp"
-        android:layout_height="232dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/boxbase_logo" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        style="@style/Widget.AppCompat.ImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="467dp"
-        android:background="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/log_in_button" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="create account"
-        android:textColor="@color/textColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="reset password"
-        android:textColor="@color/textColor"
-        android:textColorHighlight="@color/textColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
