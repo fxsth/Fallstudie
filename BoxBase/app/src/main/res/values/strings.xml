@@ -14,4 +14,23 @@
     <string name="invalid_username">not a valid email address</string>
     <string name="invalid_password">password must contain at least 6 characters</string>
     <string name="login_failed">login failed</string>
+
+    <!-- registration.xml -->
+    <string name="registration_title">Registration</string>
+    <string name="registration_first_name">first name</string>
+    <string name="registration_last_name">last name</string>
+    <string name="registration_street">street</string>
+    <string name="registration_number">no.</string>
+    <string name="registration_postcode">postcode</string>
+    <string name="registration_city">city</string>
+    <string name="registration_email">email</string>
+    <string name="registration_set_password">set password</string>
+    <string name="registration_repeat_password">repeat password</string>
+    <string name="registration_registration">registration</string>
+
+
+    <!-- main menu.xml -->
+    <string name="incoming_title">Incoming deliveries</string>
+    <string name="outgoing_title">Outgoing deliveries</string>
+
 </resources>
