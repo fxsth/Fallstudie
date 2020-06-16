@@ -1,7 +1,9 @@
 <resources>
-    <color name="colorPrimary">#33343E</color>
-    <color name="colorPrimaryDark">#33343E</color>
-    <color name="colorSecondary">#282830</color>
-    <color name="colorAccent">#33343E</color>
-    <color name="textColor">#878787</color>
+    <color name="colorPrimary">#1EB980</color>
+    <color name="colorPrimaryDark">#045D56</color>
+    <color name="colorSecondary">#FFAC12</color>
+    <color name="colorBackground">#33343E</color>
+    <color name="colorTextBox">#282830</color>
+    <color name="colorText">#FFFFFF</color>
+    <color name="colorTextHint">#868686</color>
 </resources>
