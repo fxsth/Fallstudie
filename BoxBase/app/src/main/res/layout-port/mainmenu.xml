@@ -7,27 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/boxbase_logo_to_start_of_parent"
-        android:layout_marginLeft="@dimen/boxbase_logo_to_start_of_parent"
-        android:layout_marginTop="@dimen/boxbase_logo_to_top_of_parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/boxbase_logo_small" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/avatar_to_top_of_parent"
-        android:layout_marginEnd="@dimen/avatar_to_end_of_parent"
-        android:layout_marginRight="@dimen/avatar_to_end_of_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_avatar" />
+    <include layout="@layout/top_bar_logo_avatar" />
 
     <TextView
         android:id="@+id/incoming_title"
@@ -37,11 +17,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="@dimen/first_title_to_end_of_boxbase_logo"
+        android:layout_marginStart="@dimen/title_to_start_of_parent"
+        android:layout_marginLeft="@dimen/title_to_start_of_parent"
+        android:layout_marginTop="@dimen/first_title_to_top_of_parent"
         android:gravity="center_vertical"
-        android:text="@string/incoming_title"
+        android:text="@string/title_main_menu_incoming"
         android:textAppearance="@style/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -54,11 +34,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
+        android:layout_marginStart="@dimen/title_to_start_of_parent"
+        android:layout_marginLeft="@dimen/title_to_start_of_parent"
         android:layout_marginTop="30dp"
         android:gravity="center_vertical"
-        android:text="@string/outgoing_title"
+        android:text="@string/title_main_menu_outgoing"
         android:textAppearance="@style/title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/incoming_title" />

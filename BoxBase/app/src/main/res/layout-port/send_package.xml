@@ -11,7 +11,7 @@
         layout="@layout/top_bar_logo_avatar" />
 
     <TextView
-        android:id="@+id/registration_title"
+        android:id="@+id/delivery_address_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -20,26 +20,24 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/title_to_start_of_parent"
         android:layout_marginLeft="@dimen/title_to_start_of_parent"
-        android:layout_marginTop="73dp"
-        android:layout_marginBottom="392dp"
+        android:layout_marginTop="@dimen/first_title_to_top_of_parent"
         android:gravity="center_vertical"
-        android:text="@string/title_registration"
+        android:text="@string/title_send_package_delivery_address"
         android:textAppearance="@style/title"
-        app:layout_constraintBottom_toTopOf="@id/button_create_account"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Input fields for Registration -->
+    <!-- Input fields for Delivery address -->
 
     <EditText
-        android:id="@+id/box_first_mame"
+        android:id="@+id/box_receiver"
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="@dimen/box_total_width"
         android:layout_height="@dimen/box_height"
         android:layout_marginTop="@dimen/box_to_upper_title"
         android:background="@drawable/inputbox_shape"
         android:hapticFeedbackEnabled="false"
-        android:hint="@string/hint_first_name"
+        android:hint="@string/hint_receiver"
         android:importantForAutofill="no"
         android:lineSpacingExtra="12sp"
         android:paddingLeft="12dp"
@@ -55,40 +53,14 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_title" />
-
-    <EditText
-        android:id="@+id/box_last_mame"
-        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-        android:layout_width="@dimen/box_total_width"
-        android:layout_height="@dimen/box_height"
-        android:layout_marginTop="@dimen/box_to_box_small"
-        android:background="@drawable/inputbox_shape"
-        android:hapticFeedbackEnabled="false"
-        android:hint="@string/hint_last_name"
-        android:importantForAutofill="no"
-        android:lineSpacingExtra="12sp"
-        android:paddingLeft="12dp"
-        android:paddingTop="12dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="12dp"
-        android:selectAllOnFocus="false"
-        android:singleLine="true"
-        android:textAppearance="@style/text"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorTextHint"
-        android:textIsSelectable="false"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/box_first_mame" />
+        app:layout_constraintTop_toBottomOf="@+id/delivery_address_title" />
 
     <EditText
         android:id="@+id/box_street"
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="@dimen/box_street_width"
         android:layout_height="@dimen/box_height"
-        android:layout_marginTop="@dimen/box_to_box_big"
+        android:layout_marginTop="@dimen/box_to_box_small"
         android:layout_marginEnd="@dimen/box_street_margin_right"
         android:layout_marginRight="@dimen/box_street_margin_right"
         android:background="@drawable/inputbox_shape"
@@ -109,7 +81,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/box_last_mame" />
+        app:layout_constraintTop_toBottomOf="@+id/box_receiver" />
 
     <EditText
         android:id="@+id/box_number"
@@ -194,14 +166,14 @@
         app:layout_constraintTop_toTopOf="@+id/box_postcode" />
 
     <EditText
-        android:id="@+id/box_email"
+        android:id="@+id/box_country"
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="@dimen/box_total_width"
         android:layout_height="@dimen/box_height"
-        android:layout_marginTop="@dimen/box_to_box_big"
+        android:layout_marginTop="@dimen/box_to_box_small"
         android:background="@drawable/inputbox_shape"
         android:hapticFeedbackEnabled="false"
-        android:hint="@string/hint_email"
+        android:hint="@string/hint_country"
         android:importantForAutofill="no"
         android:lineSpacingExtra="12sp"
         android:paddingLeft="12dp"
@@ -219,74 +191,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/box_postcode" />
 
-    <EditText
-        android:id="@+id/box_set_password"
-        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-        android:layout_width="@dimen/box_total_width"
-        android:layout_height="@dimen/box_height"
-        android:layout_marginTop="@dimen/box_to_box_small"
-        android:background="@drawable/inputbox_shape"
-        android:fontFamily="@font/roboto"
-        android:hapticFeedbackEnabled="false"
-        android:hint="@string/hint_set_password"
-        android:importantForAutofill="no"
-        android:inputType="text|textPassword"
-        android:lineSpacingExtra="12sp"
-        android:paddingLeft="12dp"
-        android:paddingTop="12dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="12dp"
-        android:selectAllOnFocus="false"
-        android:singleLine="true"
-        android:textAppearance="@style/text"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorTextHint"
-        android:textIsSelectable="false"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/box_email" />
-
-    <EditText
-        android:id="@+id/box_repeat_password"
-        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-        android:layout_width="@dimen/box_total_width"
-        android:layout_height="@dimen/box_height"
-        android:layout_marginTop="@dimen/box_to_box_small"
-        android:background="@drawable/inputbox_shape"
-        android:fontFamily="@font/roboto"
-        android:hapticFeedbackEnabled="false"
-        android:hint="@string/hint_repeat_password"
-        android:importantForAutofill="no"
-        android:inputType="text|textPassword"
-        android:lineSpacingExtra="12sp"
-        android:paddingLeft="12dp"
-        android:paddingTop="12dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="12dp"
-        android:selectAllOnFocus="false"
-        android:singleLine="true"
-        android:textAppearance="@style/text"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorTextHint"
-        android:textIsSelectable="false"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/box_set_password" />
-
     <Button
-        android:id="@+id/button_create_account"
+        android:id="@+id/button_send_package_confirm"
         android:layout_width="@dimen/button_big_width"
         android:layout_height="@dimen/button_big_height"
-        android:layout_marginBottom="71dp"
+        android:layout_marginBottom="81dp"
         android:background="@drawable/button_primary_color_rounded"
-        android:text="@string/button_registration_create_account"
+        android:text="@string/button_send_package_confirm"
         android:textAppearance="@style/button_big"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registration_title" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_discard"
@@ -298,6 +213,6 @@
         android:textAppearance="@style/button_big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_create_account" />
+        app:layout_constraintTop_toBottomOf="@+id/button_send_package_confirm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
