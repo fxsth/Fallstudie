@@ -2,4 +2,16 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <!-- Distances in the layout -->
+    <dimen name="boxbase_logo_to_top_of_parent">15dp</dimen>
+    <dimen name="boxbase_logo_to_start_of_parent">35dp</dimen>
+
+    <dimen name="avatar_to_top_of_parent">19dp</dimen>
+    <dimen name="avatar_to_end_of_parent">40dp</dimen>
+
+    <dimen name="first_title_to_end_of_boxbase_logo">10dp</dimen>
+
+
 </resources>

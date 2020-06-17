@@ -11,9 +11,9 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="@dimen/boxbase_logo_to_start_of_parent"
+        android:layout_marginLeft="@dimen/boxbase_logo_to_start_of_parent"
+        android:layout_marginTop="@dimen/boxbase_logo_to_top_of_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/boxbase_logo_small" />
@@ -22,9 +22,9 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginTop="@dimen/avatar_to_top_of_parent"
+        android:layout_marginEnd="@dimen/avatar_to_end_of_parent"
+        android:layout_marginRight="@dimen/avatar_to_end_of_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_avatar" />
@@ -39,11 +39,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="35dp"
         android:layout_marginLeft="35dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/first_title_to_end_of_boxbase_logo"
         android:gravity="center_vertical"
         android:text="@string/incoming_title"
         android:textAppearance="@style/title"
-        app:layout_constraintBottom_toTopOf="@+id/outgoings_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 

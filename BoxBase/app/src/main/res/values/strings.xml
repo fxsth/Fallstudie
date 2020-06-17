@@ -27,6 +27,8 @@
     <string name="registration_set_password">set password</string>
     <string name="registration_repeat_password">repeat password</string>
     <string name="registration_registration">registration</string>
+    <string name="registration_button_create_account">create account</string>
+    <string name="registration_button_discard">discard</string>
 
 
     <!-- main menu.xml -->

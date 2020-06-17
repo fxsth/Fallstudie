@@ -15,6 +15,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- Text styles -->
     <style name="text">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#878787</item>
@@ -29,4 +30,15 @@
         </item>
     </style>
 
+    <style name="button_big">
+        <item name="android:textSize">
+            14sp
+        </item>
+        <item name="android:textStyle">
+            bold
+        </item>
+        <item name="android:textColor">
+            @color/colorText
+        </item>
+    </style>
 </resources>
