@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="textInputStyle">@style/Widget.Design.TextInputLayout</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Text styles -->
+    <style name="text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#878787</item>
+    </style>
+
+    <style name="title">
+        <item name="android:textSize">
+            18sp
+        </item>
+        <item name="android:textColor">
+            @color/colorText
+        </item>
+    </style>
+
+    <style name="button_big">
+        <item name="android:textSize">
+            14sp
+        </item>
+        <item name="android:textStyle">
+            bold
+        </item>
+        <item name="android:textColor">
+            @color/colorText
+        </item>
+    </style>
+</resources>
