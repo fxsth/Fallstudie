@@ -4,22 +4,23 @@ services:
     image: postgres:12
     restart: always
     volumes:
-    - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
   graphql-engine:
     image: hasura/graphql-engine:v1.2.0
     ports:
-    - "8080:8080"
+      - '8080:8080'
     depends_on:
-    - "postgres"
+      - 'postgres'
     restart: always
     environment:
       HASURA_GRAPHQL_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+      HASURA_GRAPHQL_ENABLE_CONSOLE: 'true' # set to "false" to disable console
       HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
       ## uncomment next line to set an admin secret
-      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+      HASURA_GRAPHQL_ADMIN_SECRET: mobilestationen
+      HASURA_GRAPHQL_JWT_SECRET: '{"type":"RS256", "key": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzX6fe1/u08O1ssMmAmpi\nlnviM25t+y06N5zDJ7Lhj4iAwqi2Mm5pC/LKBh8Q3OzxPlqorTbLmI6GLbGpeEPL\nV9/H/ewAOCT+/3ld0NPtLzsFX9VGZTf0e9d2UaTooCJnVaxG5ufF6UHliVexWiMw\nK5xBBAddct6HT1G798H4R7sPE1BQV62B9WE1bCrH52u6OAeP+p0QUcVGD32uQ5yw\nJejycVoDh8hIaUcE3yb95zgjKQDMPLv6evFMUWHK89SX8jr9KLvrPFT00Fs0vpx8\nFLsUK58KLoDxO5cKkojxJVQBhVEyjzArBcAOt9zqi+BHbhXlG1nW8InfB5g3RR7P\ntQIDAQAB\n-----END PUBLIC KEY-----\n"}'
 volumes:
   db_data:
-
+  
