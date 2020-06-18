@@ -12,3 +12,4 @@
 /captures
 .externalNativeBuild
 .cxx
+import_hasura_schema.sh
