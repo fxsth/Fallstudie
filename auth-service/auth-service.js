@@ -35,6 +35,10 @@ app.post('/register', async function (req, res) {
   const token = jwt.sign(tokenData, privateKey, { algorithm: 'RS256' });
   res.send(token);
 });
+app.post("/get_package", async function (req, res) {
+  code = await generatCode(10)
+  res.send(code)
+})
 
 app.listen(3000);
 
@@ -53,3 +57,23 @@ async function checkIfUserAccountExistsAndPasswordCorrect(username, password) {
   };
   return answer;
 }
+async function generatCode(fachnummer) {
+  
+  let randomNumber = []
+  randomNumber.push(getDigitAtPos(0,fachnummer))
+  randomNumber.push(getDigitAtPos(1, fachnummer))
+  for (let index = 0; index < 3; index++) {
+    const element = Math.floor(Math.random() * 10);;
+    randomNumber.push(element)
+  }
+  return randomNumber
+}
+function getDigitAtPos(n, number) {
+// convert number to a string, then extract the first digit
+var one = String(number).charAt(n);
+
+// convert the first digit back to an integer
+var one_as_number = Number(one); 
+return one_as_number;
+}
+

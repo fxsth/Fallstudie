@@ -1,0 +1,7 @@
+query GetPackages {
+  pakete {
+    fach
+    groesse
+    id
+  }
+}

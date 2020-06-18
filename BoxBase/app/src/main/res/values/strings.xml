@@ -3,7 +3,6 @@
     <string name="app_name">BoxBase</string>
     <string name="button_next">next</string>
     <string name="button_cancel">cancel</string>
-    <string name="error_password">password must contain at least 6 characters</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="action_sign_in">sign in or register</string>
     <string name="action_sign_in_short">sign in</string>
