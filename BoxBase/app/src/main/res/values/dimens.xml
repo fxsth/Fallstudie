@@ -12,7 +12,7 @@
         <dimen name="avatar_to_top_of_parent">19dp</dimen>
         <dimen name="avatar_to_end_of_parent">40dp</dimen>
 
-        <dimen name="first_title_to_top_of_parent">83dp</dimen>
+        <dimen name="first_title_to_top_bar">10dp</dimen>
         <dimen name="title_to_start_of_parent">35dp</dimen>
 
 

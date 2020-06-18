@@ -7,7 +7,14 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <include layout="@layout/top_bar_logo_avatar" />
+    <include
+        android:id="@+id/top_bar_logo_avatar"
+        layout="@layout/top_bar_logo_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/incoming_title"
@@ -19,12 +26,23 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/title_to_start_of_parent"
         android:layout_marginLeft="@dimen/title_to_start_of_parent"
-        android:layout_marginTop="@dimen/first_title_to_top_of_parent"
+        android:layout_marginTop="@dimen/first_title_to_top_bar"
         android:gravity="center_vertical"
         android:text="@string/title_main_menu_incoming"
         android:textAppearance="@style/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/top_bar_logo_avatar" />
+
+    <include
+        android:id="@+id/incoming_delivery_list"
+        layout="@layout/incoming_delivery_list"
+        android:layout_width="@dimen/box_total_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/outgoings_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/incoming_title" />
 
     <TextView
         android:id="@+id/outgoings_title"
@@ -36,11 +54,13 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/title_to_start_of_parent"
         android:layout_marginLeft="@dimen/title_to_start_of_parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_vertical"
         android:text="@string/title_main_menu_outgoing"
         android:textAppearance="@style/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/incoming_title" />
+        app:layout_constraintTop_toBottomOf="@+id/incoming_delivery_list" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
