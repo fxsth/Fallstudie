@@ -1,6 +1,7 @@
-query GetPackages {
+query PaketeQuery {
   pakete {
-    fach
+    empfaenger_id
+    fach_nummber
     groesse
     id
   }

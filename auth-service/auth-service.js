@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
-const privateKey = fs.readFileSync('private.pem');
+const privateKey = fs.readFileSync(__dirname + '/private.pem');
 app.use(bodyParser.json());
 app.get('/', function (req, res) {
   res.send('Hallo Auth Service');
