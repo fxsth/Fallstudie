@@ -20,7 +20,8 @@ public class MainMenu extends AppCompatActivity {
 
         incoming_deliveriesList = new ArrayList<>();
 
-        /** these are just example; later entries will come from the database */
+        /* these are just example; later entries will come from the database */
+
         incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_home, "Amazon", "home address", "delivered"));
         incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "mobil delivery base", "ready for pick up"));
         incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_truck, "Adidas", "home address", "arrive tomorrow"));
