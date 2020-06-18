@@ -1,13 +1,9 @@
 <resources>
+    <!-- presets -->
     <string name="app_name">BoxBase</string>
-    <string name="hint_username">username</string>
-    <string name="hint_password">password</string>
     <string name="button_next">next</string>
     <string name="button_cancel">cancel</string>
-    <string name="error_password">password must contain at least 6 characters</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="prompt_email">email</string>
-    <string name="prompt_password">password</string>
     <string name="action_sign_in">sign in or register</string>
     <string name="action_sign_in_short">sign in</string>
     <string name="welcome">"Welcome! "</string>
@@ -15,24 +11,31 @@
     <string name="invalid_password">password must contain at least 6 characters</string>
     <string name="login_failed">login failed</string>
 
-    <!-- registration.xml -->
-    <string name="registration_title">Registration</string>
-    <string name="registration_first_name">first name</string>
-    <string name="registration_last_name">last name</string>
-    <string name="registration_street">street</string>
-    <string name="registration_number">no.</string>
-    <string name="registration_postcode">postcode</string>
-    <string name="registration_city">city</string>
-    <string name="registration_email">email</string>
-    <string name="registration_set_password">set password</string>
-    <string name="registration_repeat_password">repeat password</string>
-    <string name="registration_registration">registration</string>
-    <string name="registration_button_create_account">create account</string>
-    <string name="registration_button_discard">discard</string>
+    <!-- input box hints -->
+    <string name="hint_receiver">receiver</string>
+    <string name="hint_first_name">first name</string>
+    <string name="hint_last_name">last name</string>
+    <string name="hint_street">street</string>
+    <string name="hint_house_number">no.</string>
+    <string name="hint_postcode">postcode</string>
+    <string name="hint_city">city</string>
+    <string name="hint_country">country</string>
+    <string name="hint_email">email</string>
+    <string name="hint_password">password</string>
+    <string name="hint_set_password">set password</string>
+    <string name="hint_repeat_password">repeat password</string>
 
+    <!-- titles -->
+    <string name="title_registration">Registration</string>
+    <string name="title_main_menu_incoming">Incoming deliveries</string>
+    <string name="title_main_menu_outgoing">Outgoing deliveries</string>
+    <string name="title_send_package_delivery_address">Delivery address</string>
+    <string name="title_send_package_drop_location">Drop location</string>
+    <string name="title_package_size">Package size</string>
 
-    <!-- main menu.xml -->
-    <string name="incoming_title">Incoming deliveries</string>
-    <string name="outgoing_title">Outgoing deliveries</string>
+    <!-- buttons -->
+    <string name="button_registration_create_account">create account</string>
+    <string name="button_send_package_confirm">go to payment</string>
+    <string name="button_discard">discard</string>
 
 </resources>
