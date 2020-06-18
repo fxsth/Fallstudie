@@ -201,11 +201,11 @@
         android:id="@+id/button_send_package_confirm"
         android:layout_width="@dimen/button_big_width"
         android:layout_height="@dimen/button_big_height"
-        android:layout_marginBottom="81dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_primary_color_rounded"
         android:text="@string/button_send_package_confirm"
         android:textAppearance="@style/button_big"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_discard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -213,12 +213,12 @@
         android:id="@+id/button_discard"
         android:layout_width="@dimen/button_big_width"
         android:layout_height="@dimen/button_big_height"
-        android:layout_marginTop="@dimen/button_to_button_big"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_primary_color_dark_rounded"
         android:text="@string/button_discard"
         android:textAppearance="@style/button_big"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_send_package_confirm" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
