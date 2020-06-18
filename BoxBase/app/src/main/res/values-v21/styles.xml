@@ -61,6 +61,9 @@
         <item name="android:textColor">
             @color/colorText
         </item>
+        <item name="android:textStyle">
+            bold
+        </item>
     </style>
 
     <style name="box_text_smaller">

@@ -23,14 +23,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="@dimen/title_to_start_of_parent"
-        android:layout_marginLeft="@dimen/title_to_start_of_parent"
         android:layout_marginBottom="397dp"
         android:gravity="center_vertical"
         android:text="@string/title_registration"
         android:textAppearance="@style/title"
         app:layout_constraintBottom_toTopOf="@id/button_create_account"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/box_first_mame"
         app:layout_constraintTop_toBottomOf="@+id/top_bar_logo_avatar" />
 
     <!-- Input fields for Registration -->
@@ -93,8 +91,6 @@
         android:layout_width="@dimen/box_street_width"
         android:layout_height="@dimen/box_height"
         android:layout_marginTop="@dimen/box_to_box_big"
-        android:layout_marginEnd="@dimen/box_street_margin_right"
-        android:layout_marginRight="@dimen/box_street_margin_right"
         android:background="@drawable/inputbox_shape"
         android:hapticFeedbackEnabled="false"
         android:hint="@string/hint_street"
@@ -111,8 +107,7 @@
         android:textColorHint="@color/colorTextHint"
         android:textIsSelectable="false"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/box_last_mame"
         app:layout_constraintTop_toBottomOf="@+id/box_last_mame" />
 
     <EditText
@@ -120,8 +115,6 @@
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="@dimen/box_house_number_width"
         android:layout_height="@dimen/box_height"
-        android:layout_marginStart="@dimen/box_house_number_margin_left"
-        android:layout_marginLeft="@dimen/box_house_number_margin_left"
         android:background="@drawable/inputbox_shape"
         android:hapticFeedbackEnabled="false"
         android:hint="@string/hint_house_number"
@@ -138,8 +131,7 @@
         android:textColorHint="@color/colorTextHint"
         android:textIsSelectable="false"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/box_last_mame"
         app:layout_constraintTop_toTopOf="@+id/box_street" />
 
     <EditText
@@ -148,8 +140,6 @@
         android:layout_width="@dimen/box_postcode_width"
         android:layout_height="@dimen/box_height"
         android:layout_marginTop="@dimen/box_to_box_small"
-        android:layout_marginEnd="@dimen/box_postcode_margin_right"
-        android:layout_marginRight="@dimen/box_postcode_margin_right"
         android:background="@drawable/inputbox_shape"
         android:hapticFeedbackEnabled="false"
         android:hint="@string/hint_postcode"
@@ -166,8 +156,7 @@
         android:textColorHint="@color/colorTextHint"
         android:textIsSelectable="false"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/box_last_mame"
         app:layout_constraintTop_toBottomOf="@+id/box_street" />
 
     <EditText
@@ -175,8 +164,6 @@
         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
         android:layout_width="@dimen/box_city_width"
         android:layout_height="@dimen/box_height"
-        android:layout_marginStart="@dimen/box_city_margin_left"
-        android:layout_marginLeft="@dimen/box_city_margin_left"
         android:background="@drawable/inputbox_shape"
         android:hapticFeedbackEnabled="false"
         android:hint="@string/hint_city"
@@ -193,8 +180,7 @@
         android:textColorHint="@color/colorTextHint"
         android:textIsSelectable="false"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/box_last_mame"
         app:layout_constraintTop_toTopOf="@+id/box_postcode" />
 
     <EditText
