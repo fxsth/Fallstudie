@@ -46,6 +46,7 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
         delivery_status.setText(incoming_deliveries.getDelivery_status());
         delivery_status_icon.setImageDrawable(mCtx.getResources().getDrawable(incoming_deliveries.getDelivery_status_image()));
 
+        /* define what happen if the button is clicked */
 
         view.findViewById(R.id.button_delivery_action).setOnClickListener(new View.OnClickListener() {
             @Override
