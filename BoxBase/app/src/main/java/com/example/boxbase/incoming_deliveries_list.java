@@ -32,7 +32,7 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
 
-        View view = inflater.inflate(R.layout.incoming_delivery_list, null);
+        View view = inflater.inflate(resource, null);
 
         TextView delivery_sender = view.findViewById(R.id.delivery_sender);
         TextView delivery_destination = view.findViewById(R.id.delivery_destination);

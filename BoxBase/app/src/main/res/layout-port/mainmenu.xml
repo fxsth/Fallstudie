@@ -33,9 +33,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_bar_logo_avatar" />
 
-    <include
-        android:id="@+id/incoming_delivery_list"
-        layout="@layout/incoming_delivery_list"
+
+    <ListView
+        android:id="@+id/incoming_deliveries_ListView"
         android:layout_width="@dimen/box_total_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -59,8 +59,6 @@
         android:text="@string/title_main_menu_outgoing"
         android:textAppearance="@style/title"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/incoming_delivery_list" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/incoming_deliveries_ListView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
