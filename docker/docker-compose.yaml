@@ -1,5 +1,12 @@
 version: '3.6'
 services:
+  authservice:
+    image: authservice
+    build: ../auth-service
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
   postgres:
     image: postgres:12
     restart: always
