@@ -1,6 +1,9 @@
 package com.example.boxbase;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +20,15 @@ public class MainMenu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainmenu);
+        final Button sendPackageButton = findViewById(R.id.button_send_package);
+
+        sendPackageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sendPackageIntent = new Intent(MainMenu.this, SendPackageActivity.class);
+                MainMenu.this.startActivity(sendPackageIntent);
+            }
+        });
 
         incoming_deliveriesList = new ArrayList<>();
 

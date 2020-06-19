@@ -1,27 +1,26 @@
 package com.example.boxbase;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RegistrationActivity extends AppCompatActivity {
-
+public class SendPackageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration);
-        final Button createAccountButton = findViewById(R.id.button_create_account);
+        setContentView(R.layout.send_package);
+        final Button goToPaymentButton = findViewById(R.id.button_send_package_confirm);
         final Button discardButton = findViewById(R.id.button_discard);
 
-        createAccountButton.setOnClickListener(new View.OnClickListener() {
+        goToPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(RegistrationActivity.this, MainMenu.class);
-                RegistrationActivity.this.startActivity(mainIntent);
+//                Intent goToPaymentIntent = new Intent(SendPackageActivity.this, MainMenu.class);
+//                SendPackageActivity.this.startActivity(goToPaymentIntent);
+                finish();
             }
         });
 
@@ -31,6 +30,5 @@ public class RegistrationActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }

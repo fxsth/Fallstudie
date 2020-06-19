@@ -124,8 +124,8 @@ public class LoginActivity extends AppCompatActivity {
         createAccountTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
-                LoginActivity.this.startActivity(mainIntent);
+                Intent createAccountIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                LoginActivity.this.startActivity(createAccountIntent);
             }
         });
     }

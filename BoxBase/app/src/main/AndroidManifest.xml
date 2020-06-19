@@ -13,12 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RegistrationActivity"></activity>
-        <activity android:name=".MainMenu"></activity>
+        <activity android:name=".SendPackageActivity"></activity>
+        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".MainMenu" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Splash"
             android:screenOrientation="portrait">
