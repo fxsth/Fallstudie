@@ -46,5 +46,4 @@ class AuthentificationTask extends AsyncTask<Void, Void, String> {
         }
         return token;
     }
-
 }

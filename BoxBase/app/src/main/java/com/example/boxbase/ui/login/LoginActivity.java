@@ -96,6 +96,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
         usernameEditText.addTextChangedListener(afterTextChangedListener);
+        usernameEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            // Wenn
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
+                            passwordEditText.getText().toString());
+                }
+                return false;
+            }
+        });
         passwordEditText.addTextChangedListener(afterTextChangedListener);
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
