@@ -1,7 +1,6 @@
 package com.example.boxbase;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -39,10 +38,6 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.mainmenu);
         final Button sendPackageButton = findViewById(R.id.button_send_package);
 
-        // Wenn der Benutzer eingeloggt ist -> Frage die eingehenden Sendungen ab und aktualisier die deliveriesList
-        if(LoginRepository.getInstance(new LoginDataSource()).isLoggedIn())
-            new IncomingQueryTask().execute();
-
         sendPackageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,53 +46,68 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
-        incoming_deliveriesList = new ArrayList<>();
+        // Bei eingeloggten Usern aktualisiere die eingehenden Pakete
+        if(LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
+            LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+            OkHttpClient httpClient = HttpClientBuilder.getHttpClient(user.getToken());
+            ApolloClient apolloClient = ApolloClient.builder().serverUrl("http://roman.technology:8080/v1/graphql").okHttpClient(httpClient).build();
+            ApolloQueryCall<IncomingQuery.Data> query = apolloClient.query(new IncomingQuery());
+            query.enqueue(new ApolloCall.Callback<IncomingQuery.Data>() {
+                @Override
+                public void onResponse(@NotNull Response<IncomingQuery.Data> response) {
+                    if (response.getData() != null) {
+                        Log.d("GraphQLAntwort", response.getData().toString());
+                        response.getData();
+                        MainMenu.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateIncomingDeliveryList(response.getData().pakete());
+                            }
+                        });
+                    }
+                }
 
-        /* these are just example; later entries will come from the database */
-
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_home, "Amazon", "home address", "delivered"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "mobil delivery base", "ready for pick up"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_truck, "Adidas", "home address", "arrive tomorrow"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_home, "Amazon", "home address", "delivered"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "mobil delivery base", "ready for pick up"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_truck, "Adidas", "home address", "arrive tomorrow"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_home, "Amazon", "home address", "delivered"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "mobil delivery base", "ready for pick up"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_truck, "Adidas", "home address", "arrive tomorrow"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_home, "Amazon", "home address", "delivered"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "mobil delivery base", "ready for pick up"));
-        incoming_deliveriesList.add(new incoming_deliveries(R.drawable.ic_delivery_status_icon_truck, "Adidas", "home address", "arrive tomorrow"));
-
-        incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
-
-        incoming_deliveries_list adapter = new incoming_deliveries_list(this, R.layout.incoming_delivery_list, incoming_deliveriesList);
-
-        incoming_deliveries_ListView.setAdapter(adapter);
-
+                @Override
+                public void onFailure(@NotNull ApolloException e) {
+                    Log.d("GraphQlFehler", e.toString());
+                }
+            });
+        }
     }
-}
 
-class IncomingQueryTask extends AsyncTask<Void, Void, Void> {
-    protected Void doInBackground(Void... voids) {
-        LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
-        OkHttpClient httpClient = HttpClientBuilder.getHttpClient(user.getToken());
-        ApolloClient apolloClient = ApolloClient.builder().serverUrl("http://roman.technology:8080/v1/graphql").okHttpClient(httpClient).build();
-        ApolloQueryCall<IncomingQuery.Data> query = apolloClient.query(new IncomingQuery());
-        query.enqueue(new ApolloCall.Callback<IncomingQuery.Data>() {
-            @Override
-            public void onResponse(@NotNull Response<IncomingQuery.Data> response) {
-                if(response.getData() !=null)
+    public void updateIncomingDeliveryList(List<IncomingQuery.Pakete> pakete)
+    {
+        List<incoming_deliveries> incoming_deliveriesList = new ArrayList<>();
+        for(IncomingQuery.Pakete paket : pakete)
+        {
+            int drawable;
+            String delivery_status;
+            if(paket.zustellbasis_id() != null)
+            {
+                if(paket.fach_nummer() != null)
                 {
-                    Log.d("GraphQLAntwort", response.getData().toString() );
-                    response.getData();
+                    delivery_status = "ready for pickup";
+                    drawable = R.drawable.ic_delivery_status_icon_boxbase;
+                }
+                else {
+                    delivery_status = "delivery is pending";
+                    drawable = R.drawable.ic_delivery_status_icon_truck;
                 }
             }
-
-            @Override
-            public void onFailure(@NotNull ApolloException e) {
-                Log.d("GraphQlFehler", e.toString() );
+            else {
+                delivery_status = "home delivery";
+                drawable = R.drawable.ic_delivery_status_icon_home;
             }
-        });
-        return null;
+            incoming_deliveriesList.add(
+                    new incoming_deliveries(
+                            drawable,
+                            paket.absender(),
+                            paket.empfaenger().ort().adresse(),
+                            delivery_status)
+            );
+        }
+        ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
+        incoming_deliveries_list adapter = new incoming_deliveries_list(this, R.layout.incoming_delivery_list, incoming_deliveriesList);
+        incoming_deliveries_ListView.setAdapter(adapter);
     }
 }
