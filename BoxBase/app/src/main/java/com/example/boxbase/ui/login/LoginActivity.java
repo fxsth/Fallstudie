@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.boxbase.MainMenu;
 import com.example.boxbase.R;
+import com.example.boxbase.RegistrationActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final ImageButton loginButton = findViewById(R.id.loginButton);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        final TextView createAccountTextView = findViewById(R.id.createAccount);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -116,6 +118,14 @@ public class LoginActivity extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        createAccountTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainIntent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                LoginActivity.this.startActivity(mainIntent);
             }
         });
     }
