@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.boxbase.ui.login.LoginActivity;
 
-public class Splash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
     /** Duration of wait **/
     private final int SPLASH_DISPLAY_LENGTH = 1000;
 
@@ -23,9 +23,9 @@ public class Splash extends AppCompatActivity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(Splash.this, LoginActivity.class);
-                Splash.this.startActivity(mainIntent);
-                Splash.this.finish();
+                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                SplashActivity.this.startActivity(mainIntent);
+                SplashActivity.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

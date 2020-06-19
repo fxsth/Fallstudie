@@ -16,11 +16,8 @@ public class LoginDataSource {
         if(username.isEmpty())
                 return new Result.Error(new SecurityException("no username"));
         try {
-            username = username.toLowerCase();
-            String token = new AuthentificationTask().execute().get();
-
-            //String test = testGraphQl(token);
-            LoggedInUser user = new LoggedInUser(username, name, token);
+            String token = new AuthentificationTask().execute(username.toLowerCase(), password).get();
+            LoggedInUser user = new LoggedInUser(username, username, token);
             return new Result.Success<>(user);
         } catch (Exception e) {
             return new Result.Error(new IOException("Error logging in", e));
@@ -35,11 +32,11 @@ public class LoginDataSource {
     private boolean waitingForResponse;
 }
 
-class AuthentificationTask extends AsyncTask<Void, Void, String> {
-    protected String doInBackground(Void... voids) {
-        String json = HttpUtilities.getJsonPost("max@web.de", "test1234");
+class AuthentificationTask extends AsyncTask<String, Void, String> {
+    protected String doInBackground(String... pair) {
         String token = "";
         try {
+            String json = HttpUtilities.getJsonPost(pair[0], pair[1]);
             token = HttpUtilities.doPostRequest(HttpUtilities.getAuthServiceUrl(), json);
         } catch (IOException e) {
             e.printStackTrace();

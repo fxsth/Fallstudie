@@ -20,7 +20,7 @@ public class RegistrationActivity extends AppCompatActivity {
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(RegistrationActivity.this, MainMenu.class);
+                Intent mainIntent = new Intent(RegistrationActivity.this, MainMenuActivity.class);
                 RegistrationActivity.this.startActivity(mainIntent);
             }
         });

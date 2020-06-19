@@ -27,7 +27,7 @@ import java.util.List;
 
 import okhttp3.OkHttpClient;
 
-public class MainMenu extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
 
     List<incoming_deliveries> incoming_deliveriesList;
     ListView incoming_deliveries_ListView;
@@ -41,8 +41,8 @@ public class MainMenu extends AppCompatActivity {
         sendPackageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent sendPackageIntent = new Intent(MainMenu.this, SendPackageActivity.class);
-                MainMenu.this.startActivity(sendPackageIntent);
+                Intent sendPackageIntent = new Intent(MainMenuActivity.this, SendPackageActivity.class);
+                MainMenuActivity.this.startActivity(sendPackageIntent);
             }
         });
 
@@ -58,7 +58,7 @@ public class MainMenu extends AppCompatActivity {
                     if (response.getData() != null) {
                         Log.d("GraphQLAntwort", response.getData().toString());
                         response.getData();
-                        MainMenu.this.runOnUiThread(new Runnable() {
+                        MainMenuActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 updateIncomingDeliveryList(response.getData().pakete());

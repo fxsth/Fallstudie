@@ -20,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.boxbase.MainMenu;
+import com.example.boxbase.MainMenuActivity;
 import com.example.boxbase.R;
 import com.example.boxbase.RegistrationActivity;
 
@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
-        Intent mainIntent = new Intent(LoginActivity.this, MainMenu.class);
+        Intent mainIntent = new Intent(LoginActivity.this, MainMenuActivity.class);
         LoginActivity.this.startActivity(mainIntent);
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }

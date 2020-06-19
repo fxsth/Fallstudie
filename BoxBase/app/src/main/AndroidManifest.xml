@@ -15,13 +15,13 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".SendPackageActivity"></activity>
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".MainMenu" />
+        <activity android:name=".MainMenuActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Splash"
+            android:name=".SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
