@@ -18,7 +18,7 @@ import com.example.IncomingQuery;
 import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.model.LoggedInUser;
-import com.example.boxbase.network.HttpClientBuilder;
+import com.example.boxbase.network.HttpUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,8 +49,8 @@ public class MainMenu extends AppCompatActivity {
         // Bei eingeloggten Usern aktualisiere die eingehenden Pakete
         if(LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
             LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
-            OkHttpClient httpClient = HttpClientBuilder.getHttpClient(user.getToken());
-            ApolloClient apolloClient = ApolloClient.builder().serverUrl("http://roman.technology:8080/v1/graphql").okHttpClient(httpClient).build();
+            OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
+            ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
             ApolloQueryCall<IncomingQuery.Data> query = apolloClient.query(new IncomingQuery());
             query.enqueue(new ApolloCall.Callback<IncomingQuery.Data>() {
                 @Override
