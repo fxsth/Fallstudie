@@ -36,8 +36,7 @@ public class LoginDataSource {
             username = username.toLowerCase();
             String token = new AuthentificationTask().execute().get();
 
-            // TODO: handle loggedInUser authentication
-            String test = testGraphQl(token);
+            //String test = testGraphQl(token);
             LoggedInUser user = new LoggedInUser(username, name);
             return new Result.Success<>(user);
         } catch (Exception e) {

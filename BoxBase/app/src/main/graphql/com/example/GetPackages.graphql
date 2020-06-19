@@ -1,7 +1,7 @@
 query PaketeQuery {
   pakete {
     empfaenger_id
-    fach_nummber
+    fach_nummer
     groesse
     id
   }
