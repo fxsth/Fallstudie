@@ -37,7 +37,7 @@ public class HttpUtilities {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", username);
-            jsonObject.put("password", username);
+            jsonObject.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -51,7 +51,10 @@ public class HttpUtilities {
                 .post(body)
                 .build();
         okhttp3.Response response = new OkHttpClient().newCall(request).execute();
-        return response.body().string();
+        if(((int) response.code()) == 200)
+            return response.body().string();
+        else
+            throw new IOException(response.message().toString());
     }
 
     public static final MediaType JSON
