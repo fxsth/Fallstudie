@@ -16,7 +16,9 @@ public class LoginDataSource {
         if(username.isEmpty())
                 return new Result.Error(new SecurityException("no username"));
         try {
-            String token = new AuthentificationTask().execute(username.toLowerCase(), password).get();
+            String token = new AuthentificationTask().execute(username, password).get();
+            if(token.isEmpty())
+                throw new IOException("Fehlerhafte Login-Daten");
             LoggedInUser user = new LoggedInUser(username, username, token);
             return new Result.Success<>(user);
         } catch (Exception e) {
@@ -30,17 +32,18 @@ public class LoginDataSource {
 
     private String name;
     private boolean waitingForResponse;
-}
 
-class AuthentificationTask extends AsyncTask<String, Void, String> {
-    protected String doInBackground(String... pair) {
-        String token = "";
-        try {
-            String json = HttpUtilities.getJsonPost(pair[0], pair[1]);
-            token = HttpUtilities.doPostRequest(HttpUtilities.getAuthServiceUrl(), json);
-        } catch (IOException e) {
-            e.printStackTrace();
+    class AuthentificationTask extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... pair) {
+            String token = "";
+                String json = HttpUtilities.getJsonPost(pair[0], pair[1]);
+            try {
+                token = HttpUtilities.doPostRequest(HttpUtilities.getAuthServiceUrl(), json);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return token;
         }
-        return token;
     }
 }
+
