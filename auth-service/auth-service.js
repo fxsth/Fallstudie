@@ -28,7 +28,7 @@ app.post('/login', async function (req, res) {
   }
 
   const tokenData = {
-    sub: answer.sub,
+    sub: answer.sub.toString(),
     name: answer.name,
     'https://hasura.io/jwt/claims': {
       'x-hasura-allowed-roles': ['user'],
