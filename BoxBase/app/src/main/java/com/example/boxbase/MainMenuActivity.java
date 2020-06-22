@@ -6,9 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.ApolloQueryCall;
@@ -22,12 +20,9 @@ import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.model.LoggedInUser;
 import com.example.boxbase.network.HttpUtilities;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import okhttp3.OkHttpClient;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -35,10 +30,34 @@ public class MainMenuActivity extends AppCompatActivity {
     List<incoming_deliveries> incoming_deliveriesList;
     ListView incoming_deliveries_ListView;
 
+    List<outgoing_deliveries> outgoing_deliveriesList;
+    ListView outgoing_deliveries_ListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainmenu);
+
+
+
+
+        outgoing_deliveriesList = new ArrayList<>();
+
+        /* these are just example; later entries will come from the database */
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Amazon", "ready for drop off"));
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "ready for drop off"));
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_truck, "Peter Müller", "arrive tomorrow"));
+
+        outgoing_deliveries_ListView = findViewById(R.id.outgoing_deliveries_ListView);
+
+        outgoing_deliveries_list adapter = new outgoing_deliveries_list(this, R.layout.outgoing_delivery_list, outgoing_deliveriesList);
+
+        outgoing_deliveries_ListView.setAdapter(adapter);
+
+
+
+
+
         final Button sendPackageButton = findViewById(R.id.button_send_package);
         final Button refreshButton = findViewById(R.id.button_refresh);
 

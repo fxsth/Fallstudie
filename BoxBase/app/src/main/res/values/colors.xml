@@ -2,6 +2,7 @@
     <color name="colorPrimary">#1EB980</color>
     <color name="colorPrimaryDark">#045D56</color>
     <color name="colorSecondary">#FFAC12</color>
+    <color name="colorSecondaryDark">#AE7407</color>
     <color name="colorBackground">#33343E</color>
     <color name="colorTextBox">#282830</color>
     <color name="colorText">#FFFFFF</color>
