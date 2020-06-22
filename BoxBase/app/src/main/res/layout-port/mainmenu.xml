@@ -72,4 +72,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="85dp"
+        android:layout_marginLeft="85dp"
+        android:text="refresh"
+        app:layout_constraintBottom_toBottomOf="@+id/top_bar_logo_avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/top_bar_logo_avatar"
+        app:layout_constraintTop_toTopOf="@+id/top_bar_logo_avatar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
