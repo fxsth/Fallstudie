@@ -9,14 +9,11 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
-import com.apollographql.apollo.ApolloQueryCall;
 import com.apollographql.apollo.ApolloSubscriptionCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.apollographql.apollo.subscription.WebSocketSubscriptionTransport;
-import com.example.IncomingQuery;
 import com.example.IncomingSubSubscription;
 import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
@@ -29,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
+
+import static com.example.IncomingSubSubscription.builder;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -60,9 +59,11 @@ public class MainMenuActivity extends AppCompatActivity {
 
         if(LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
             LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+            Integer input_id = new Integer(user.getUserId());
+            IncomingSubSubscription subscription = builder().user(user.getUserId()).build();
             OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
             ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).subscriptionTransportFactory(new WebSocketSubscriptionTransport.Factory(HttpUtilities.getGraphQLUrl(), httpClient)).build();
-            ApolloSubscriptionCall<IncomingSubSubscription.Data> sub = apolloClient.subscribe(new IncomingSubSubscription());
+            ApolloSubscriptionCall<IncomingSubSubscription.Data> sub = apolloClient.subscribe(subscription);
             sub.execute(new ApolloSubscriptionCall.Callback<IncomingSubSubscription.Data>() {
                 @Override
                 public void onResponse(@NotNull Response<IncomingSubSubscription.Data> response) {

@@ -21,8 +21,8 @@ public class LoginDataSource {
         try {
             String response = new AuthentificationTask().execute(username, password).get();
             String token = getToken(response);
-            String id = getId(response);
-            if(token.isEmpty() || id.isEmpty())
+            int id = getId(response);
+            if(token.isEmpty())
                 throw new IOException("Fehlerhafte Login-Daten");
             LoggedInUser user = new LoggedInUser(id, username, token);
             return new Result.Success<>(user);
@@ -50,14 +50,14 @@ public class LoginDataSource {
         }
         return token;
     }
-    private String getId(String jsonString)
+    private int getId(String jsonString)
     {
-        String id ="";
+        int id=0;
         JSONObject jsonObject = null;
         try {
             jsonObject = new JSONObject(jsonString);
-            id = (String) jsonObject.get("id");
-        } catch (JSONException e) {
+            id = (int) jsonObject.get("id");
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return id;

@@ -1,5 +1,5 @@
-subscription IncomingSub {
-  pakete {
+subscription IncomingSub($user:Int) {
+  pakete (where: {empfaenger_id: {_eq: $user}}){
     groesse
     id
     absender
