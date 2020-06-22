@@ -40,22 +40,17 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
 
+        /* OUTGOING DELIVERIES */
 
         outgoing_deliveriesList = new ArrayList<>();
-
         /* these are just example; later entries will come from the database */
         outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Amazon", "ready for drop off"));
         outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "ready for drop off"));
         outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_truck, "Peter Müller", "arrive tomorrow"));
 
         outgoing_deliveries_ListView = findViewById(R.id.outgoing_deliveries_ListView);
-
         outgoing_deliveries_list adapter = new outgoing_deliveries_list(this, R.layout.outgoing_delivery_list, outgoing_deliveriesList);
-
         outgoing_deliveries_ListView.setAdapter(adapter);
-
-
-
 
 
         final Button sendPackageButton = findViewById(R.id.button_send_package);
@@ -69,7 +64,8 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
-        
+
+
         // Bei eingeloggten Usern aktualisiere die eingehenden Pakete
 
         refreshLayout();
