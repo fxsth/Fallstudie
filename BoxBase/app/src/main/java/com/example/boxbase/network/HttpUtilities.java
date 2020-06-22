@@ -19,7 +19,7 @@ public class HttpUtilities {
 
     public static String getAuthServiceUrl()
     {
-        return "http://roman.technology:3000/register";
+        return "http://roman.technology:3000/login";
     }
 
     public static OkHttpClient getHttpAuthorizationClient(String token) {
