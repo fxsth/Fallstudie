@@ -48,7 +48,12 @@ public class MainMenuActivity extends AppCompatActivity {
                 MainMenuActivity.this.startActivity(sendPackageIntent);
             }
         });
-
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshLayout();
+            }
+        });
         
         // Bei eingeloggten Usern aktualisiere die eingehenden Pakete
 
