@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "username": "start@start.de",
+      "password": "a7f3d80f39dc2d4c947d5f38bc160050e1660416b5695b61631392b1b2e79aee",
+      "id": 1
+    },
+    {
+      "username": "start2@start.de",
+      "password": "a7f3d80f39dc2d4c947d5f38bc160050e1660416b5695b61631392b1b2e79aee",
+      "id": 2
+    }
+  ]
+}
