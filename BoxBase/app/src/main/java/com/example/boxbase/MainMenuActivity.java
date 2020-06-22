@@ -37,6 +37,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainmenu);
         final Button sendPackageButton = findViewById(R.id.button_send_package);
+        final Button refreshButton = findViewById(R.id.button_refresh);
 
         sendPackageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,8 +46,19 @@ public class MainMenuActivity extends AppCompatActivity {
                 MainMenuActivity.this.startActivity(sendPackageIntent);
             }
         });
-
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshLayout();
+            }
+        });
+        
         // Bei eingeloggten Usern aktualisiere die eingehenden Pakete
+
+        refreshLayout();
+    }
+
+    private void refreshLayout() {
         if(LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
             LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
             OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());

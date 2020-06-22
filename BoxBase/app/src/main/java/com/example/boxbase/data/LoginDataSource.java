@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import com.example.boxbase.data.model.LoggedInUser;
 import com.example.boxbase.network.HttpUtilities;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 /**
@@ -33,13 +36,16 @@ public class LoginDataSource {
     private String name;
     private boolean waitingForResponse;
 
+
     class AuthentificationTask extends AsyncTask<String, Void, String> {
         protected String doInBackground(String... pair) {
             String token = "";
                 String json = HttpUtilities.getJsonPost(pair[0], pair[1]);
             try {
-                token = HttpUtilities.doPostRequest(HttpUtilities.getAuthServiceUrl(), json);
-            } catch (IOException e) {
+                String jsonString = HttpUtilities.doPostRequest(HttpUtilities.getAuthServiceUrl(), json);
+                JSONObject jsonObject = new JSONObject(jsonString);
+                token = (String) jsonObject.get("jwt");
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return token;
