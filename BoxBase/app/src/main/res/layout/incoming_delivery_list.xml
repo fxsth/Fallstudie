@@ -9,6 +9,7 @@
     android:background="@color/colorBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/incoming_list_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -50,6 +51,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
+            android:paddingBottom="2dp"
             android:text="destination"
             android:textAppearance="@style/box_text_hint"
             app:layout_constraintBottom_toTopOf="@id/delivery_destination_hint"
@@ -62,11 +64,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:layout_marginLeft="100dp"
+            android:paddingBottom="2dp"
             android:text="mobil delivery base"
             android:textAppearance="@style/box_text_smaller"
-            app:layout_constraintBottom_toBottomOf="@id/delivery_destination_hint"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/delivery_destination_hint" />
+            app:layout_constraintTop_toTopOf="@+id/delivery_destination_hint" />
 
         <TextView
             android:id="@+id/delivery_status_hint"
@@ -74,12 +76,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="2dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="5dp"
             android:text="status"
             android:textAppearance="@style/box_text_hint"
             app:layout_constraintBottom_toTopOf="@id/button_delivery_details"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/delivery_destination_hint" />
+            app:layout_constraintTop_toBottomOf="@+id/delivery_destination" />
 
         <TextView
             android:id="@+id/delivery_status"
@@ -87,6 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
             android:layout_marginLeft="100dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="5dp"
             android:text="ready for pick up"
             android:textAppearance="@style/box_text_smaller"
             app:layout_constraintBottom_toBottomOf="@id/delivery_status_hint"
@@ -102,6 +107,7 @@
             android:background="@drawable/button_primary_color_dark_rounded_small"
             android:text="@string/button_main_menu_delivery_details"
             android:textAppearance="@style/button_small"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_delivery_action"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,10 +120,21 @@
             android:background="@drawable/button_primary_color_rounded_small"
             android:text="redirect"
             android:textAppearance="@style/button_small"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/button_delivery_details"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_delivery_details"
-            app:layout_constraintTop_toTopOf="@id/button_delivery_details" />
+            app:layout_constraintTop_toTopOf="@id/button_delivery_details"
+            tools:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/delivery_status_hint"
+            tools:layout_editor_absoluteX="20dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

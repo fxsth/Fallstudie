@@ -40,7 +40,6 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.mainmenu);
         final Button sendPackageButton = findViewById(R.id.button_send_package);
         final Button refreshButton = findViewById(R.id.button_refresh);
-
         sendPackageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +53,8 @@ public class MainMenuActivity extends AppCompatActivity {
                 refreshLayout();
             }
         });
+
+
         
         // Bei eingeloggten Usern aktualisiere die eingehenden Pakete
 
