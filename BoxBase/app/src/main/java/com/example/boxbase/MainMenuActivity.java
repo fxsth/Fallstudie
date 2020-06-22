@@ -12,9 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.ApolloQueryCall;
+import com.apollographql.apollo.ApolloSubscriptionCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.apollographql.apollo.subscription.WebSocketSubscriptionTransport;
 import com.example.IncomingQuery;
+import com.example.IncomingSubSubscription;
 import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.model.LoggedInUser;
@@ -46,12 +49,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 MainMenuActivity.this.startActivity(sendPackageIntent);
             }
         });
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshLayout();
-            }
-        });
+
         
         // Bei eingeloggten Usern aktualisiere die eingehenden Pakete
 
@@ -59,14 +57,15 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void refreshLayout() {
+
         if(LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
             LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
             OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
-            ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
-            ApolloQueryCall<IncomingQuery.Data> query = apolloClient.query(new IncomingQuery());
-            query.enqueue(new ApolloCall.Callback<IncomingQuery.Data>() {
+            ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).subscriptionTransportFactory(new WebSocketSubscriptionTransport.Factory(HttpUtilities.getGraphQLUrl(), httpClient)).build();
+            ApolloSubscriptionCall<IncomingSubSubscription.Data> sub = apolloClient.subscribe(new IncomingSubSubscription());
+            sub.execute(new ApolloSubscriptionCall.Callback<IncomingSubSubscription.Data>() {
                 @Override
-                public void onResponse(@NotNull Response<IncomingQuery.Data> response) {
+                public void onResponse(@NotNull Response<IncomingSubSubscription.Data> response) {
                     if (response.getData() != null) {
                         Log.d("GraphQLAntwort", response.getData().toString());
                         response.getData();
@@ -81,16 +80,30 @@ public class MainMenuActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NotNull ApolloException e) {
-                    Log.d("GraphQlFehler", e.toString());
+
+                }
+
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onTerminated() {
+                    Log.d("GraphQlFehler", "Terminiert");
+                }
+
+                @Override
+                public void onConnected() {
+
                 }
             });
-        }
-    }
+    }}
 
-    public void updateIncomingDeliveryList(List<IncomingQuery.Pakete> pakete)
+    public void updateIncomingDeliveryList(List<IncomingSubSubscription.Pakete> pakete)
     {
         List<incoming_deliveries> incoming_deliveriesList = new ArrayList<>();
-        for(IncomingQuery.Pakete paket : pakete)
+        for(IncomingSubSubscription.Pakete paket : pakete)
         {
             int drawable;
             String delivery_status;
