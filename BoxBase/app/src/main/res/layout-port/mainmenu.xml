@@ -14,7 +14,6 @@
         layout="@layout/top_bar_logo_avatar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,10 +36,10 @@
     <ListView
         android:id="@+id/incoming_deliveries_ListView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginRight="35dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="35dp"
-        app:layout_constraintBottom_toTopOf="@+id/outgoings_title"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/incoming_title" />
@@ -53,12 +52,23 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:gravity="center_vertical"
         android:text="@string/title_main_menu_outgoing"
         android:textAppearance="@style/title"
-        app:layout_constraintStart_toStartOf="@+id/incoming_deliveries_ListView"
+        app:layout_constraintStart_toStartOf="@+id/outgoing_deliveries_ListView"
         app:layout_constraintTop_toBottomOf="@+id/incoming_deliveries_ListView" />
+
+    <ListView
+        android:id="@+id/outgoing_deliveries_ListView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outgoings_title" />
 
     <Button
         android:id="@+id/button_send_package"
@@ -74,14 +84,12 @@
 
     <Button
         android:id="@+id/button_refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
-        android:layout_marginLeft="85dp"
-        android:text="refresh"
-        app:layout_constraintBottom_toBottomOf="@+id/top_bar_logo_avatar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/top_bar_logo_avatar"
-        app:layout_constraintTop_toTopOf="@+id/top_bar_logo_avatar" />
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/ic_refresh"
+        app:layout_constraintBottom_toBottomOf="@+id/incoming_title"
+        app:layout_constraintStart_toEndOf="@+id/incoming_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

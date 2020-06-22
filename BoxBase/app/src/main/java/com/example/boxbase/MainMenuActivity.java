@@ -48,6 +48,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 MainMenuActivity.this.startActivity(sendPackageIntent);
             }
         });
+
         
         // Bei eingeloggten Usern aktualisiere die eingehenden Pakete
 
@@ -63,7 +64,6 @@ public class MainMenuActivity extends AppCompatActivity {
             ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).subscriptionTransportFactory(new WebSocketSubscriptionTransport.Factory(HttpUtilities.getGraphQLUrl(), httpClient)).build();
             ApolloSubscriptionCall<IncomingSubSubscription.Data> sub = apolloClient.subscribe(subscription);
             sub.execute(new ApolloSubscriptionCall.Callback<IncomingSubSubscription.Data>() {
-
                 @Override
                 public void onResponse(@NotNull Response<IncomingSubSubscription.Data> response) {
                     if (response.getData() != null) {
@@ -80,12 +80,12 @@ public class MainMenuActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NotNull ApolloException e) {
-                    Log.d("GraphQlFehler", e.getMessage().toString());
+
                 }
 
                 @Override
                 public void onCompleted() {
-                    Log.d("GraphQl", "Completed");
+
                 }
 
                 @Override
@@ -95,7 +95,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
                 @Override
                 public void onConnected() {
-                    Log.d("GraphQl", "Connected");
+
                 }
             });
     }}
