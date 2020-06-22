@@ -37,7 +37,7 @@ app.post('/login', async function (req, res) {
       'x-hasura-user-id': answer.uid,
     },
   };
-
+  res.setHeader('Content-Type', 'application/json');
   const token = jwt.sign(tokenData, privateKey, { algorithm: 'RS256' });
   res.send({ jwt: token, id: answer.uid });
 });
