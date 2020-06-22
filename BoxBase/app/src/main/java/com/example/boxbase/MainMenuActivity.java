@@ -59,7 +59,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         if(LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
             LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
-            Integer input_id = new Integer(user.getUserId());
             IncomingSubSubscription subscription = builder().user(user.getUserId()).build();
             OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
             ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).subscriptionTransportFactory(new WebSocketSubscriptionTransport.Factory(HttpUtilities.getGraphQLUrl(), httpClient)).build();
