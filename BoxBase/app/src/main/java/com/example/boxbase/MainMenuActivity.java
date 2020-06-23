@@ -40,7 +40,7 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mainmenu);
+        setContentView(R.layout.main_menu);
 
         /* OUTGOING DELIVERIES */
         outgoing_deliveriesList = new ArrayList<>();
@@ -50,7 +50,7 @@ public class MainMenuActivity extends AppCompatActivity {
         outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.icon_delivery_status_truck, "Peter Müller", "arrive tomorrow"));
 
         outgoing_deliveries_ListView = findViewById(R.id.outgoing_deliveries_ListView);
-        outgoing_deliveries_list adapter = new outgoing_deliveries_list(this, R.layout.outgoing_delivery_list, outgoing_deliveriesList);
+        outgoing_deliveries_list adapter = new outgoing_deliveries_list(this, R.layout.main_menu_outgoing_delivery, outgoing_deliveriesList);
         outgoing_deliveries_ListView.setAdapter(adapter);
 
         /* BUTTON - SEND PACKAGE */
@@ -160,7 +160,7 @@ public class MainMenuActivity extends AppCompatActivity {
             );
         }
         ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
-        incoming_deliveries_list adapter = new incoming_deliveries_list(this, R.layout.incoming_delivery_list, incoming_deliveriesList);
+        incoming_deliveries_list adapter = new incoming_deliveries_list(this, R.layout.main_menu_incoming_delivery, incoming_deliveriesList);
         incoming_deliveries_ListView.setAdapter(adapter);
     }
 }
