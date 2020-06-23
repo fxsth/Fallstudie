@@ -20,7 +20,7 @@
         app:srcCompat="@drawable/boxbase_logo_small" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageViewAvatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/avatar_to_top_of_parent"
