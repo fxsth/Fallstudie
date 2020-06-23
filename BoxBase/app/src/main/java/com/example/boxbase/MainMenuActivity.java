@@ -33,11 +33,26 @@ public class MainMenuActivity extends AppCompatActivity {
 
     List<incoming_deliveries> incoming_deliveriesList;
     ListView incoming_deliveries_ListView;
+    List<outgoing_deliveries> outgoing_deliveriesList;
+    ListView outgoing_deliveries_ListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainmenu);
+
+        /* OUTGOING DELIVERIES */
+        outgoing_deliveriesList = new ArrayList<>();
+        /* these are just example; later entries will come from the database */
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Amazon", "ready for drop off"));
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "ready for drop off"));
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_truck, "Peter Müller", "arrive tomorrow"));
+
+        outgoing_deliveries_ListView = findViewById(R.id.outgoing_deliveries_ListView);
+        outgoing_deliveries_list adapter = new outgoing_deliveries_list(this, R.layout.outgoing_delivery_list, outgoing_deliveriesList);
+        outgoing_deliveries_ListView.setAdapter(adapter);
+
+        /* BUTTON - SEND PACKAGE */
         final Button sendPackageButton = findViewById(R.id.button_send_package);
         final Button refreshButton = findViewById(R.id.button_refresh);
         sendPackageButton.setOnClickListener(new View.OnClickListener() {
@@ -86,12 +101,12 @@ public class MainMenuActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NotNull ApolloException e) {
-
+                    Log.d("GraphQlFehler", e.getMessage().toString());
                 }
 
                 @Override
                 public void onCompleted() {
-
+                    Log.d("GraphQl", "Completed");
                 }
 
                 @Override
@@ -101,7 +116,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
                 @Override
                 public void onConnected() {
-
+                    Log.d("GraphQl", "Connected");
                 }
             });
     }}
