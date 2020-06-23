@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/incoming_deliveries_shape"
+        android:background="@drawable/shape_box_package_incoming_delivery"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
             app:layout_constraintBottom_toTopOf="@id/delivery_destination_hint"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_delivery_status_icon_boxbase" />
+            app:srcCompat="@drawable/icon_delivery_status_boxbase" />
 
         <TextView
             android:id="@+id/delivery_sender"
@@ -104,7 +104,7 @@
             android:layout_height="25dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="12dp"
-            android:background="@drawable/button_primary_color_dark_rounded_small"
+            android:background="@drawable/shape_button_small_primary_color_dark"
             android:text="@string/button_main_menu_delivery_details"
             android:textAppearance="@style/button_small"
             android:visibility="gone"
@@ -117,7 +117,7 @@
             android:id="@+id/button_delivery_action"
             android:layout_width="130dp"
             android:layout_height="25dp"
-            android:background="@drawable/button_primary_color_rounded_small"
+            android:background="@drawable/shape_button_small_primary_color_bright"
             android:text="redirect"
             android:textAppearance="@style/button_small"
             android:visibility="gone"

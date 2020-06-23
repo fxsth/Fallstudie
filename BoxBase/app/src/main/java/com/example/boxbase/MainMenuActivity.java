@@ -45,9 +45,9 @@ public class MainMenuActivity extends AppCompatActivity {
         /* OUTGOING DELIVERIES */
         outgoing_deliveriesList = new ArrayList<>();
         /* these are just example; later entries will come from the database */
-        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Amazon", "ready for drop off"));
-        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_boxbase, "Zalando", "ready for drop off"));
-        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.ic_delivery_status_icon_truck, "Peter Müller", "arrive tomorrow"));
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.icon_delivery_status_boxbase, "Amazon", "ready for drop off"));
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.icon_delivery_status_boxbase, "Zalando", "ready for drop off"));
+        outgoing_deliveriesList.add(new outgoing_deliveries(R.drawable.icon_delivery_status_truck, "Peter Müller", "arrive tomorrow"));
 
         outgoing_deliveries_ListView = findViewById(R.id.outgoing_deliveries_ListView);
         outgoing_deliveries_list adapter = new outgoing_deliveries_list(this, R.layout.outgoing_delivery_list, outgoing_deliveriesList);
@@ -140,16 +140,16 @@ public class MainMenuActivity extends AppCompatActivity {
                 if(paket.fach_nummer() != null)
                 {
                     delivery_status = "ready for pickup";
-                    drawable = R.drawable.ic_delivery_status_icon_boxbase;
+                    drawable = R.drawable.icon_delivery_status_boxbase;
                 }
                 else {
                     delivery_status = "delivery is pending";
-                    drawable = R.drawable.ic_delivery_status_icon_truck;
+                    drawable = R.drawable.icon_delivery_status_truck;
                 }
             }
             else {
                 delivery_status = "home delivery";
-                drawable = R.drawable.ic_delivery_status_icon_home;
+                drawable = R.drawable.icon_delivery_status_home;
             }
             incoming_deliveriesList.add(
                     new incoming_deliveries(

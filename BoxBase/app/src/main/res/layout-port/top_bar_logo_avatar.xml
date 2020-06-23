@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/boxbase_logo_to_top_of_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/boxbase_logo_small" />
+        app:srcCompat="@drawable/icon_logo_boxbase_small" />
 
     <ImageView
         android:id="@+id/imageViewAvatar"
@@ -28,6 +28,6 @@
         android:layout_marginRight="@dimen/avatar_to_end_of_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_avatar" />
+        app:srcCompat="@drawable/icon_avatar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
