@@ -1,52 +1,39 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-        <dimen name="activity_horizontal_margin">16dp</dimen>
-        <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <integer name="activity_standard_weight">20</integer>
+    <integer name="activity_standard_weight_login">30</integer>
 
 
     <!-- Distances in the top of most of the layouts -->
-        <dimen name="boxbase_logo_to_top_of_parent">15dp</dimen>
-        <dimen name="boxbase_logo_to_start_of_parent">35dp</dimen>
+    <dimen name="boxbase_logo_to_top_of_parent">15dp</dimen>
+    <dimen name="boxbase_logo_to_start_of_parent">35dp</dimen>
 
-        <dimen name="avatar_to_top_of_parent">19dp</dimen>
-        <dimen name="avatar_to_end_of_parent">40dp</dimen>
+    <dimen name="avatar_to_top_of_parent">19dp</dimen>
+    <dimen name="avatar_to_end_of_parent">40dp</dimen>
 
-        <dimen name="first_title_to_top_bar">10dp</dimen>
-        <dimen name="title_to_start_of_parent">35dp</dimen>
-
+    <dimen name="first_title_to_top_bar">15dp</dimen>
+    <dimen name="title_to_start_of_parent">35dp</dimen>
 
 
     <!-- input boxes -->
-        <dimen name="box_total_width">343dp</dimen>
-        <dimen name="box_height">41dp</dimen>
+    <dimen name="box_height">41dp</dimen>
 
-        <dimen name="box_to_upper_title">15dp</dimen>
-        <dimen name="box_to_box_small">10dp</dimen>
-        <dimen name="box_to_box_big">20dp</dimen>
+    <dimen name="box_to_upper_title">15dp</dimen>
+    <dimen name="box_to_box_small">10dp</dimen>
+    <dimen name="box_to_box_big">20dp</dimen>
 
-        <dimen name="box_street_width">265dp</dimen>
-        <dimen name="box_street_margin_right">78dp</dimen>
-            <!-- number_box + small_distance -->
-        <dimen name="box_house_number_width">68dp</dimen>
-            <!-- total_width - street_box - small_distance -->
-        <dimen name="box_house_number_margin_left">275dp</dimen>
-            <!-- street_box + small_distance -->
-
-        <dimen name="box_postcode_width">107dp</dimen>
-        <dimen name="box_postcode_margin_right">236dp</dimen>
-            <!-- city_box + small_distance -->
-        <dimen name="box_city_width">226dp</dimen>
-            <!-- total_width - postcode_box - small_distance -->
-        <dimen name="box_city_margin_left">117dp</dimen>
-            <!-- postcode_box + small_distance -->
-
+    <dimen name="box_to_left_side_for_scrolling_bar">8dp</dimen>
 
 
     <!-- buttons -->
-        <dimen name="button_big_width">263dp</dimen>
-        <dimen name="button_big_height">41dp</dimen>
-        <dimen name="button_to_button_big">20dp</dimen>
+    <dimen name="button_big_width">263dp</dimen>
+    <dimen name="button_big_height">41dp</dimen>
+    <dimen name="button_to_button_big">20dp</dimen>
+    <dimen name="button_to_bottom">20dp</dimen>
+    <dimen name="button_to_top">30dp</dimen>
 
 
 </resources>

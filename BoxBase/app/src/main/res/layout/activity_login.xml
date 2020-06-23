@@ -6,101 +6,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.login.LoginActivity">
 
     <ImageView
         android:id="@+id/boxbase_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintBottom_toTopOf="@+id/login_boxes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/boxbase_logo"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/boxbase_logo" />
 
-    <EditText
-        android:id="@+id/username"
-        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-        android:layout_width="343dp"
-        android:layout_height="41dp"
-        android:layout_marginBottom="53dp"
-        android:background="@drawable/inputbox_shape"
-        android:hapticFeedbackEnabled="false"
-        android:hint="@string/hint_email"
-        android:inputType="textEmailAddress"
-        android:lineSpacingExtra="12sp"
-        android:paddingLeft="12dp"
-        android:paddingTop="12dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="12dp"
-        android:selectAllOnFocus="false"
-        android:singleLine="true"
-        android:textAppearance="@style/text"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorTextHint"
-        android:textIsSelectable="false"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <LinearLayout
+        android:id="@+id/login_boxes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/boxbase_logo"
-        android:importantForAutofill="no" />
+        app:layout_constraintBottom_toTopOf="@+id/loginButton" >
 
-    <EditText
-        android:id="@+id/password"
-        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-        android:layout_width="343dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/inputbox_shape"
-        android:fontFamily="@font/roboto"
-        android:hapticFeedbackEnabled="false"
-        android:hint="@string/hint_password"
-        android:inputType="text|textPassword"
-        android:lineSpacingExtra="12sp"
-        android:paddingLeft="12dp"
-        android:paddingTop="12dp"
-        android:paddingRight="12dp"
-        android:paddingBottom="12dp"
-        android:selectAllOnFocus="false"
-        android:singleLine="true"
-        android:textAppearance="@style/text"
-        android:textColor="@color/colorText"
-        android:textColorHint="@color/colorTextHint"
-        android:textIsSelectable="false"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        android:importantForAutofill="no" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="100" />
 
-    <TextView
-        android:id="@+id/createAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="create account"
-        android:textColor="@color/colorTextHint"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="@integer/activity_standard_weight_login" >
 
-    <TextView
-        android:id="@+id/resetPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="reset password"
-        android:textColor="@color/colorTextHint"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccount" />
+            <EditText
+                android:id="@+id/username"
+                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:background="@drawable/inputbox_shape"
+                android:hapticFeedbackEnabled="false"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:lineSpacingExtra="12sp"
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp"
+                android:selectAllOnFocus="false"
+                android:singleLine="true"
+                android:textAppearance="@style/text"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorTextHint"
+                android:textIsSelectable="false"
+                android:textSize="14sp"
+                android:importantForAutofill="no" />
+
+            <EditText
+                android:id="@+id/password"
+                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginTop="@dimen/box_to_box_small"
+                android:background="@drawable/inputbox_shape"
+                android:fontFamily="@font/roboto"
+                android:hapticFeedbackEnabled="false"
+                android:hint="@string/hint_password"
+                android:inputType="text|textPassword"
+                android:lineSpacingExtra="30sp"
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="12dp"
+                android:selectAllOnFocus="false"
+                android:singleLine="true"
+                android:textAppearance="@style/text"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorTextHint"
+                android:textIsSelectable="false"
+                android:textSize="14sp"
+                android:importantForAutofill="no" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="100" />
+
+    </LinearLayout>
 
     <ImageButton
         android:id="@+id/loginButton"
@@ -108,11 +99,38 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@null"
-        app:layout_constraintBottom_toTopOf="@+id/createAccount"
+        app:layout_constraintBottom_toTopOf="@+id/area_other_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintTop_toBottomOf="@+id/login_boxes"
         app:srcCompat="@drawable/log_in_button" />
+
+    <LinearLayout
+        android:id="@+id/area_other_options"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintBottom_toBottomOf="parent" >
+
+        <TextView
+            android:id="@+id/createAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/create_account"
+            android:textColor="@color/colorTextHint" />
+
+        <TextView
+            android:id="@+id/resetPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="18dp"
+            android:text="@string/reset_password"
+            android:textColor="@color/colorTextHint" />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/loading"
@@ -120,9 +138,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/password"
+        app:layout_constraintBottom_toBottomOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/username" />
+        app:layout_constraintStart_toEndOf="@+id/loginButton"
+        app:layout_constraintTop_toTopOf="@+id/loginButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

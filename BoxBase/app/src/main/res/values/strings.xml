@@ -40,5 +40,7 @@
     <string name="button_send_package_confirm">go to payment</string>
     <string name="button_discard">discard</string>
     <string name="button_main_menu_delivery_details">details</string>
+    <string name="create_account">create account</string>
+    <string name="reset_password">reset password</string>
 
 </resources>
