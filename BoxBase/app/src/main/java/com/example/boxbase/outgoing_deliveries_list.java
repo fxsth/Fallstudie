@@ -1,10 +1,12 @@
 package com.example.boxbase;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +39,8 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
         TextView delivery_receiver = view.findViewById(R.id.delivery_receiver);
         TextView delivery_status = view.findViewById(R.id.delivery_status);
         ImageView delivery_status_icon = view.findViewById(R.id.delivery_status_icon);
+        Button button_delivery_details = view.findViewById(R.id.button_delivery_details);
+        Button button_delivery_action = view.findViewById(R.id.button_delivery_action);
 
         outgoing_deliveries outgoing_deliveries = outgoing_deliveriesList.get(position);
 
@@ -45,11 +49,24 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
         delivery_status_icon.setImageDrawable(mCtx.getResources().getDrawable(outgoing_deliveries.getDelivery_status_image()));
 
         /* define what happen if the button is clicked */
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("onClickView", "Position-"+position);
+                if(button_delivery_details.getVisibility()==View.VISIBLE) {
+                    button_delivery_details.setVisibility(View.GONE);
+                    button_delivery_action.setVisibility(View.GONE);
+                }
+                else {
+                    button_delivery_details.setVisibility(View.VISIBLE);
+                    button_delivery_action.setVisibility(View.VISIBLE);
+                }
 
+            }
+        });
         view.findViewById(R.id.button_delivery_action).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
             }
         });
 
