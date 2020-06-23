@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabTextAppearance="@style/title"
-        app:tabIndicatorColor="@color/colorText" >
+        app:tabIndicatorColor="@color/colorTextHint" >
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/incoming_tab"
