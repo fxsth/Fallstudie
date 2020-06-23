@@ -1,4 +1,5 @@
 <resources>
+    <color name="colorOnPrimary">#1EB980</color>
     <color name="colorPrimary">#1EB980</color>
     <color name="colorPrimaryDark">#045D56</color>
     <color name="colorSecondary">#FFAC12</color>

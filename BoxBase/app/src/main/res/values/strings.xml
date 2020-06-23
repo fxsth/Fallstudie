@@ -28,8 +28,8 @@
 
     <!-- titles -->
     <string name="title_registration">Registration</string>
-    <string name="title_main_menu_incoming">Incoming deliveries</string>
-    <string name="title_main_menu_outgoing">Outgoing deliveries</string>
+    <string name="title_main_menu_incoming">Incoming</string>
+    <string name="title_main_menu_outgoing">Outgoing</string>
     <string name="title_send_package_delivery_address">Delivery address</string>
     <string name="title_send_package_drop_location">Drop location</string>
     <string name="title_package_size">Package size</string>

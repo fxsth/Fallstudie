@@ -5,6 +5,20 @@
 
     <integer name="activity_standard_weight">20</integer>
     <integer name="activity_standard_weight_login">30</integer>
+    <integer name="activity_standard_weight_main_menu">10</integer>
+
+
+    <!-- Package box layout -->
+    <dimen name="package_box_margin_to_title">15dp</dimen>
+    <dimen name="package_box_margin_left">20dp</dimen>
+    <dimen name="package_box_padding_top">12dp</dimen>
+    <dimen name="package_box_padding_bottom">12dp</dimen>
+    <dimen name="package_box_title_to_icon">20dp</dimen>
+    <dimen name="package_box_text_to_icon">10dp</dimen>
+    <dimen name="package_box_text_to_text">2dp</dimen>
+    <dimen name="package_box_text_to_hint">50dp</dimen>
+    <dimen name="package_box_button_to_text">10dp</dimen>
+    <dimen name="package_box_to_box">10dp</dimen>
 
 
     <!-- Distances in the top of most of the layouts -->
@@ -29,8 +43,10 @@
 
 
     <!-- buttons -->
-    <dimen name="button_big_width">263dp</dimen>
-    <dimen name="button_big_height">41dp</dimen>
+    <dimen name="button_big_width">200dp</dimen>
+    <dimen name="button_big_height">35dp</dimen>
+    <dimen name="button_small_width">130dp</dimen>
+    <dimen name="button_small_height">25dp</dimen>
     <dimen name="button_to_button_big">20dp</dimen>
     <dimen name="button_to_bottom">20dp</dimen>
     <dimen name="button_to_top">30dp</dimen>
