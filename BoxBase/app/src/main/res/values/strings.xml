@@ -50,7 +50,10 @@
     <string name="package_size_l">L</string>
 
 
-    <!-- Package sizes -->
+    <!-- pick up / drop off location -->
+    <string name="location_selection_shop_title">package shop</string>
+    <string name="location_selection_others_title">other address</string>
+
     <string name="location_selection_mdb_title">mobile delivery base</string>
     <string name="location_selection_mdb_hint">close to …</string>
     <string name="button_home_address">home address</string>

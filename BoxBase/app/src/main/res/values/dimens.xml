@@ -19,6 +19,8 @@
     <dimen name="package_box_text_to_hint">50dp</dimen>
     <dimen name="package_box_button_to_text">10dp</dimen>
     <dimen name="package_box_to_box">10dp</dimen>
+    <dimen name="package_box_arrow_to_right">25dp</dimen>
+    <dimen name="package_box_arrow_weight">15dp</dimen>
 
 
     <!-- distances in the top of most of the layouts -->

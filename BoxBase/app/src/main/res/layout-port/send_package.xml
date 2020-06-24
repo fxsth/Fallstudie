@@ -68,6 +68,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/box_to_upper_title"/>
 
+                    <include
+                        android:id="@+id/drop_location_package_shop_layout"
+                        layout="@layout/universal_location_selection_package_shop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/box_to_upper_title"/>
+
                     <Button
                         android:id="@+id/button_send_package_confirm"
                         android:layout_width="@dimen/button_big_width"

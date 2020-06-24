@@ -49,14 +49,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:srcCompat="@drawable/icon_arrow_open_box" />
+            app:srcCompat="@drawable/icon_arrow_box_location_open" />
 
         <ImageView
             android:id="@+id/arrow_to_close_mdb_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:srcCompat="@drawable/icon_arrow_close_box" />
+            app:srcCompat="@drawable/icon_arrow_box_location_close" />
 
     </LinearLayout>
 

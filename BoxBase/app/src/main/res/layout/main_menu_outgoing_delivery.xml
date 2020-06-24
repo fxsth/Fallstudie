@@ -44,6 +44,36 @@
             app:layout_constraintBottom_toBottomOf="@id/delivery_status_icon"
             app:layout_constraintStart_toEndOf="@id/delivery_status_icon" />
 
+        <LinearLayout
+            android:id="@+id/arrow_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/package_box_arrow_to_right"
+            android:layout_marginRight="@dimen/package_box_arrow_to_right"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/delivery_status_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/delivery_status_icon">
+
+            <ImageView
+                android:id="@+id/arrow_to_open_box"
+                android:layout_width="@dimen/package_box_arrow_weight"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:visibility="visible"
+                app:srcCompat="@drawable/icon_arrow_box_package_open" />
+
+            <ImageView
+                android:id="@+id/arrow_to_close_box"
+                android:layout_width="@dimen/package_box_arrow_weight"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:visibility="gone"
+                app:srcCompat="@drawable/icon_arrow_box_package_close" />
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/delivery_status_hint"
             android:layout_width="wrap_content"

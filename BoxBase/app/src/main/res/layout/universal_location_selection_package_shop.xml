@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_box_location_selection"
+    android:paddingTop="@dimen/location_selection_padding_of_box"
+    android:paddingBottom="@dimen/location_selection_padding_of_box">
+
+    <TextView
+        android:id="@+id/location_selection_shop_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/location_selection_title_to_left"
+        android:layout_marginLeft="@dimen/location_selection_title_to_left"
+        android:text="@string/location_selection_shop_title"
+        android:textAppearance="@style/box_title"
+        app:layout_constraintBottom_toBottomOf="@+id/arrow_space"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/arrow_space" />
+
+
+    <!-- space for arrows to open/close the box -->
+
+    <LinearLayout
+        android:id="@+id/arrow_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/icon_arrow_box_open_to_right"
+        android:layout_marginRight="@dimen/icon_arrow_box_open_to_right"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/arrow_to_open_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:srcCompat="@drawable/icon_arrow_box_location_open" />
+
+        <ImageView
+            android:id="@+id/arrow_to_close_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/icon_arrow_box_location_close" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
