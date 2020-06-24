@@ -206,6 +206,13 @@
                         android:textIsSelectable="false"
                         android:textSize="14sp" />
 
+                    <include
+                        android:id="@+id/package_size_layout"
+                        layout="@layout/universal_package_size_selection"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/standard_margin_between_fragments"/>
+
                     <Button
                         android:id="@+id/button_send_package_confirm"
                         android:layout_width="@dimen/button_big_width"
