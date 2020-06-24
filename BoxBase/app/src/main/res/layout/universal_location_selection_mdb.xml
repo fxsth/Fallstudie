@@ -29,7 +29,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/location_selection_mdb_title"
         app:layout_constraintStart_toEndOf="@+id/location_selection_mdb_title"
         app:layout_constraintTop_toTopOf="@+id/location_selection_mdb_title"
-        app:srcCompat="@drawable/icon_help" />
+        app:srcCompat="@drawable/icon_help"
+        tools:ignore="ContentDescription" />
 
 
     <!-- space for arrows to open/close the box -->
@@ -49,14 +50,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:srcCompat="@drawable/icon_arrow_box_location_open" />
+            app:srcCompat="@drawable/icon_arrow_box_location_open"
+            tools:ignore="ContentDescription" />
 
         <ImageView
             android:id="@+id/arrow_to_close_mdb_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:srcCompat="@drawable/icon_arrow_box_location_close" />
+            app:srcCompat="@drawable/icon_arrow_box_location_close"
+            tools:ignore="ContentDescription" />
 
     </RelativeLayout>
 
@@ -113,7 +116,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_home_address_title"
-                app:srcCompat="@drawable/icon_delivery_status_home" />
+                app:srcCompat="@drawable/icon_delivery_status_home"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -147,7 +151,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_point_on_map_title"
-                app:srcCompat="@drawable/icon_location" />
+                app:srcCompat="@drawable/icon_location"
+                tools:ignore="ContentDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -163,7 +168,8 @@
             android:text="@string/dropdown_hint_time_slot"
             android:textAppearance="@style/text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_home_address" />
+            app:layout_constraintTop_toBottomOf="@+id/button_home_address"
+            android:layout_marginStart="@dimen/location_selection_text_to_left" />
 
 
         <!-- day -->
@@ -190,7 +196,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_day"
             app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_day"
             app:layout_constraintTop_toTopOf="@+id/time_slot_selection_day"
-            app:srcCompat="@drawable/icon_arrow_dropdown" />
+            app:srcCompat="@drawable/icon_arrow_dropdown"
+            tools:ignore="ContentDescription" />
 
 
         <!-- time "to" -->
@@ -200,10 +207,12 @@
             android:layout_width="@dimen/dropdown_time_width"
             android:layout_height="@dimen/box_height"
             android:layout_marginTop="@dimen/box_to_box_small"
+            android:layout_marginBottom="7dp"
             android:background="@drawable/shape_box_text_input"
             android:spinnerMode="dropdown"
             android:textAppearance="@style/text"
             android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_day"
             app:layout_constraintTop_toBottomOf="@+id/time_slot_selection_day" />
 
@@ -216,7 +225,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_to"
             app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_to"
             app:layout_constraintTop_toTopOf="@+id/time_slot_selection_to"
-            app:srcCompat="@drawable/icon_arrow_dropdown" />
+            app:srcCompat="@drawable/icon_arrow_dropdown"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/time_slot_selection_text_to"
@@ -255,7 +265,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_from"
             app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_from"
             app:layout_constraintTop_toTopOf="@+id/time_slot_selection_from"
-            app:srcCompat="@drawable/icon_arrow_dropdown" />
+            app:srcCompat="@drawable/icon_arrow_dropdown"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/time_slot_selection_text_from"
@@ -267,15 +278,6 @@
             android:textAppearance="@style/text"
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_text_to"
             app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_from" />
-
-
-        <!-- same extra space in the bottom if the box is open -->
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="7dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/time_slot_selection_to" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

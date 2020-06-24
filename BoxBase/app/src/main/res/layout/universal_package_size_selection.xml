@@ -23,7 +23,8 @@
         android:layout_marginLeft="@dimen/help_icon_to_title"
         app:layout_constraintBottom_toBottomOf="@+id/package_size_title"
         app:layout_constraintStart_toEndOf="@+id/package_size_title"
-        app:srcCompat="@drawable/icon_help" />
+        app:srcCompat="@drawable/icon_help"
+        tools:ignore="ContentDescription" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button_package_size_s"
@@ -56,7 +57,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/digit_package_size_s"
-            app:srcCompat="@drawable/icon_button_package_size" />
+            app:srcCompat="@drawable/icon_button_package_size"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -90,7 +92,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/digit_package_size_m"
-            app:srcCompat="@drawable/icon_button_package_size" />
+            app:srcCompat="@drawable/icon_button_package_size"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -125,7 +128,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/digit_package_size_l"
-            app:srcCompat="@drawable/icon_button_package_size" />
+            app:srcCompat="@drawable/icon_button_package_size"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

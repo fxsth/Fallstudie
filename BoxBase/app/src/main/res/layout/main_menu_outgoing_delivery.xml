@@ -3,6 +3,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
@@ -31,7 +32,8 @@
             android:layout_marginStart="@dimen/package_box_margin_left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_delivery_status_boxbase" />
+            app:srcCompat="@drawable/icon_delivery_status_boxbase"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/delivery_receiver"
@@ -62,7 +64,8 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:visibility="visible"
-                app:srcCompat="@drawable/icon_arrow_box_package_open" />
+                app:srcCompat="@drawable/icon_arrow_box_package_open"
+                tools:ignore="ContentDescription" />
 
             <ImageView
                 android:id="@+id/arrow_to_close_box"
@@ -70,7 +73,8 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:visibility="gone"
-                app:srcCompat="@drawable/icon_arrow_box_package_close" />
+                app:srcCompat="@drawable/icon_arrow_box_package_close"
+                tools:ignore="ContentDescription" />
 
         </LinearLayout>
 
