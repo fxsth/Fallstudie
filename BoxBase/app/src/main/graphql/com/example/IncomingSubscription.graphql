@@ -1,14 +1,16 @@
-subscription IncomingSub($user:Int) {
-  pakete (where: {empfaenger_id: {_eq: $user}}){
+subscription IncomingSub($user: Int) {
+  pakete(where: {empfaenger_id: {_eq: $user}}) {
     groesse
     id
-    absender
     fach_nummer
     zustellbasis_id
     empfaenger {
       ort {
         adresse
       }
+    }
+    sender {
+      name
     }
   }
 }

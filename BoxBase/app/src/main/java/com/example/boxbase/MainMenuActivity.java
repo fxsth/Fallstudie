@@ -185,7 +185,7 @@ public class MainMenuActivity extends AppCompatActivity {
             incoming_deliveriesList.add(
                     new incoming_deliveries(
                             drawable,
-                            paket.absender(),
+                            paket.sender().name(),
                             paket.empfaenger().ort().adresse(),
                             delivery_status)
             );
