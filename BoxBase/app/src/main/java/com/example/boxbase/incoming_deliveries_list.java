@@ -22,8 +22,8 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
     List<incoming_deliveries> incoming_deliveriesList;
     boolean split_address = false;
 
-    public incoming_deliveries_list (Context mCtx, int resource, List<incoming_deliveries> incoming_deliveriesList) {
-        super (mCtx, resource, incoming_deliveriesList);
+    public incoming_deliveries_list(Context mCtx, int resource, List<incoming_deliveries> incoming_deliveriesList) {
+        super(mCtx, resource, incoming_deliveriesList);
 
         this.mCtx = mCtx;
         this.resource = resource;
@@ -45,21 +45,10 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
         Button button_delivery_action = view.findViewById(R.id.button_delivery_action);
 
         incoming_deliveries incoming_deliveries = incoming_deliveriesList.get(position);
-
-        String a = incoming_deliveries.getDelivery_destination();
-        if(split_address) {
-            if (a.contains(",")) {
-                int index = a.indexOf(",");
-                String street = a.substring(0, index);
-                String city = a.substring(index + 1, a.length());
-                if (city.charAt(0) == ' ')
-                    city = city.substring(1, city.length());
-                a = street + "\n" + city;
-            }
-        }
+        final String address = getAddress(incoming_deliveries.getDelivery_destination(), split_address);
 
         delivery_sender.setText(incoming_deliveries.getDelivery_sender());
-        delivery_destination.setText(a);
+        delivery_destination.setText(address);
         delivery_status.setText(incoming_deliveries.getDelivery_status());
         delivery_status_icon.setImageDrawable(mCtx.getResources().getDrawable(incoming_deliveries.getDelivery_status_image()));
 
@@ -67,12 +56,11 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("onClickView", "Position-"+position);
-                if(button_delivery_details.getVisibility()==View.VISIBLE) {
+                Log.d("onClickView", "Position-" + position);
+                if (button_delivery_details.getVisibility() == View.VISIBLE) {
                     button_delivery_details.setVisibility(View.GONE);
                     button_delivery_action.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     button_delivery_details.setVisibility(View.VISIBLE);
                     button_delivery_action.setVisibility(View.VISIBLE);
                 }
@@ -88,5 +76,19 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
         });
 
         return view;
+    }
+
+    private String getAddress(String address, boolean split) {
+        if (split_address) {
+            if (address.contains(",")) {
+                int index = address.indexOf(",");
+                String street = address.substring(0, index);
+                String city = address.substring(index + 1, address.length());
+                if (city.charAt(0) == ' ')
+                    city = city.substring(1, city.length());
+                return street + "\n" + city;
+            }
+        }
+        return address;
     }
 }

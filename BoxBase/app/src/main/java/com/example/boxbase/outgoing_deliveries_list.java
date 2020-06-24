@@ -22,7 +22,7 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
     List<outgoing_deliveries> outgoing_deliveriesList;
 
     public outgoing_deliveries_list(Context mCtx, int resource, List<outgoing_deliveries> outgoing_deliveriesList) {
-        super (mCtx, resource, outgoing_deliveriesList);
+        super(mCtx, resource, outgoing_deliveriesList);
 
         this.mCtx = mCtx;
         this.resource = resource;
@@ -35,7 +35,6 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
         LayoutInflater inflater = LayoutInflater.from(mCtx);
 
         View view = inflater.inflate(resource, null);
-
         TextView delivery_receiver = view.findViewById(R.id.delivery_receiver);
         TextView delivery_status = view.findViewById(R.id.delivery_status);
         ImageView delivery_status_icon = view.findViewById(R.id.delivery_status_icon);
@@ -43,7 +42,6 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
         Button button_delivery_action = view.findViewById(R.id.button_delivery_action);
 
         outgoing_deliveries outgoing_deliveries = outgoing_deliveriesList.get(position);
-
         delivery_receiver.setText(outgoing_deliveries.getDelivery_receiver());
         delivery_status.setText(outgoing_deliveries.getDelivery_status());
         delivery_status_icon.setImageDrawable(mCtx.getResources().getDrawable(outgoing_deliveries.getDelivery_status_image()));
@@ -52,12 +50,11 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("onClickView", "Position-"+position);
-                if(button_delivery_details.getVisibility()==View.VISIBLE) {
+                Log.d("onClickView", "Position-" + position);
+                if (button_delivery_details.getVisibility() == View.VISIBLE) {
                     button_delivery_details.setVisibility(View.GONE);
                     button_delivery_action.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     button_delivery_details.setVisibility(View.VISIBLE);
                     button_delivery_action.setVisibility(View.VISIBLE);
                 }

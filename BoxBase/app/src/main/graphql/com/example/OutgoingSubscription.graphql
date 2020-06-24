@@ -1,0 +1,17 @@
+subscription OutgoingSub($user: Int) {
+  pakete(where: {sender: {id: {_eq: $user}}}) {
+    groesse
+    id
+    fach_nummer
+    zustellbasis_id
+    empfaenger {
+      ort {
+        adresse
+      }
+      name
+    }
+    sender {
+      name
+    }
+  }
+}
