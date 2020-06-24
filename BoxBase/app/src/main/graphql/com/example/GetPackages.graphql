@@ -1,8 +1,0 @@
-query PaketeQuery {
-  pakete {
-    empfaenger_id
-    fach_nummer
-    groesse
-    id
-  }
-}
