@@ -20,6 +20,7 @@ import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.model.LoggedInUser;
 import com.example.boxbase.network.HttpUtilities;
+import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,6 +58,10 @@ public class MainMenuActivity extends AppCompatActivity {
         final Button sendPackageButton = findViewById(R.id.button_send_package);
         final Button refreshButton = findViewById(R.id.button_refresh);
         final ImageView imageViewAvatar = findViewById(R.id.imageViewAvatar);
+        final TabLayout packagesTabLayout = findViewById(R.id.packagesTabLayout);
+        ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
+
+
         sendPackageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +78,32 @@ public class MainMenuActivity extends AppCompatActivity {
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            }
+        });
+
+        packagesTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
+            @Override
+            public void onTabSelected(TabLayout.Tab tab){
+                int position = tab.getPosition();
+                if(position%2==0)
+                {
+                    incoming_deliveries_ListView.setVisibility(View.VISIBLE);
+                    outgoing_deliveries_ListView.setVisibility(View.GONE);
+                }
+                else {
+                    incoming_deliveries_ListView.setVisibility(View.GONE);
+                    outgoing_deliveries_ListView.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 

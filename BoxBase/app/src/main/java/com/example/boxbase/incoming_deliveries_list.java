@@ -20,6 +20,7 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
     Context mCtx;
     int resource;
     List<incoming_deliveries> incoming_deliveriesList;
+    boolean split_address = false;
 
     public incoming_deliveries_list (Context mCtx, int resource, List<incoming_deliveries> incoming_deliveriesList) {
         super (mCtx, resource, incoming_deliveriesList);
@@ -44,14 +45,17 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
         Button button_delivery_action = view.findViewById(R.id.button_delivery_action);
 
         incoming_deliveries incoming_deliveries = incoming_deliveriesList.get(position);
+
         String a = incoming_deliveries.getDelivery_destination();
-        if(a.contains(",")) {
-            int index = a.indexOf(",");
-            String street = a.substring(0, index);
-            String city = a.substring(index+1, a.length());
-            if(city.charAt(0)==' ')
-                city = city.substring(1, city.length());
-            a = street + "\n" + city;
+        if(split_address) {
+            if (a.contains(",")) {
+                int index = a.indexOf(",");
+                String street = a.substring(0, index);
+                String city = a.substring(index + 1, a.length());
+                if (city.charAt(0) == ' ')
+                    city = city.substring(1, city.length());
+                a = street + "\n" + city;
+            }
         }
 
         delivery_sender.setText(incoming_deliveries.getDelivery_sender());
