@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground">
+
+    <TextView
+        android:id="@+id/package_size_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_package_size"
+        android:textAppearance="@style/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/help_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/help_icon_to_title"
+        android:layout_marginLeft="@dimen/help_icon_to_title"
+        app:layout_constraintBottom_toBottomOf="@+id/package_size_title"
+        app:layout_constraintStart_toEndOf="@+id/package_size_title"
+        app:srcCompat="@drawable/icon_help" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_package_size_s"
+        android:layout_width="@dimen/button_package_size_width"
+        android:layout_height="@dimen/button_package_size_height"
+        android:layout_marginTop="@dimen/box_to_upper_title"
+        android:background="@drawable/shape_button_big_primary_color_bright"
+        app:layout_constraintEnd_toStartOf="@+id/button_package_size_m"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/package_size_title">
+
+        <TextView
+            android:id="@+id/digit_package_size_s"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_digit_to_top"
+            android:text="@string/package_size_s"
+            android:textAppearance="@style/button_package_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/icon_package_size_s"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="@dimen/package_size_icon_to_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/digit_package_size_s"
+            app:srcCompat="@drawable/icon_button_package_size" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_package_size_m"
+        android:layout_width="@dimen/button_package_size_width"
+        android:layout_height="@dimen/button_package_size_height"
+        android:background="@drawable/shape_button_big_primary_color_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/button_package_size_s"
+        app:layout_constraintEnd_toStartOf="@+id/button_package_size_l"
+        app:layout_constraintStart_toEndOf="@+id/button_package_size_s">
+
+        <TextView
+            android:id="@+id/digit_package_size_m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_digit_to_top"
+            android:text="@string/package_size_m"
+            android:textAppearance="@style/button_package_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/icon_package_size_m"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="@dimen/package_size_icon_to_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/digit_package_size_m"
+            app:srcCompat="@drawable/icon_button_package_size" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/button_package_size_l"
+        android:layout_width="@dimen/button_package_size_width"
+        android:layout_height="@dimen/button_package_size_height"
+        android:background="@drawable/shape_button_big_primary_color_dark"
+        app:layout_constraintBottom_toBottomOf="@+id/button_package_size_m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_package_size_m">
+
+        <TextView
+            android:id="@+id/digit_package_size_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_digit_to_top"
+            android:text="@string/package_size_l"
+            android:textAppearance="@style/button_package_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/icon_package_size_l"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginBottom="@dimen/package_size_icon_to_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/digit_package_size_l"
+            app:srcCompat="@drawable/icon_button_package_size" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

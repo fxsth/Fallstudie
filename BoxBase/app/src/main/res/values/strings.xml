@@ -43,4 +43,9 @@
     <string name="create_account">create account</string>
     <string name="reset_password">reset password</string>
 
+    <string name="package_size_s">S</string>
+    <string name="package_size_m">M</string>
+    <string name="package_size_l">L</string>
+
+
 </resources>

@@ -2,7 +2,6 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-
     <integer name="activity_standard_weight">20</integer>
     <integer name="activity_standard_weight_login">30</integer>
     <integer name="activity_standard_weight_main_menu">10</integer>
@@ -24,21 +23,17 @@
     <!-- Distances in the top of most of the layouts -->
     <dimen name="boxbase_logo_to_top_of_parent">15dp</dimen>
     <dimen name="boxbase_logo_to_start_of_parent">35dp</dimen>
-
     <dimen name="avatar_to_top_of_parent">19dp</dimen>
     <dimen name="avatar_to_end_of_parent">40dp</dimen>
-
     <dimen name="first_title_to_top_bar">15dp</dimen>
     <dimen name="title_to_start_of_parent">35dp</dimen>
 
 
     <!-- input boxes -->
     <dimen name="box_height">41dp</dimen>
-
     <dimen name="box_to_upper_title">15dp</dimen>
     <dimen name="box_to_box_small">10dp</dimen>
     <dimen name="box_to_box_big">20dp</dimen>
-
     <dimen name="box_to_left_side_for_scrolling_bar">8dp</dimen>
 
 
@@ -50,6 +45,16 @@
     <dimen name="button_to_button_big">20dp</dimen>
     <dimen name="button_to_bottom">20dp</dimen>
     <dimen name="button_to_top">30dp</dimen>
+
+    <dimen name="button_package_size_width">80dp</dimen>
+    <dimen name="button_package_size_height">80dp</dimen>
+    <dimen name="size_digit_to_top">10dp</dimen>
+    <dimen name="package_size_icon_to_bottom">7dp</dimen>
+
+
+
+    <dimen name="help_icon_to_title">15dp</dimen>
+    <dimen name="standard_margin_between_fragments">30dp</dimen>
 
 
 </resources>
