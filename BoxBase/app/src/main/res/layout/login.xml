@@ -35,7 +35,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="@integer/activity_standard_weight_login" >
+            android:layout_weight="@integer/activity_weight_login" >
 
             <EditText
                 android:id="@+id/username"

@@ -18,7 +18,7 @@
     <!-- Text styles -->
     <style name="text">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">#878787</item>
+        <item name="android:textColor">@color/colorText</item>
     </style>
 
     <style name="title">

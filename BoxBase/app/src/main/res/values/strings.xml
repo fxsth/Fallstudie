@@ -43,9 +43,23 @@
     <string name="create_account">create account</string>
     <string name="reset_password">reset password</string>
 
+
+    <!-- Package sizes -->
     <string name="package_size_s">S</string>
     <string name="package_size_m">M</string>
     <string name="package_size_l">L</string>
+
+
+    <!-- Package sizes -->
+    <string name="location_selection_mdb_title">mobile delivery base</string>
+    <string name="location_selection_mdb_hint">close to …</string>
+    <string name="button_home_address">home address</string>
+    <string name="button_point_on_map">point on map</string>
+    <string name="dropdown_hint_time_slot">set time slot …</string>
+    <string name="dropdown_hint_from">from</string>
+    <string name="dropdown_hint_to">to</string>
+    <string name="dropdown_hint_day">day</string>
+    <string name="dropdown_hint_time">time</string>
 
 
 </resources>

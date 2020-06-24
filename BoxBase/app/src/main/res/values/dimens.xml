@@ -1,13 +1,14 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <integer name="activity_standard_weight">20</integer>
-    <integer name="activity_standard_weight_login">30</integer>
-    <integer name="activity_standard_weight_main_menu">10</integer>
+    <integer name="activity_standard_weight">17</integer>
+    <integer name="activity_weight_login">30</integer>
+    <integer name="activity_weight_main_menu">10</integer>
+    <integer name="activity_registration_weight">20</integer>
 
 
-    <!-- Package box layout -->
+    <!-- package box layout -->
     <dimen name="package_box_margin_to_title">15dp</dimen>
     <dimen name="package_box_margin_left">20dp</dimen>
     <dimen name="package_box_padding_top">12dp</dimen>
@@ -20,7 +21,7 @@
     <dimen name="package_box_to_box">10dp</dimen>
 
 
-    <!-- Distances in the top of most of the layouts -->
+    <!-- distances in the top of most of the layouts -->
     <dimen name="boxbase_logo_to_top_of_parent">15dp</dimen>
     <dimen name="boxbase_logo_to_start_of_parent">35dp</dimen>
     <dimen name="avatar_to_top_of_parent">19dp</dimen>
@@ -51,10 +52,24 @@
     <dimen name="size_digit_to_top">10dp</dimen>
     <dimen name="package_size_icon_to_bottom">7dp</dimen>
 
+    <dimen name="button_location_selection_width">130dp</dimen>
+    <dimen name="button_location_selection_height">80dp</dimen>
+    <dimen name="location_button_title_to_top">13dp</dimen>
+    <dimen name="location_button_icon_to_bottom">7dp</dimen>
 
 
+    <!-- location and time selection -->
     <dimen name="help_icon_to_title">15dp</dimen>
     <dimen name="standard_margin_between_fragments">30dp</dimen>
+    <dimen name="location_selection_padding_of_box">11dp</dimen>
+    <dimen name="location_selection_title_to_left">20dp</dimen>
+    <dimen name="location_selection_text_to_left">30dp</dimen>
+    <dimen name="dropdown_menu_to_text">12dp</dimen>
+    <dimen name="icon_arrow_box_open_to_right">15dp</dimen>
+    <dimen name="icon_arrow_dropdown_to_right">10dp</dimen>
+
+    <dimen name="dropdown_day_width">150dp</dimen>
+    <dimen name="dropdown_time_width">85dp</dimen>
 
 
 </resources>

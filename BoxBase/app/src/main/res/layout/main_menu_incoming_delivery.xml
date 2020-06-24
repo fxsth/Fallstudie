@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/package_box_to_box"
-        android:layout_weight="@integer/activity_standard_weight_main_menu"
+        android:layout_weight="@integer/activity_weight_main_menu"
         android:paddingTop="@dimen/package_box_padding_top"
         android:paddingBottom="@dimen/package_box_padding_bottom"
         android:background="@drawable/shape_box_package_incoming_delivery" >

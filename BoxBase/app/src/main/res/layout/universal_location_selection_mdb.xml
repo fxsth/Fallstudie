@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_box_location_selection"
+    android:paddingTop="@dimen/location_selection_padding_of_box"
+    android:paddingBottom="@dimen/location_selection_padding_of_box">
+
+    <TextView
+        android:id="@+id/location_selection_mdb_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/location_selection_title_to_left"
+        android:layout_marginLeft="@dimen/location_selection_title_to_left"
+        android:text="@string/location_selection_mdb_title"
+        android:textAppearance="@style/box_title"
+        app:layout_constraintBottom_toBottomOf="@+id/arrow_space"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/arrow_space" />
+
+    <ImageView
+        android:id="@+id/help_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/help_icon_to_title"
+        android:layout_marginLeft="@dimen/help_icon_to_title"
+        app:layout_constraintBottom_toBottomOf="@+id/location_selection_mdb_title"
+        app:layout_constraintStart_toEndOf="@+id/location_selection_mdb_title"
+        app:layout_constraintTop_toTopOf="@+id/location_selection_mdb_title"
+        app:srcCompat="@drawable/icon_help" />
+
+
+    <!-- space for arrows to open/close the box -->
+
+    <LinearLayout
+        android:id="@+id/arrow_space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/icon_arrow_box_open_to_right"
+        android:layout_marginRight="@dimen/icon_arrow_box_open_to_right"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/arrow_to_open_mdb_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:srcCompat="@drawable/icon_arrow_open_box" />
+
+        <ImageView
+            android:id="@+id/arrow_to_close_mdb_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:srcCompat="@drawable/icon_arrow_close_box" />
+
+    </LinearLayout>
+
+
+    <!-- selection of a location as reference for the MDB -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/location_selection_mdb_title"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/location_selection_button_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/location_selection_text_to_left"
+            android:layout_marginTop="10dp"
+            android:text="@string/location_selection_mdb_hint"
+            android:textAppearance="@style/text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/location_selection_text_to_left" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button_home_address"
+            android:layout_width="@dimen/button_location_selection_width"
+            android:layout_height="@dimen/button_location_selection_height"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape_button_big_primary_color_bright"
+            app:layout_constraintEnd_toStartOf="@+id/button_point_on_map"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/location_selection_button_hint">
+
+            <TextView
+                android:id="@+id/button_home_address_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/location_button_title_to_top"
+                android:text="@string/button_home_address"
+                android:textAppearance="@style/button_big"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/button_home_address_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginBottom="@dimen/location_button_icon_to_bottom"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_home_address_title"
+                app:srcCompat="@drawable/icon_delivery_status_home" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button_point_on_map"
+            android:layout_width="@dimen/button_location_selection_width"
+            android:layout_height="@dimen/button_location_selection_height"
+            android:background="@drawable/shape_button_big_primary_color_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/button_home_address"
+            app:layout_constraintTop_toTopOf="@+id/button_home_address">
+
+            <TextView
+                android:id="@+id/button_point_on_map_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/location_button_title_to_top"
+                android:text="@string/button_point_on_map"
+                android:textAppearance="@style/button_big"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/button_point_on_map_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginBottom="@dimen/location_button_icon_to_bottom"
+                android:adjustViewBounds="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_point_on_map_title"
+                app:srcCompat="@drawable/icon_location" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- time slot selection -->
+
+        <TextView
+            android:id="@+id/set_time_slot_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="@dimen/location_selection_text_to_left"
+            android:text="@string/dropdown_hint_time_slot"
+            android:textAppearance="@style/text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_home_address" />
+
+
+        <!-- day -->
+
+        <Spinner
+            android:id="@+id/time_slot_selection_day"
+            android:layout_width="@dimen/dropdown_day_width"
+            android:layout_height="@dimen/box_height"
+            android:background="@drawable/shape_box_text_input"
+            android:spinnerMode="dropdown"
+            android:textAppearance="@style/text"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@+id/set_time_slot_hint"
+            app:layout_constraintEnd_toEndOf="@+id/button_point_on_map"
+            app:layout_constraintTop_toTopOf="@+id/set_time_slot_hint" />
+
+        <ImageView
+            android:id="@+id/dropdown_arrow_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/icon_arrow_dropdown_to_right"
+            android:layout_marginRight="@dimen/icon_arrow_dropdown_to_right"
+            app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_day"
+            app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_day"
+            app:layout_constraintTop_toTopOf="@+id/time_slot_selection_day"
+            app:srcCompat="@drawable/icon_arrow_dropdown" />
+
+
+        <!-- time "to" -->
+
+        <Spinner
+            android:id="@+id/time_slot_selection_to"
+            android:layout_width="@dimen/dropdown_time_width"
+            android:layout_height="@dimen/box_height"
+            android:layout_marginTop="@dimen/box_to_box_small"
+            android:background="@drawable/shape_box_text_input"
+            android:spinnerMode="dropdown"
+            android:textAppearance="@style/text"
+            android:textColor="@color/colorText"
+            app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_day"
+            app:layout_constraintTop_toBottomOf="@+id/time_slot_selection_day" />
+
+        <ImageView
+            android:id="@+id/dropdown_arrow_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/icon_arrow_dropdown_to_right"
+            android:layout_marginRight="@dimen/icon_arrow_dropdown_to_right"
+            app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_to"
+            app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_to"
+            app:layout_constraintTop_toTopOf="@+id/time_slot_selection_to"
+            app:srcCompat="@drawable/icon_arrow_dropdown" />
+
+        <TextView
+            android:id="@+id/time_slot_selection_text_to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dropdown_menu_to_text"
+            android:layout_marginEnd="@dimen/dropdown_menu_to_text"
+            android:text="@string/dropdown_hint_to"
+            android:textAppearance="@style/text"
+            app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_to"
+            app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_to"
+            app:layout_constraintTop_toTopOf="@+id/time_slot_selection_to" />
+
+
+        <!-- time "from" -->
+
+        <Spinner
+            android:id="@+id/time_slot_selection_from"
+            android:layout_width="@dimen/dropdown_time_width"
+            android:layout_height="@dimen/box_height"
+            android:layout_marginRight="@dimen/dropdown_menu_to_text"
+            android:layout_marginEnd="@dimen/dropdown_menu_to_text"
+            android:background="@drawable/shape_box_text_input"
+            android:spinnerMode="dropdown"
+            android:textAppearance="@style/text"
+            android:textColor="@color/colorText"
+            app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_to"
+            app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_text_to" />
+
+        <ImageView
+            android:id="@+id/dropdown_arrow_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/icon_arrow_dropdown_to_right"
+            android:layout_marginRight="@dimen/icon_arrow_dropdown_to_right"
+            app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_from"
+            app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_from"
+            app:layout_constraintTop_toTopOf="@+id/time_slot_selection_from"
+            app:srcCompat="@drawable/icon_arrow_dropdown" />
+
+        <TextView
+            android:id="@+id/time_slot_selection_text_from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dropdown_menu_to_text"
+            android:layout_marginEnd="@dimen/dropdown_menu_to_text"
+            android:text="@string/dropdown_hint_from"
+            android:textAppearance="@style/text"
+            app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_text_to"
+            app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_from" />
+
+
+        <!-- same extra space in the bottom if the box is open -->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/time_slot_selection_to" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
