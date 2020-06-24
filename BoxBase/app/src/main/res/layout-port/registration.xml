@@ -33,32 +33,80 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_weight="@integer/activity_registration_weight">
 
-                <LinearLayout
-                    android:orientation="vertical"
+                <TextView
+                    android:id="@+id/registration_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/first_title_to_top_bar"
+                    android:text="@string/title_registration"
+                    android:textAppearance="@style/title" />
+
+                <!-- Input fields for Registration -->
+
+                <EditText
+                    android:id="@+id/box_first_mame"
+                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="@dimen/box_height"
+                    android:layout_marginTop="@dimen/box_to_upper_title"
+                    android:background="@drawable/shape_box_text_input"
+                    android:hapticFeedbackEnabled="false"
+                    android:hint="@string/hint_first_name"
+                    android:importantForAutofill="no"
+                    android:lineSpacingExtra="12sp"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:textAppearance="@style/text"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/registration_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/first_title_to_top_bar"
-                        android:text="@string/title_registration"
-                        android:textAppearance="@style/title" />
+                <EditText
+                    android:id="@+id/box_last_mame"
+                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/box_height"
+                    android:layout_marginTop="@dimen/box_to_box_small"
+                    android:background="@drawable/shape_box_text_input"
+                    android:hapticFeedbackEnabled="false"
+                    android:hint="@string/hint_last_name"
+                    android:importantForAutofill="no"
+                    android:lineSpacingExtra="12sp"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:textAppearance="@style/text"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
 
-                    <!-- Input fields for Registration -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/box_to_box_big" >
 
                     <EditText
-                        android:id="@+id/box_first_mame"
+                        android:id="@+id/box_street"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/box_height"
-                        android:layout_marginTop="@dimen/box_to_upper_title"
+                        android:layout_weight="0.4"
                         android:background="@drawable/shape_box_text_input"
                         android:hapticFeedbackEnabled="false"
-                        android:hint="@string/hint_first_name"
+                        android:hint="@string/hint_street"
                         android:importantForAutofill="no"
                         android:lineSpacingExtra="12sp"
                         android:paddingLeft="12dp"
@@ -74,14 +122,15 @@
                         android:textSize="14sp" />
 
                     <EditText
-                        android:id="@+id/box_last_mame"
+                        android:id="@+id/box_number"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/box_height"
-                        android:layout_marginTop="@dimen/box_to_box_small"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/box_to_box_small"
                         android:background="@drawable/shape_box_text_input"
                         android:hapticFeedbackEnabled="false"
-                        android:hint="@string/hint_last_name"
+                        android:hint="@string/hint_house_number"
                         android:importantForAutofill="no"
                         android:lineSpacingExtra="12sp"
                         android:paddingLeft="12dp"
@@ -94,23 +143,26 @@
                         android:textColor="@color/colorText"
                         android:textColorHint="@color/colorTextHint"
                         android:textIsSelectable="false"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:layout_marginStart="@dimen/box_to_box_small" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/box_to_box_big" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/box_to_box_small" >
 
                         <EditText
-                            android:id="@+id/box_street"
+                            android:id="@+id/box_postcode"
                             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/box_height"
-                            android:layout_weight="0.4"
+                            android:layout_weight="1"
                             android:background="@drawable/shape_box_text_input"
                             android:hapticFeedbackEnabled="false"
-                            android:hint="@string/hint_street"
+                            android:hint="@string/hint_postcode"
                             android:importantForAutofill="no"
                             android:lineSpacingExtra="12sp"
                             android:paddingLeft="12dp"
@@ -126,15 +178,15 @@
                             android:textSize="14sp" />
 
                         <EditText
-                            android:id="@+id/box_number"
+                            android:id="@+id/box_city"
                             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/box_height"
-                            android:layout_weight="1"
+                            android:layout_weight="0.5"
                             android:layout_marginLeft="@dimen/box_to_box_small"
                             android:background="@drawable/shape_box_text_input"
                             android:hapticFeedbackEnabled="false"
-                            android:hint="@string/hint_house_number"
+                            android:hint="@string/hint_city"
                             android:importantForAutofill="no"
                             android:lineSpacingExtra="12sp"
                             android:paddingLeft="12dp"
@@ -150,159 +202,101 @@
                             android:textSize="14sp"
                             android:layout_marginStart="@dimen/box_to_box_small" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="@dimen/box_to_box_small" >
-
-                            <EditText
-                                android:id="@+id/box_postcode"
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/box_height"
-                                android:layout_weight="1"
-                                android:background="@drawable/shape_box_text_input"
-                                android:hapticFeedbackEnabled="false"
-                                android:hint="@string/hint_postcode"
-                                android:importantForAutofill="no"
-                                android:lineSpacingExtra="12sp"
-                                android:paddingLeft="12dp"
-                                android:paddingTop="12dp"
-                                android:paddingRight="12dp"
-                                android:paddingBottom="12dp"
-                                android:selectAllOnFocus="false"
-                                android:singleLine="true"
-                                android:textAppearance="@style/text"
-                                android:textColor="@color/colorText"
-                                android:textColorHint="@color/colorTextHint"
-                                android:textIsSelectable="false"
-                                android:textSize="14sp" />
-
-                            <EditText
-                                android:id="@+id/box_city"
-                                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/box_height"
-                                android:layout_weight="0.5"
-                                android:layout_marginLeft="@dimen/box_to_box_small"
-                                android:background="@drawable/shape_box_text_input"
-                                android:hapticFeedbackEnabled="false"
-                                android:hint="@string/hint_city"
-                                android:importantForAutofill="no"
-                                android:lineSpacingExtra="12sp"
-                                android:paddingLeft="12dp"
-                                android:paddingTop="12dp"
-                                android:paddingRight="12dp"
-                                android:paddingBottom="12dp"
-                                android:selectAllOnFocus="false"
-                                android:singleLine="true"
-                                android:textAppearance="@style/text"
-                                android:textColor="@color/colorText"
-                                android:textColorHint="@color/colorTextHint"
-                                android:textIsSelectable="false"
-                                android:textSize="14sp"
-                                android:layout_marginStart="@dimen/box_to_box_small" />
-
-                    </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/box_email"
-                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/box_height"
-                        android:layout_marginTop="@dimen/box_to_box_big"
-                        android:background="@drawable/shape_box_text_input"
-                        android:hapticFeedbackEnabled="false"
-                        android:hint="@string/hint_email"
-                        android:importantForAutofill="no"
-                        android:lineSpacingExtra="12sp"
-                        android:paddingLeft="12dp"
-                        android:paddingTop="12dp"
-                        android:paddingRight="12dp"
-                        android:paddingBottom="12dp"
-                        android:selectAllOnFocus="false"
-                        android:singleLine="true"
-                        android:textAppearance="@style/text"
-                        android:textColor="@color/colorText"
-                        android:textColorHint="@color/colorTextHint"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/box_set_password"
-                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/box_height"
-                        android:layout_marginTop="@dimen/box_to_box_small"
-                        android:background="@drawable/shape_box_text_input"
-                        android:fontFamily="@font/roboto"
-                        android:hapticFeedbackEnabled="false"
-                        android:hint="@string/hint_set_password"
-                        android:importantForAutofill="no"
-                        android:inputType="text|textPassword"
-                        android:lineSpacingExtra="12sp"
-                        android:paddingLeft="12dp"
-                        android:paddingTop="12dp"
-                        android:paddingRight="12dp"
-                        android:paddingBottom="12dp"
-                        android:selectAllOnFocus="false"
-                        android:singleLine="true"
-                        android:textAppearance="@style/text"
-                        android:textColor="@color/colorText"
-                        android:textColorHint="@color/colorTextHint"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp" />
-
-                    <EditText
-                        android:id="@+id/box_repeat_password"
-                        style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/box_height"
-                        android:layout_marginTop="@dimen/box_to_box_small"
-                        android:background="@drawable/shape_box_text_input"
-                        android:fontFamily="@font/roboto"
-                        android:hapticFeedbackEnabled="false"
-                        android:hint="@string/hint_repeat_password"
-                        android:importantForAutofill="no"
-                        android:inputType="text|textPassword"
-                        android:lineSpacingExtra="12sp"
-                        android:paddingLeft="12dp"
-                        android:paddingTop="12dp"
-                        android:paddingRight="12dp"
-                        android:paddingBottom="12dp"
-                        android:selectAllOnFocus="false"
-                        android:singleLine="true"
-                        android:textAppearance="@style/text"
-                        android:textColor="@color/colorText"
-                        android:textColorHint="@color/colorTextHint"
-                        android:textIsSelectable="false"
-                        android:textSize="14sp" />
-
-                    <Button
-                        android:id="@+id/button_create_account"
-                        android:layout_width="@dimen/button_big_width"
-                        android:layout_height="@dimen/button_big_height"
-                        android:layout_marginTop="@dimen/button_to_top"
-                        android:layout_gravity="center"
-                        android:background="@drawable/shape_button_big_primary_color_bright"
-                        android:text="@string/button_registration_create_account"
-                        android:textAppearance="@style/button_big" />
-
-                    <Button
-                        android:id="@+id/button_discard"
-                        android:layout_width="@dimen/button_big_width"
-                        android:layout_height="@dimen/button_big_height"
-                        android:layout_marginTop="@dimen/button_to_button_big"
-                        android:layout_marginBottom="@dimen/button_to_bottom"
-                        android:layout_gravity="center"
-                        android:background="@drawable/shape_button_big_primary_color_dark"
-                        android:text="@string/button_discard"
-                        android:textAppearance="@style/button_big" />
-
                 </LinearLayout>
+
+                <EditText
+                    android:id="@+id/box_email"
+                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/box_height"
+                    android:layout_marginTop="@dimen/box_to_box_big"
+                    android:background="@drawable/shape_box_text_input"
+                    android:hapticFeedbackEnabled="false"
+                    android:hint="@string/hint_email"
+                    android:importantForAutofill="no"
+                    android:lineSpacingExtra="12sp"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:textAppearance="@style/text"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/box_set_password"
+                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/box_height"
+                    android:layout_marginTop="@dimen/box_to_box_small"
+                    android:background="@drawable/shape_box_text_input"
+                    android:fontFamily="@font/roboto"
+                    android:hapticFeedbackEnabled="false"
+                    android:hint="@string/hint_set_password"
+                    android:importantForAutofill="no"
+                    android:inputType="text|textPassword"
+                    android:lineSpacingExtra="12sp"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:textAppearance="@style/text"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/box_repeat_password"
+                    style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/box_height"
+                    android:layout_marginTop="@dimen/box_to_box_small"
+                    android:background="@drawable/shape_box_text_input"
+                    android:fontFamily="@font/roboto"
+                    android:hapticFeedbackEnabled="false"
+                    android:hint="@string/hint_repeat_password"
+                    android:importantForAutofill="no"
+                    android:inputType="text|textPassword"
+                    android:lineSpacingExtra="12sp"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="12dp"
+                    android:selectAllOnFocus="false"
+                    android:singleLine="true"
+                    android:textAppearance="@style/text"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorTextHint"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/button_create_account"
+                    android:layout_width="@dimen/button_big_width"
+                    android:layout_height="@dimen/button_big_height"
+                    android:layout_marginTop="@dimen/button_to_top"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_button_big_primary_color_bright"
+                    android:text="@string/button_registration_create_account"
+                    android:textAppearance="@style/button_big" />
+
+                <Button
+                    android:id="@+id/button_discard"
+                    android:layout_width="@dimen/button_big_width"
+                    android:layout_height="@dimen/button_big_height"
+                    android:layout_marginTop="@dimen/button_to_button_big"
+                    android:layout_marginBottom="@dimen/button_to_bottom"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_button_big_primary_color_dark"
+                    android:text="@string/button_discard"
+                    android:textAppearance="@style/button_big" />
 
             </LinearLayout>
 

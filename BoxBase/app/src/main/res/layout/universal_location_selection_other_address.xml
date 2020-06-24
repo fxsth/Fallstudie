@@ -22,7 +22,7 @@
 
     <!-- space for arrows to open/close the box -->
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/arrow_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,6 +46,6 @@
             android:visibility="gone"
             app:srcCompat="@drawable/icon_arrow_box_location_close" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

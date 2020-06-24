@@ -34,7 +34,7 @@
 
     <!-- space for arrows to open/close the box -->
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/arrow_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
             android:visibility="visible"
             app:srcCompat="@drawable/icon_arrow_box_location_close" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <!-- selection of a location as reference for the MDB -->
@@ -177,7 +177,8 @@
             android:textAppearance="@style/text"
             android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="@+id/set_time_slot_hint"
-            app:layout_constraintEnd_toEndOf="@+id/button_point_on_map"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/set_time_slot_hint"
             app:layout_constraintTop_toTopOf="@+id/set_time_slot_hint" />
 
         <ImageView
