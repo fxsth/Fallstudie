@@ -38,6 +38,8 @@
     <string name="title_mdb_desired_location">Desired location</string>
     <string name="title_mdb_location">Location of mobile delivery base</string>
 
+    <string name="title_key_compartment">Key to open compartment</string>
+
 
     <!-- buttons -->
     <string name="button_registration_create_account">create account</string>
@@ -51,6 +53,7 @@
     <string name="button_confirm_location">confirm location</string>
     <string name="button_open_compartment">open compartment</string>
     <string name="button_close">go back</string>
+    <string name="button_finish">finish</string>
 
 
     <!-- Package sizes -->

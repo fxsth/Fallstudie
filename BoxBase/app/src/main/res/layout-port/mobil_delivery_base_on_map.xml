@@ -43,8 +43,8 @@
             android:background="@drawable/shape_box_text_input"
             android:text="Schillerstraße"
             android:textAppearance="@style/text"
-            android:paddingLeft="@dimen/input_box_side_padding"
-            android:paddingRight="@dimen/input_box_side_padding" />
+            android:paddingLeft="@dimen/input_box_left_padding"
+            android:paddingRight="@dimen/input_box_left_padding" />
 
         <TextView
             android:id="@+id/box_number"
@@ -56,8 +56,8 @@
             android:background="@drawable/shape_box_text_input"
             android:text="10"
             android:textAppearance="@style/text"
-            android:paddingLeft="@dimen/input_box_side_padding"
-            android:paddingRight="@dimen/input_box_side_padding"
+            android:paddingLeft="@dimen/input_box_left_padding"
+            android:paddingRight="@dimen/input_box_left_padding"
             android:layout_marginStart="@dimen/input_box_to_box_small" />
 
     </LinearLayout>
@@ -77,8 +77,8 @@
             android:background="@drawable/shape_box_text_input"
             android:text="44147"
             android:textAppearance="@style/text"
-            android:paddingLeft="@dimen/input_box_side_padding"
-            android:paddingRight="@dimen/input_box_side_padding" />
+            android:paddingLeft="@dimen/input_box_left_padding"
+            android:paddingRight="@dimen/input_box_left_padding" />
 
         <TextView
             android:id="@+id/box_city"
@@ -90,8 +90,8 @@
             android:background="@drawable/shape_box_text_input"
             android:text="Dortmund"
             android:textAppearance="@style/text"
-            android:paddingLeft="@dimen/input_box_side_padding"
-            android:paddingRight="@dimen/input_box_side_padding"
+            android:paddingLeft="@dimen/input_box_left_padding"
+            android:paddingRight="@dimen/input_box_left_padding"
             android:layout_marginStart="@dimen/input_box_to_box_small" />
 
     </LinearLayout>

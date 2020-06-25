@@ -37,7 +37,7 @@
     <dimen name="input_box_to_box_small">10dp</dimen>
     <dimen name="input_box_to_box_big">20dp</dimen>
     <dimen name="input_box_to_left_side_for_scrolling_bar">8dp</dimen>
-    <dimen name="input_box_side_padding">12dp</dimen>
+    <dimen name="input_box_left_padding">18dp</dimen>
 
 
     <!-- buttons -->
