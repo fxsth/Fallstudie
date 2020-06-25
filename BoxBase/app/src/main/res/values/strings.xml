@@ -35,6 +35,10 @@
     <string name="title_package_size">Package size</string>
     <string name="title_redirect_package_options">Redirection options</string>
 
+    <string name="title_redirect_desired_location">Desired pick up location</string>
+    <string name="title_send_package_desired_location">Desired drop off location</string>
+    <string name="title_mdb_location">Location of mobile delivery base</string>
+
 
     <!-- buttons -->
     <string name="button_registration_create_account">create account</string>
@@ -43,8 +47,11 @@
     <string name="button_redirection_confirm">confirm redirection</string>
     <string name="button_discard">discard</string>
     <string name="button_main_menu_delivery_details">details</string>
-    <string name="create_account">create account</string>
-    <string name="reset_password">reset password</string>
+    <string name="button_create_account">create account</string>
+    <string name="button_reset_password">reset password</string>
+    <string name="button_confirm_location">confirm location</string>
+    <string name="button_open_compartment">open compartment</string>
+    <string name="button_close">go back</string>
 
 
     <!-- Package sizes -->

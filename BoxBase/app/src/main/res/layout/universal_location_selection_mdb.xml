@@ -204,7 +204,7 @@
         <Spinner
             android:id="@+id/time_slot_selection_day"
             android:layout_width="0dp"
-            android:layout_height="@dimen/box_height"
+            android:layout_height="@dimen/input_box_height"
             android:layout_marginStart="24dp"
             android:layout_marginLeft="24dp"
             android:background="@drawable/shape_box_text_input"
@@ -235,8 +235,8 @@
             android:id="@+id/time_slot_selection_to"
             android:layout_width="0dp"
             app:layout_constraintHorizontal_weight="1"
-            android:layout_height="@dimen/box_height"
-            android:layout_marginTop="@dimen/box_to_box_small"
+            android:layout_height="@dimen/input_box_height"
+            android:layout_marginTop="@dimen/input_box_to_box_small"
             android:layout_marginBottom="7dp"
             android:background="@drawable/shape_box_text_input"
             android:spinnerMode="dropdown"
@@ -280,7 +280,7 @@
         <Spinner
             android:id="@+id/time_slot_selection_from"
             android:layout_width="0dp"
-            android:layout_height="@dimen/box_height"
+            android:layout_height="@dimen/input_box_height"
             android:layout_marginStart="@dimen/dropdown_menu_to_text"
             android:layout_marginLeft="@dimen/dropdown_menu_to_text"
             android:layout_marginEnd="@dimen/dropdown_menu_to_text"

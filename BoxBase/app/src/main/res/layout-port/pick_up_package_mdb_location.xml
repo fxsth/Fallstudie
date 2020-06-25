@@ -47,53 +47,39 @@
                     android:layout_weight="@integer/activity_standard_weight" >
 
                     <TextView
-                        android:id="@+id/drop_location_title"
+                        android:id="@+id/mdb_location_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/title_to_package_box"
-                        android:text="@string/title_redirect_package_options"
+                        android:text="@string/title_mdb_location"
                         android:textAppearance="@style/title" />
 
                     <include
-                        android:id="@+id/drop_location_mdb_layout"
-                        layout="@layout/universal_location_selection_mdb"
+                        android:id="@+id/map_view_layout"
+                        layout="@layout/universal_mdb_location_map"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/input_box_to_upper_title"/>
-
-                    <include
-                        android:id="@+id/drop_location_package_shop_layout"
-                        layout="@layout/universal_location_selection_package_shop"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/input_box_to_upper_title"/>
-
-                    <include
-                        android:id="@+id/drop_location_other_address_layout"
-                        layout="@layout/universal_location_selection_other_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/input_box_to_upper_title"/>
+                        android:layout_marginTop="@dimen/input_box_to_upper_title" />
 
                     <Button
-                        android:id="@+id/button_redirection_confirm"
+                        android:id="@+id/button_open_compartment"
                         android:layout_width="@dimen/button_big_width"
                         android:layout_height="@dimen/button_big_height"
                         android:layout_marginTop="@dimen/button_to_top"
                         android:layout_gravity="center"
-                        android:background="@drawable/shape_button_big_primary_color_bright"
-                        android:text="@string/button_redirection_confirm"
+                        android:background="@drawable/shape_button_big_red"
+                        android:text="@string/button_open_compartment"
                         android:textAppearance="@style/button_big" />
 
                     <Button
-                        android:id="@+id/button_discard"
+                        android:id="@+id/button_close"
                         android:layout_width="@dimen/button_big_width"
                         android:layout_height="@dimen/button_big_height"
                         android:layout_marginTop="@dimen/button_to_button_big"
                         android:layout_marginBottom="@dimen/button_to_bottom"
                         android:layout_gravity="center"
-                        android:background="@drawable/shape_button_big_primary_color_dark"
-                        android:text="@string/button_discard"
+                        android:background="@drawable/shape_button_big_primary_color_bright"
+                        android:text="@string/button_close"
                         android:textAppearance="@style/button_big" />
 
                 </LinearLayout>
@@ -108,4 +94,5 @@
         </LinearLayout>
 
     </ScrollView>
+
 </LinearLayout>

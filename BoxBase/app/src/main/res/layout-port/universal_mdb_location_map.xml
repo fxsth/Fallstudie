@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:background="@drawable/shape_map"
+            android:gravity="center"
+            android:textAppearance="@style/button_big"
+            android:text="place holder for map view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="H,1:1"
+            tools:ignore="HardcodedText"
+            android:layout_height="0dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/input_box_to_box_big" >
+
+        <TextView
+            android:id="@+id/box_street"
+            android:layout_weight="0.4"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_box_height"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_box_text_input"
+            android:text="Schillerstraße"
+            android:textAppearance="@style/text"
+            android:paddingLeft="@dimen/input_box_side_padding"
+            android:paddingRight="@dimen/input_box_side_padding" />
+
+        <TextView
+            android:id="@+id/box_number"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/input_box_to_box_small"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_box_height"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_box_text_input"
+            android:text="10"
+            android:textAppearance="@style/text"
+            android:paddingLeft="@dimen/input_box_side_padding"
+            android:paddingRight="@dimen/input_box_side_padding"
+            android:layout_marginStart="@dimen/input_box_to_box_small" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/input_box_to_box_small" >
+
+        <TextView
+            android:id="@+id/box_postcode"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_box_height"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_box_text_input"
+            android:text="44147"
+            android:textAppearance="@style/text"
+            android:paddingLeft="@dimen/input_box_side_padding"
+            android:paddingRight="@dimen/input_box_side_padding" />
+
+        <TextView
+            android:id="@+id/box_city"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="@dimen/input_box_to_box_small"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/input_box_height"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_box_text_input"
+            android:text="Dortmund"
+            android:textAppearance="@style/text"
+            android:paddingLeft="@dimen/input_box_side_padding"
+            android:paddingRight="@dimen/input_box_side_padding"
+            android:layout_marginStart="@dimen/input_box_to_box_small" />
+
+    </LinearLayout>
+
+</LinearLayout>

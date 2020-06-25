@@ -66,7 +66,7 @@
                 style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
-                android:layout_marginTop="@dimen/box_to_box_small"
+                android:layout_marginTop="@dimen/input_box_to_box_small"
                 android:background="@drawable/shape_box_text_input"
                 android:fontFamily="@font/roboto"
                 android:hapticFeedbackEnabled="false"
@@ -120,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/create_account"
+            android:text="@string/button_create_account"
             android:textColor="@color/colorTextHint" />
 
         <TextView
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="18dp"
-            android:text="@string/reset_password"
+            android:text="@string/button_reset_password"
             android:textColor="@color/colorTextHint" />
 
     </LinearLayout>

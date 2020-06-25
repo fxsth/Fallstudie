@@ -40,7 +40,7 @@
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="@integer/size_selection_button_weight"
         android:layout_height="@dimen/button_package_size_height"
-        android:layout_marginTop="@dimen/box_to_upper_title"
+        android:layout_marginTop="@dimen/input_box_to_upper_title"
         android:background="@drawable/shape_button_big_primary_color_bright"
         app:layout_constraintEnd_toStartOf="@+id/view2"
         app:layout_constraintStart_toEndOf="@+id/view1"

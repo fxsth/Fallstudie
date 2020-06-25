@@ -50,8 +50,8 @@
                     android:id="@+id/box_first_mame"
                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/box_height"
-                    android:layout_marginTop="@dimen/box_to_upper_title"
+                    android:layout_height="@dimen/input_box_height"
+                    android:layout_marginTop="@dimen/input_box_to_upper_title"
                     android:background="@drawable/shape_box_text_input"
                     android:hapticFeedbackEnabled="false"
                     android:hint="@string/hint_first_name"
@@ -73,8 +73,8 @@
                     android:id="@+id/box_last_mame"
                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/box_height"
-                    android:layout_marginTop="@dimen/box_to_box_small"
+                    android:layout_height="@dimen/input_box_height"
+                    android:layout_marginTop="@dimen/input_box_to_box_small"
                     android:background="@drawable/shape_box_text_input"
                     android:hapticFeedbackEnabled="false"
                     android:hint="@string/hint_last_name"
@@ -96,13 +96,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/box_to_box_big" >
+                    android:layout_marginTop="@dimen/input_box_to_box_big" >
 
                     <EditText
                         android:id="@+id/box_street"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/box_height"
+                        android:layout_height="@dimen/input_box_height"
                         android:layout_weight="0.4"
                         android:background="@drawable/shape_box_text_input"
                         android:hapticFeedbackEnabled="false"
@@ -125,9 +125,9 @@
                         android:id="@+id/box_number"
                         style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/box_height"
+                        android:layout_height="@dimen/input_box_height"
                         android:layout_weight="1"
-                        android:layout_marginLeft="@dimen/box_to_box_small"
+                        android:layout_marginLeft="@dimen/input_box_to_box_small"
                         android:background="@drawable/shape_box_text_input"
                         android:hapticFeedbackEnabled="false"
                         android:hint="@string/hint_house_number"
@@ -144,7 +144,7 @@
                         android:textColorHint="@color/colorTextHint"
                         android:textIsSelectable="false"
                         android:textSize="14sp"
-                        android:layout_marginStart="@dimen/box_to_box_small" />
+                        android:layout_marginStart="@dimen/input_box_to_box_small" />
 
                 </LinearLayout>
 
@@ -152,13 +152,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/box_to_box_small" >
+                    android:layout_marginTop="@dimen/input_box_to_box_small" >
 
                         <EditText
                             android:id="@+id/box_postcode"
                             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/box_height"
+                            android:layout_height="@dimen/input_box_height"
                             android:layout_weight="1"
                             android:background="@drawable/shape_box_text_input"
                             android:hapticFeedbackEnabled="false"
@@ -181,9 +181,9 @@
                             android:id="@+id/box_city"
                             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/box_height"
+                            android:layout_height="@dimen/input_box_height"
                             android:layout_weight="0.5"
-                            android:layout_marginLeft="@dimen/box_to_box_small"
+                            android:layout_marginLeft="@dimen/input_box_to_box_small"
                             android:background="@drawable/shape_box_text_input"
                             android:hapticFeedbackEnabled="false"
                             android:hint="@string/hint_city"
@@ -200,7 +200,7 @@
                             android:textColorHint="@color/colorTextHint"
                             android:textIsSelectable="false"
                             android:textSize="14sp"
-                            android:layout_marginStart="@dimen/box_to_box_small" />
+                            android:layout_marginStart="@dimen/input_box_to_box_small" />
 
                 </LinearLayout>
 
@@ -208,8 +208,8 @@
                     android:id="@+id/box_email"
                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/box_height"
-                    android:layout_marginTop="@dimen/box_to_box_big"
+                    android:layout_height="@dimen/input_box_height"
+                    android:layout_marginTop="@dimen/input_box_to_box_big"
                     android:background="@drawable/shape_box_text_input"
                     android:hapticFeedbackEnabled="false"
                     android:hint="@string/hint_email"
@@ -231,8 +231,8 @@
                     android:id="@+id/box_set_password"
                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/box_height"
-                    android:layout_marginTop="@dimen/box_to_box_small"
+                    android:layout_height="@dimen/input_box_height"
+                    android:layout_marginTop="@dimen/input_box_to_box_small"
                     android:background="@drawable/shape_box_text_input"
                     android:fontFamily="@font/roboto"
                     android:hapticFeedbackEnabled="false"
@@ -256,8 +256,8 @@
                     android:id="@+id/box_repeat_password"
                     style="@style/Base.Widget.MaterialComponents.TextInputEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/box_height"
-                    android:layout_marginTop="@dimen/box_to_box_small"
+                    android:layout_height="@dimen/input_box_height"
+                    android:layout_marginTop="@dimen/input_box_to_box_small"
                     android:background="@drawable/shape_box_text_input"
                     android:fontFamily="@font/roboto"
                     android:hapticFeedbackEnabled="false"
