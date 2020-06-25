@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBackground"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/package_box_to_box" >
 
     <View
         android:layout_width="match_parent"
@@ -17,8 +18,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/package_box_to_box"
-        android:layout_weight="@integer/activity_weight_main_menu"
+        android:layout_weight="@integer/activity_standard_weight"
         android:paddingTop="@dimen/package_box_padding_top"
         android:paddingBottom="@dimen/package_box_padding_bottom"
         android:background="@drawable/shape_box_package_outgoing_delivery" >

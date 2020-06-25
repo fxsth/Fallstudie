@@ -33,11 +33,14 @@
     <string name="title_send_package_delivery_address">Delivery address</string>
     <string name="title_send_package_drop_location">Drop location</string>
     <string name="title_package_size">Package size</string>
+    <string name="title_redirect_package_options">Redirection options</string>
+
 
     <!-- buttons -->
     <string name="button_registration_create_account">create account</string>
     <string name="button_send_package">send package</string>
     <string name="button_send_package_confirm">go to payment</string>
+    <string name="button_redirection_confirm">confirm redirection</string>
     <string name="button_discard">discard</string>
     <string name="button_main_menu_delivery_details">details</string>
     <string name="create_account">create account</string>
