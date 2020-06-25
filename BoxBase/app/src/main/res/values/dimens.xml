@@ -60,12 +60,13 @@
     <dimen name="location_button_icon_to_bottom">7dp</dimen>
 
 
-    <!-- location and time selection -->
+    <!-- location and time (and size) selection -->
     <dimen name="help_icon_to_title">15dp</dimen>
     <dimen name="standard_margin_between_fragments">30dp</dimen>
     <dimen name="location_selection_padding_of_box">11dp</dimen>
     <dimen name="location_selection_title_to_left">20dp</dimen>
     <dimen name="location_selection_text_to_left">30dp</dimen>
+    <dimen name="location_selection_text_line_feed">10dp</dimen>
     <dimen name="dropdown_menu_to_text">12dp</dimen>
     <dimen name="icon_arrow_box_open_to_right">15dp</dimen>
     <dimen name="icon_arrow_dropdown_to_right">10dp</dimen>
@@ -73,5 +74,9 @@
     <dimen name="dropdown_day_width">150dp</dimen>
     <dimen name="dropdown_time_width">85dp</dimen>
 
+    <integer name="location_selection_button_weight">39</integer>
+    <integer name="location_selection_margin_weight">7</integer>
+
+    <integer name="size_selection_button_weight">24</integer>
 
 </resources>

@@ -26,14 +26,24 @@
         app:srcCompat="@drawable/icon_help"
         tools:ignore="ContentDescription" />
 
+    <View
+        android:id="@+id/view1"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="@integer/location_selection_margin_weight"
+        android:layout_height="@dimen/button_package_size_height"
+        app:layout_constraintEnd_toStartOf="@+id/button_package_size_s"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/button_package_size_s" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button_package_size_s"
-        android:layout_width="@dimen/button_package_size_width"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="@integer/size_selection_button_weight"
         android:layout_height="@dimen/button_package_size_height"
         android:layout_marginTop="@dimen/box_to_upper_title"
         android:background="@drawable/shape_button_big_primary_color_bright"
-        app:layout_constraintEnd_toStartOf="@+id/button_package_size_m"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view2"
+        app:layout_constraintStart_toEndOf="@+id/view1"
         app:layout_constraintTop_toBottomOf="@+id/package_size_title">
 
         <TextView
@@ -51,8 +61,8 @@
             android:id="@+id/icon_package_size_s"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
             android:layout_marginBottom="@dimen/package_size_icon_to_bottom"
+            android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,14 +72,24 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="@integer/location_selection_margin_weight"
+        android:layout_height="@dimen/button_package_size_height"
+        app:layout_constraintEnd_toStartOf="@+id/button_package_size_m"
+        app:layout_constraintStart_toEndOf="@+id/button_package_size_s"
+        app:layout_constraintTop_toTopOf="@+id/button_package_size_s" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button_package_size_m"
-        android:layout_width="@dimen/button_package_size_width"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="@integer/size_selection_button_weight"
         android:layout_height="@dimen/button_package_size_height"
         android:background="@drawable/shape_button_big_primary_color_dark"
-        app:layout_constraintBottom_toBottomOf="@+id/button_package_size_s"
-        app:layout_constraintEnd_toStartOf="@+id/button_package_size_l"
-        app:layout_constraintStart_toEndOf="@+id/button_package_size_s">
+        app:layout_constraintEnd_toStartOf="@+id/view3"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/button_package_size_s">
 
         <TextView
             android:id="@+id/digit_package_size_m"
@@ -86,8 +106,8 @@
             android:id="@+id/icon_package_size_m"
             android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
             android:layout_marginBottom="@dimen/package_size_icon_to_bottom"
+            android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,15 +117,24 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/view3"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="@integer/location_selection_margin_weight"
+        android:layout_height="@dimen/button_package_size_height"
+        app:layout_constraintEnd_toStartOf="@+id/button_package_size_l"
+        app:layout_constraintStart_toEndOf="@+id/button_package_size_m"
+        app:layout_constraintTop_toTopOf="@+id/button_package_size_s" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button_package_size_l"
-        android:layout_width="@dimen/button_package_size_width"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="@integer/size_selection_button_weight"
         android:layout_height="@dimen/button_package_size_height"
         android:background="@drawable/shape_button_big_primary_color_dark"
-        app:layout_constraintBottom_toBottomOf="@+id/button_package_size_m"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button_package_size_m">
+        app:layout_constraintEnd_toStartOf="@+id/view4"
+        app:layout_constraintStart_toEndOf="@+id/view3"
+        app:layout_constraintTop_toTopOf="@+id/button_package_size_s">
 
         <TextView
             android:id="@+id/digit_package_size_l"
@@ -122,8 +151,8 @@
             android:id="@+id/icon_package_size_l"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
             android:layout_marginBottom="@dimen/package_size_icon_to_bottom"
+            android:adjustViewBounds="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,5 +161,14 @@
             tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="@integer/location_selection_margin_weight"
+        android:layout_height="@dimen/button_package_size_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_package_size_l"
+        app:layout_constraintTop_toTopOf="@+id/button_package_size_s" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

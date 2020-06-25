@@ -69,9 +69,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location_selection_mdb_title"
-        android:visibility="visible">
+        app:layout_constraintTop_toBottomOf="@+id/location_selection_mdb_title">
 
         <TextView
             android:id="@+id/location_selection_button_hint"
@@ -85,14 +85,25 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="@dimen/location_selection_text_to_left" />
 
+        <View
+            android:id="@+id/view1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_location_selection_height"
+            app:layout_constraintEnd_toStartOf="@id/button_home_address"
+            app:layout_constraintHorizontal_weight="@integer/location_selection_margin_weight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/button_home_address" />
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/button_home_address"
-            android:layout_width="@dimen/button_location_selection_width"
+            android:layout_width="0dp"
             android:layout_height="@dimen/button_location_selection_height"
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_button_big_primary_color_bright"
-            app:layout_constraintEnd_toStartOf="@+id/button_point_on_map"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/view2"
+            app:layout_constraintHorizontal_weight="@integer/location_selection_button_weight"
+            app:layout_constraintStart_toEndOf="@id/view1"
             app:layout_constraintTop_toBottomOf="@+id/location_selection_button_hint">
 
             <TextView
@@ -121,14 +132,24 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_location_selection_height"
+            app:layout_constraintEnd_toStartOf="@id/button_point_on_map"
+            app:layout_constraintHorizontal_weight="@integer/location_selection_margin_weight"
+            app:layout_constraintStart_toEndOf="@id/button_home_address"
+            app:layout_constraintTop_toTopOf="@id/button_home_address" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/button_point_on_map"
-            android:layout_width="@dimen/button_location_selection_width"
+            android:layout_width="0dp"
             android:layout_height="@dimen/button_location_selection_height"
             android:background="@drawable/shape_button_big_primary_color_dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/button_home_address"
-            app:layout_constraintTop_toTopOf="@+id/button_home_address">
+            app:layout_constraintEnd_toStartOf="@id/view3"
+            app:layout_constraintHorizontal_weight="@integer/location_selection_button_weight"
+            app:layout_constraintStart_toEndOf="@id/view2"
+            app:layout_constraintTop_toTopOf="@id/button_home_address">
 
             <TextView
                 android:id="@+id/button_point_on_map_title"
@@ -156,6 +177,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/view3"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_location_selection_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="@integer/location_selection_margin_weight"
+            app:layout_constraintStart_toEndOf="@id/button_point_on_map"
+            app:layout_constraintTop_toTopOf="@id/button_home_address" />
 
         <!-- time slot selection -->
 
@@ -164,26 +193,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="@dimen/location_selection_text_to_left"
             android:text="@string/dropdown_hint_time_slot"
             android:textAppearance="@style/text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_home_address"
-            android:layout_marginStart="@dimen/location_selection_text_to_left" />
+            app:layout_constraintStart_toStartOf="@+id/location_selection_button_hint"
+            app:layout_constraintTop_toBottomOf="@+id/button_home_address" />
 
 
         <!-- day -->
 
         <Spinner
             android:id="@+id/time_slot_selection_day"
-            android:layout_width="@dimen/dropdown_day_width"
+            android:layout_width="0dp"
             android:layout_height="@dimen/box_height"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
             android:background="@drawable/shape_box_text_input"
             android:spinnerMode="dropdown"
             android:textAppearance="@style/text"
             android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="@+id/set_time_slot_hint"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/button_point_on_map"
             app:layout_constraintStart_toEndOf="@+id/set_time_slot_hint"
             app:layout_constraintTop_toTopOf="@+id/set_time_slot_hint" />
 
@@ -204,7 +233,8 @@
 
         <Spinner
             android:id="@+id/time_slot_selection_to"
-            android:layout_width="@dimen/dropdown_time_width"
+            android:layout_width="0dp"
+            app:layout_constraintHorizontal_weight="1"
             android:layout_height="@dimen/box_height"
             android:layout_marginTop="@dimen/box_to_box_small"
             android:layout_marginBottom="7dp"
@@ -214,6 +244,8 @@
             android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_day"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/time_slot_selection_text_to"
             app:layout_constraintTop_toBottomOf="@+id/time_slot_selection_day" />
 
         <ImageView
@@ -232,12 +264,14 @@
             android:id="@+id/time_slot_selection_text_to"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dropdown_menu_to_text"
             android:layout_marginEnd="@dimen/dropdown_menu_to_text"
+            android:layout_marginRight="@dimen/dropdown_menu_to_text"
             android:text="@string/dropdown_hint_to"
             android:textAppearance="@style/text"
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_to"
             app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_to"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/time_slot_selection_from"
             app:layout_constraintTop_toTopOf="@+id/time_slot_selection_to" />
 
 
@@ -245,16 +279,21 @@
 
         <Spinner
             android:id="@+id/time_slot_selection_from"
-            android:layout_width="@dimen/dropdown_time_width"
+            android:layout_width="0dp"
             android:layout_height="@dimen/box_height"
-            android:layout_marginRight="@dimen/dropdown_menu_to_text"
+            android:layout_marginStart="@dimen/dropdown_menu_to_text"
+            android:layout_marginLeft="@dimen/dropdown_menu_to_text"
             android:layout_marginEnd="@dimen/dropdown_menu_to_text"
+            android:layout_marginRight="@dimen/dropdown_menu_to_text"
             android:background="@drawable/shape_box_text_input"
             android:spinnerMode="dropdown"
             android:textAppearance="@style/text"
             android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_to"
-            app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_text_to" />
+            app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_text_to"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/time_slot_selection_text_from" />
 
         <ImageView
             android:id="@+id/dropdown_arrow_from"
@@ -272,12 +311,14 @@
             android:id="@+id/time_slot_selection_text_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dropdown_menu_to_text"
-            android:layout_marginEnd="@dimen/dropdown_menu_to_text"
+            android:layout_marginLeft="@dimen/location_selection_text_line_feed"
             android:text="@string/dropdown_hint_from"
             android:textAppearance="@style/text"
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_text_to"
-            app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_from" />
+            app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_from"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/set_time_slot_hint"
+            android:layout_marginStart="@dimen/location_selection_text_line_feed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
