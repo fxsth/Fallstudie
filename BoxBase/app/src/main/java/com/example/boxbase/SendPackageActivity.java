@@ -11,7 +11,7 @@ public class SendPackageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.send_package);
+        setContentView(R.layout.activity_send_package);
         final Button goToPaymentButton = findViewById(R.id.button_send_package_confirm);
         final Button discardButton = findViewById(R.id.button_discard);
 

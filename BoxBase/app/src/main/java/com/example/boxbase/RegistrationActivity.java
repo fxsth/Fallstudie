@@ -13,7 +13,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registration);
+        setContentView(R.layout.activity_registration);
         final Button createAccountButton = findViewById(R.id.button_create_account);
         final Button discardButton = findViewById(R.id.button_discard);
 
