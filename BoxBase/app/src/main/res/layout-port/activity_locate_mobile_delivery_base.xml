@@ -24,11 +24,12 @@
             android:orientation="vertical" >
 
             <include
-                android:id="@+id/delivery_to_redirect"
+                android:id="@+id/delivery_to_pick_up"
+                android:visibility="visible"
                 layout="@layout/main_menu_incoming_delivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/package_box_to_top_bar" />
+                android:layout_marginTop="@dimen/first_title_to_top_bar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +51,7 @@
                         android:id="@+id/mdb_location_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/title_to_package_box"
+                        android:layout_marginTop="@dimen/first_title_to_top_bar"
                         android:text="@string/title_mdb_location"
                         android:textAppearance="@style/title" />
 

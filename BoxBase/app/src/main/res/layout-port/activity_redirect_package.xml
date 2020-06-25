@@ -28,7 +28,7 @@
                 layout="@layout/main_menu_incoming_delivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/package_box_to_top_bar" />
+                android:layout_marginTop="@dimen/first_title_to_top_bar" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                         android:id="@+id/drop_location_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/title_to_package_box"
+                        android:layout_marginTop="@dimen/first_title_to_top_bar"
                         android:text="@string/title_redirect_package_options"
                         android:textAppearance="@style/title" />
 

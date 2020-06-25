@@ -35,8 +35,7 @@
     <string name="title_package_size">Package size</string>
     <string name="title_redirect_package_options">Redirection options</string>
 
-    <string name="title_redirect_desired_location">Desired pick up location</string>
-    <string name="title_send_package_desired_location">Desired drop off location</string>
+    <string name="title_mdb_desired_location">Desired location</string>
     <string name="title_mdb_location">Location of mobile delivery base</string>
 
 

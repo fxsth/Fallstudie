@@ -28,11 +28,7 @@
     <dimen name="boxbase_logo_to_start_of_parent">35dp</dimen>
     <dimen name="avatar_to_top_of_parent">19dp</dimen>
     <dimen name="avatar_to_end_of_parent">40dp</dimen>
-    <dimen name="first_title_to_top_bar">15dp</dimen>
-    <dimen name="title_to_start_of_parent">35dp</dimen>
-
-    <dimen name="title_to_package_box">12dp</dimen>
-    <dimen name="package_box_to_top_bar">14dp</dimen>
+    <dimen name="first_title_to_top_bar">14dp</dimen>
 
 
     <!-- input boxes -->
