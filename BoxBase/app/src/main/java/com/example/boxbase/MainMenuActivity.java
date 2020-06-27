@@ -98,7 +98,9 @@ public class MainMenuActivity extends AppCompatActivity {
         if (LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
             LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
             OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
-            ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).subscriptionTransportFactory(new WebSocketSubscriptionTransport.Factory(HttpUtilities.getGraphQLUrl(), httpClient)).build();
+            ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).subscriptionTransportFactory(
+                    new WebSocketSubscriptionTransport.Factory(HttpUtilities.getGraphQLUrl(), httpClient)
+            ).build();
             if (position == 0) {   // Position 0 entspricht dem Incoming-Tab
                 IncomingSubSubscription incomingsubscription = IncomingSubSubscription.builder().user(user.getUserId()).build();
                 ApolloSubscriptionCall<IncomingSubSubscription.Data> sub = apolloClient.subscribe(incomingsubscription);
@@ -208,7 +210,9 @@ public class MainMenuActivity extends AppCompatActivity {
         incoming_deliveries_ListView.post(new Runnable() {
                                               @Override
                                               public void run() {
-                                                  incoming_deliveries_list adapter = new incoming_deliveries_list(MainMenuActivity.this, R.layout.main_menu_incoming_delivery, incoming_deliveriesList);
+                                                  incoming_deliveries_list adapter = new incoming_deliveries_list(
+                                                          MainMenuActivity.this, R.layout.main_menu_incoming_delivery, incoming_deliveriesList
+                                                  );
                                                   incoming_deliveries_ListView.setAdapter(adapter);
                                               }
                                           }
