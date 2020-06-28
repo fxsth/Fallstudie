@@ -65,15 +65,14 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null || !loginResult.getError_message().isEmpty()) {
-                    showLoginFailed(loginResult.getError_message());
-                }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
                     setResult(Activity.RESULT_OK);
                     finish();
                 }
-
+                if (loginResult.getError() != null || loginResult.getError_message() != null) {
+                    showLoginFailed(loginResult.getError_message());
+                }
                 //Complete and destroy login activity once successful
 
             }
