@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
@@ -19,15 +20,13 @@ public class LoginDataSource {
         if(username.isEmpty())
                 return new Result.Error(new SecurityException("no username"));
         try {
-            String response = new AuthentificationTask().execute(username, password).get(); // TODO: Result<String, Error>
-            String token = getToken(response);
-            int id = getId(response);
-            if(token.isEmpty())
-                throw new SecurityException("Fehlerhafte Login-Daten");
-            LoggedInUser user = new LoggedInUser(id, username, token);
-            return new Result.Success<>(user);
-        } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
+            return new AuthentificationTask().execute(username, password).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return new Result.Error(e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return new Result.Error(e);
         }
     }
 
@@ -63,16 +62,17 @@ public class LoginDataSource {
         return id;
     }
 
-    class AuthentificationTask extends AsyncTask<String, Void, String> {
-        protected String doInBackground(String... pair) {
+    class AuthentificationTask extends AsyncTask<String, Void, Result<LoggedInUser>> {
+        protected Result<LoggedInUser> doInBackground(String... pair) {
             String response = "";
                 String json = HttpUtilities.getJsonPost(pair[0], pair[1]);
             try {
                 response = HttpUtilities.doPostRequest(HttpUtilities.getAuthServiceUrl(), json);
+                return new Result.Success<>(new LoggedInUser(getId(response), pair[0], getToken(response)));
             } catch (IOException e) {
                 e.printStackTrace();
+                return new Result.Error(e);
             }
-            return response;
         }
     }
 }

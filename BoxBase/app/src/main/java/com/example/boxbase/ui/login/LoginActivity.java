@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
+                if (loginResult.getError() != null || !loginResult.getError_message().isEmpty()) {
                     showLoginFailed(loginResult.getError_message());
                 }
                 if (loginResult.getSuccess() != null) {
@@ -156,6 +156,10 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
     private void showLoginFailed(String errorString) {
+        if(errorString.length()>30){
+            int i = errorString.indexOf("xception:");
+            errorString = errorString.substring(i+9, errorString.length());
+        }
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 
