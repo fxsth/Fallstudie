@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
+                    showLoginFailed(loginResult.getError_message());
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
@@ -153,6 +153,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
+        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+    private void showLoginFailed(String errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 

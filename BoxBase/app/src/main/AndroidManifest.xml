@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SendPackageActivity"></activity>
+        <activity android:name=".ui.RedirectActivity"></activity>
+        <activity android:name=".SendPackageActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".MainMenuActivity" />
         <activity

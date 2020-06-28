@@ -19,11 +19,11 @@ public class LoginDataSource {
         if(username.isEmpty())
                 return new Result.Error(new SecurityException("no username"));
         try {
-            String response = new AuthentificationTask().execute(username, password).get();
+            String response = new AuthentificationTask().execute(username, password).get(); // TODO: Result<String, Error>
             String token = getToken(response);
             int id = getId(response);
             if(token.isEmpty())
-                throw new IOException("Fehlerhafte Login-Daten");
+                throw new SecurityException("Fehlerhafte Login-Daten");
             LoggedInUser user = new LoggedInUser(id, username, token);
             return new Result.Success<>(user);
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class LoginDataSource {
     private String name;
     private boolean waitingForResponse;
 
-    private String getToken(String jsonString)
+    private String getToken(String jsonString) throws SecurityException
     {
         String token ="";
         JSONObject jsonObject = null;

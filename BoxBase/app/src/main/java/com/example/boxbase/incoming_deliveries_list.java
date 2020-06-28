@@ -1,6 +1,7 @@
 package com.example.boxbase;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.boxbase.ui.RedirectActivity;
 
 import java.util.List;
 
@@ -77,7 +80,9 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
         view.findViewById(R.id.button_delivery_action).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent redirectPackageIntent = new Intent(mCtx, RedirectActivity.class);
+                redirectPackageIntent.putExtra("sender", incoming_deliveries.getDelivery_sender());
+                mCtx.startActivity(redirectPackageIntent);
             }
         });
 
