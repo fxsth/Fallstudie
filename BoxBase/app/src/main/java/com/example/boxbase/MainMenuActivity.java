@@ -186,6 +186,7 @@ public class MainMenuActivity extends AppCompatActivity {
         for (IncomingSubSubscription.Pakete paket : pakete) {
             int drawable;
             String delivery_status;
+            String destination;
             if (paket.zustellbasis_id() != null) {
                 if (paket.fach_nummer() != null) {
                     delivery_status = "ready for pickup";
@@ -194,15 +195,19 @@ public class MainMenuActivity extends AppCompatActivity {
                     delivery_status = "delivery is pending";
                     drawable = R.drawable.icon_delivery_status_truck;
                 }
+                destination = "Zustellbasis " + paket.zustellbasis_id();
             } else {
-                delivery_status = "home delivery";
+                delivery_status = "delivery is pending";
                 drawable = R.drawable.icon_delivery_status_home;
+                destination = paket.empfaenger().ort().adresse();
             }
+            if(paket.zugestellt())
+                delivery_status = "delivered";
             incoming_deliveriesList.add(
                     new incoming_deliveries(
                             drawable,
                             paket.sender().name(),
-                            paket.empfaenger().ort().adresse(),
+                            destination,
                             delivery_status)
             );
         }

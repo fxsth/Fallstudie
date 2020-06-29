@@ -55,4 +55,6 @@ public class LoginRepository {
     public LoggedInUser getUser() {
         return user;
     }
+
+    
 }

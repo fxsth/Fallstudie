@@ -1,5 +1,7 @@
 package com.example.boxbase.ui.login;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Patterns;
 
 import androidx.lifecycle.LiveData;
@@ -11,11 +13,15 @@ import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.Result;
 import com.example.boxbase.data.model.LoggedInUser;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
     private LoginRepository loginRepository;
+    private Context context;
+    private SharedPreferences sp1;
 
     LoginViewModel(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
@@ -36,6 +42,11 @@ public class LoginViewModel extends ViewModel {
         if (result instanceof Result.Success) {
             LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
             loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            sp1 = context.getSharedPreferences("Login", MODE_PRIVATE);
+            SharedPreferences.Editor Ed=sp1.edit();
+            Ed.putString("Unm",username );
+            Ed.putString("Psw",password);
+            Ed.commit();
         } else {
             loginResult.setValue(new LoginResult(result.toString()));
         }
@@ -69,5 +80,21 @@ public class LoginViewModel extends ViewModel {
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
         return password != null && password.trim().length() > 5;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+        sp1 = context.getSharedPreferences("Login", MODE_PRIVATE);
+        String username=sp1.getString("Unm", null);
+        String password = sp1.getString("Psw", null);
+        if(username != null && !username.isEmpty()) {
+            Result<LoggedInUser> result = loginRepository.login(username, password);
+            if (result instanceof Result.Success) {
+                LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
+                loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            } else {
+                loginResult.setValue(new LoginResult(result.toString()));
+            }
+        }
     }
 }
