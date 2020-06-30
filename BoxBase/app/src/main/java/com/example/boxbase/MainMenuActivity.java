@@ -22,6 +22,7 @@ import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.model.LoggedInUser;
 import com.example.boxbase.network.HttpUtilities;
+import com.example.boxbase.ui.login.LoginActivity;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -48,7 +49,17 @@ public class MainMenuActivity extends AppCompatActivity {
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView settings = findViewById(R.id.settings_view);
+        final Button settings_button_logout = findViewById(R.id.settings_button_logout);
 
+        settings_button_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginRepository.getInstance(new LoginDataSource()).logout();
+                Intent backToLogInIntent = new Intent(MainMenuActivity.this, LoginActivity.class);
+                MainMenuActivity.this.startActivity(backToLogInIntent);
+                MainMenuActivity.this.finish();
+            }
+        });
 
         sendPackageButton.setOnClickListener(new View.OnClickListener() {
             @Override

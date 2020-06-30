@@ -1,6 +1,11 @@
 package com.example.boxbase.data;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.example.boxbase.data.model.LoggedInUser;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Class that requests authentication and user information from the remote data source and
@@ -11,6 +16,7 @@ public class LoginRepository {
     private static volatile LoginRepository instance;
 
     private LoginDataSource dataSource;
+    private SharedPreferences sp1;
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
@@ -35,6 +41,9 @@ public class LoginRepository {
     public void logout() {
         user = null;
         dataSource.logout();
+        SharedPreferences.Editor editor = sp1.edit();
+        editor.clear();
+        editor.commit();
     }
 
     private void setLoggedInUser(LoggedInUser user) {
@@ -47,6 +56,7 @@ public class LoginRepository {
         // handle login
         Result<LoggedInUser> result = dataSource.login(username, password);
         if (result instanceof Result.Success) {
+            saveLogInAccess(username, password);
             setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());
         }
         return result;
@@ -56,5 +66,26 @@ public class LoginRepository {
         return user;
     }
 
-    
+    public Result<LoggedInUser> loadSavedLogInAccess(Context context) {
+        String username = "";
+        String password = "";
+        sp1 = context.getSharedPreferences("Login", MODE_PRIVATE);
+        if (sp1.contains("Unm") && sp1.contains("Psw")) {
+            username = sp1.getString("Unm", null);
+            password = sp1.getString("Psw", null);
+            if (!username.isEmpty() && !password.isEmpty()) {
+                return login(username, password);
+            }
+        }
+        return new Result.Nothing();
+    }
+
+    public void saveLogInAccess(String username, String password) {
+        if (sp1 != null) {
+            SharedPreferences.Editor Ed = sp1.edit();
+            Ed.putString("Unm", username);
+            Ed.putString("Psw", password);
+            Ed.commit();
+        }
+    }
 }

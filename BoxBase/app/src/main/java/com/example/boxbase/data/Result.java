@@ -45,4 +45,8 @@ public class Result<T> {
             return this.error;
         }
     }
+
+    public final static class Nothing extends Result {
+        public Nothing(){};
+    }
 }
