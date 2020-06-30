@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.ApolloSubscriptionCall;
@@ -21,6 +22,7 @@ import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.model.LoggedInUser;
 import com.example.boxbase.network.HttpUtilities;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,13 +38,16 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        /* BUTTON - SEND PACKAGE */
+        /* BUTTONS */
         final Button sendPackageButton = findViewById(R.id.button_send_package);
         final Button refreshButton = findViewById(R.id.button_refresh);
         final ImageView imageViewAvatar = findViewById(R.id.top_bar_avatar);
         final TabLayout packagesTabLayout = findViewById(R.id.packagesTabLayout);
         ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
         ListView outgoing_deliveries_ListView = findViewById(R.id.outgoing_deliveries_ListView);
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView settings = findViewById(R.id.settings_view);
 
 
         sendPackageButton.setOnClickListener(new View.OnClickListener() {
@@ -52,14 +57,17 @@ public class MainMenuActivity extends AppCompatActivity {
                 MainMenuActivity.this.startActivity(sendPackageIntent);
             }
         });
+
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             }
         });
+
         imageViewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                drawer.openDrawer(settings);
             }
         });
 
