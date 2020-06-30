@@ -9,7 +9,7 @@
     tools:ignore="MissingDefaultResource">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/top_bar_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/boxbase_logo_to_start_of_parent"
@@ -21,7 +21,7 @@
         tools:ignore="ContentDescription" />
 
     <ImageView
-        android:id="@+id/imageViewAvatar"
+        android:id="@+id/top_bar_avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/avatar_to_top_of_parent"

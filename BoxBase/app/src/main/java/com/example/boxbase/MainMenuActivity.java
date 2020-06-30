@@ -39,7 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
         /* BUTTON - SEND PACKAGE */
         final Button sendPackageButton = findViewById(R.id.button_send_package);
         final Button refreshButton = findViewById(R.id.button_refresh);
-        final ImageView imageViewAvatar = findViewById(R.id.imageViewAvatar);
+        final ImageView imageViewAvatar = findViewById(R.id.top_bar_avatar);
         final TabLayout packagesTabLayout = findViewById(R.id.packagesTabLayout);
         ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
         ListView outgoing_deliveries_ListView = findViewById(R.id.outgoing_deliveries_ListView);
