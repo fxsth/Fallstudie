@@ -79,7 +79,7 @@
 
     <!-- settings -->
     <dimen name="button_settings_width">189dp</dimen>
-    <dimen name="settings_button_to_top">25</dimen>
-    <dimen name="settings_button_to_button">15</dimen>
+    <dimen name="settings_button_to_top">25dp</dimen>
+    <dimen name="settings_button_to_button">15dp</dimen>
 
 </resources>
