@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="dropdown text"
+    android:paddingLeft="@dimen/input_box_dropdown_left_padding"
+    android:paddingStart="@dimen/input_box_dropdown_left_padding"
     android:background="@color/colorTextBox"
     android:textAppearance="@style/text"
     android:padding="10dp">
