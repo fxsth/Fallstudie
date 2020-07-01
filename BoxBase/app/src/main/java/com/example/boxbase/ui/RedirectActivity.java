@@ -71,20 +71,20 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         Spinner spinner_time_selection_to = (Spinner) findViewById(R.id.time_slot_selection_to);
         // day selection
         ArrayAdapter<String> adapter_day_selection = new ArrayAdapter<>(RedirectActivity.this,
-                android.R.layout.simple_spinner_item, paths_day_selection);
-        adapter_day_selection.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.spinner_layout, paths_day_selection);
+        adapter_day_selection.setDropDownViewResource(R.layout.spinner_dropdown);
         spinner_day_selection.setAdapter(adapter_day_selection);
         spinner_day_selection.setOnItemSelectedListener(this);
         // time "from" selection
         ArrayAdapter<String> adapter_time_selection_from = new ArrayAdapter<>(RedirectActivity.this,
-                android.R.layout.simple_spinner_item, paths_time_selection_from);
-        adapter_time_selection_from.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.spinner_layout, paths_time_selection_from);
+        adapter_time_selection_from.setDropDownViewResource(R.layout.spinner_dropdown);
         spinner_time_selection_from.setAdapter(adapter_time_selection_from);
         spinner_time_selection_from.setOnItemSelectedListener(this);
         // day "to" selection
         ArrayAdapter<String> adapter_time_selection_to = new ArrayAdapter<>(RedirectActivity.this,
-                android.R.layout.simple_spinner_item, paths_time_selection_to);
-        adapter_time_selection_to.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                R.layout.spinner_layout, paths_time_selection_to);
+        adapter_time_selection_to.setDropDownViewResource(R.layout.spinner_dropdown);
         spinner_time_selection_to.setAdapter(adapter_time_selection_to);
         spinner_time_selection_to.setOnItemSelectedListener(this);
     }
