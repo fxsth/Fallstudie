@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.boxbase.R;
 
@@ -23,6 +24,28 @@ public class RedirectActivity extends AppCompatActivity {
         TextView delivery_status = findViewById(R.id.delivery_status);
         ImageView delivery_status_image = findViewById(R.id.delivery_status_icon);
         ImageView arrow_to_open_box = findViewById(R.id.arrow_to_open_box);
+
+        //location_selection_mobile_delivery_base
+        ImageView arrow_to_close_mdb_box = findViewById(R.id.arrow_to_close_mdb_box);
+        ImageView arrow_to_open_mdb_box = findViewById(R.id.arrow_to_open_mdb_box);
+        ConstraintLayout cl_selection_mobile_delivery_base = findViewById(R.id.cl_selection_mobile_delivery_base);
+        arrow_to_close_mdb_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cl_selection_mobile_delivery_base.setVisibility(View.GONE);
+                arrow_to_close_mdb_box.setVisibility(View.INVISIBLE);
+                arrow_to_open_mdb_box.setVisibility(View.VISIBLE);
+            }
+        });
+        arrow_to_open_mdb_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cl_selection_mobile_delivery_base.setVisibility(View.VISIBLE);
+                arrow_to_close_mdb_box.setVisibility(View.VISIBLE);
+                arrow_to_open_mdb_box.setVisibility(View.INVISIBLE);
+            }
+        });
+
 
         Intent intent = getIntent();
         delivery_sender.setText(intent.getStringExtra("sender"));
