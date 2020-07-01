@@ -1,0 +1,9 @@
+<div class="fullwrapper">
+  <div
+    *ngIf="showMap"
+    style="height: 50%; width: 50%;"
+    leaflet
+    [leafletOptions]="options"
+    [leafletLayers]="layers"
+  ></div>
+</div>
