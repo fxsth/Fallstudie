@@ -13,10 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.RedirectActivity"></activity>
-        <activity android:name=".SendPackageActivity" />
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".MainMenuActivity" />
+        <activity android:name=".ui.RedirectActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SendPackageActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".RegistrationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainMenuActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login"
