@@ -13,7 +13,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <org.osmdroid.views.MapView android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="H,1:1"
+            android:layout_height="0dp"/>
+
+        <!--TextView
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:background="@drawable/shape_map"
@@ -24,7 +32,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintDimensionRatio="H,1:1"
             tools:ignore="HardcodedText"
-            android:layout_height="0dp" />
+            android:layout_height="0dp" /-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
