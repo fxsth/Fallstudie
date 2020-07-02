@@ -36,6 +36,7 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         ImageView delivery_status_image = findViewById(R.id.delivery_status_icon);
         ImageView arrow_to_open_box = findViewById(R.id.arrow_to_open_box);
         ConstraintLayout button_point_on_map = findViewById(R.id.button_point_on_map);
+        ConstraintLayout button_home_address = findViewById(R.id.button_home_address);
 
         //location_selection_mobile_delivery_base
         ImageView arrow_to_close_mdb_box = findViewById(R.id.arrow_to_close_mdb_box);
@@ -60,10 +61,21 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         button_point_on_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
+                button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 Intent SetPointOnMapIntent = new Intent(RedirectActivity.this, SetPointOnMapActivity.class);
                 RedirectActivity.this.startActivity(SetPointOnMapIntent);
             }
         });
+        button_home_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
+                button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
+                // TODO: set up home address as desired address
+            }
+        });
+
 
 
         Intent intent = getIntent();
