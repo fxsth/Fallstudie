@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +22,7 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
 
 import java.util.ArrayList;
 
@@ -47,6 +49,15 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_set_point_on_map);
 
         map = (MapView) findViewById(R.id.map);
+        // MapView und Scrollview streiten sich um vertikales Scrollen
+        // Lösung: Bei Touch auf MapView wird Scrollview abgeschaltet
+        map.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
         map.setTileSource(TileSourceFactory.MAPNIK);
 
         requestPermissionsIfNecessary(new String[] {
@@ -60,7 +71,7 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         map.setMultiTouchControls(true);
         IMapController mapController = map.getController();
         mapController.setZoom(13);
-        GeoPoint startPoint = new GeoPoint(51.5142, 7.4684);
+        GeoPoint startPoint = new GeoPoint(51.51, 7.4684);
         mapController.setCenter(startPoint);
 
         Button button_discard = findViewById(R.id.button_discard);
@@ -88,13 +99,19 @@ public class SetPointOnMapActivity extends AppCompatActivity {
             }
         });
 
+        Marker userLocation = new Marker(map);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
-                mapController.setZoom(17);
+                mapController.setZoom(16);
+                userLocation.setPosition(startPoint);
+                userLocation.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                userLocation.setIcon(getResources().getDrawable(R.drawable.icon_avatar));
+                userLocation.setTitle("You are here");
                 mapController.setCenter(startPoint);
+                map.getOverlays().add(userLocation);
             }
 
             @Override
@@ -124,6 +141,13 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         }
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+
+        Marker startMarker = new Marker(map);
+        startMarker.setPosition(startPoint);
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        startMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
+        startMarker.setTitle("Some Point to show it's working");
+        map.getOverlays().add(startMarker);
     }//onCreate
 
     @Override
