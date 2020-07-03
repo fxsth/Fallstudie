@@ -3,10 +3,12 @@ package com.example.boxbase;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,23 +20,31 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import org.osmdroid.api.IMapController;
+import org.osmdroid.bonuspack.location.GeocoderNominatim;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SetPointOnMapActivity extends AppCompatActivity {
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
     LocationManager locationManager;
+    GeoPoint ownLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         //load/initialize the osmdroid configuration, this can be done
         Context ctx = getApplicationContext();
@@ -48,6 +58,7 @@ public class SetPointOnMapActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_set_point_on_map);
 
+
         map = (MapView) findViewById(R.id.map);
         // MapView und Scrollview streiten sich um vertikales Scrollen
         // Lösung: Bei Touch auf MapView wird Scrollview abgeschaltet
@@ -59,8 +70,7 @@ public class SetPointOnMapActivity extends AppCompatActivity {
             }
         });
         map.setTileSource(TileSourceFactory.MAPNIK);
-
-        requestPermissionsIfNecessary(new String[] {
+        requestPermissionsIfNecessary(new String[]{
                 // if you need to show the current location, uncomment the line below
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 // WRITE_EXTERNAL_STORAGE is required in order to show the map
@@ -87,15 +97,36 @@ public class SetPointOnMapActivity extends AppCompatActivity {
                 SetPointOnMapActivity.this.finish();
             }
         });
+
+        Marker desiredAddressMarker = new Marker(map);
         button_location_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String desiredAddress = box_street.getText().toString() +
-                        box_number.getText().toString() +
-                        ", " +
-                        box_postcode.getText().toString() +
+                String desiredAddress = box_street.getText().toString() + " " +
+                        box_number.getText().toString() + ", " +
+                        box_postcode.getText().toString() + " " +
                         box_city.getText().toString();
-                SetPointOnMapActivity.this.finish();
+                GeocoderNominatim geocoderNominatim = new GeocoderNominatim("TestUserAgent");
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoderNominatim.getFromLocationName(desiredAddress, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (!addresses.isEmpty()) {
+                    GeoPoint desiredAddressPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+                    desiredAddressMarker.setPosition(desiredAddressPoint);
+                    desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                    desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
+                    desiredAddressMarker.setTitle("Some Point to show it's working");
+                    map.getOverlays().add(desiredAddressMarker);
+                    ArrayList<GeoPoint> positions = new ArrayList<GeoPoint>();
+                    positions.add(ownLocation);
+                    positions.add(desiredAddressPoint);
+                    map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true);
+                    map.invalidate();   // MapView aktualisieren
+                }
             }
         });
 
@@ -104,13 +135,13 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
+                ownLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
                 mapController.setZoom(16);
-                userLocation.setPosition(startPoint);
+                userLocation.setPosition(ownLocation);
                 userLocation.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                 userLocation.setIcon(getResources().getDrawable(R.drawable.icon_avatar));
                 userLocation.setTitle("You are here");
-                mapController.setCenter(startPoint);
+                mapController.setCenter(ownLocation);
                 map.getOverlays().add(userLocation);
                 locationManager.removeUpdates(this);
                 locationManager = null;
@@ -144,12 +175,7 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
-        Marker startMarker = new Marker(map);
-        startMarker.setPosition(startPoint);
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-        startMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
-        startMarker.setTitle("Some Point to show it's working");
-        map.getOverlays().add(startMarker);
+
     }//onCreate
 
     @Override
@@ -202,4 +228,6 @@ public class SetPointOnMapActivity extends AppCompatActivity {
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
     }
+
 }
+
