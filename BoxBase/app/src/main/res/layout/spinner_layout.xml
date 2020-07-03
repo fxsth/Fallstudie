@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckedTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/input_box_dropdown_left_padding"
+    android:paddingStart="@dimen/input_box_dropdown_left_padding"
+    android:text="selected text"
+    android:textAppearance="@style/text"
+    android:padding="10dp">
+</CheckedTextView>

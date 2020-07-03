@@ -36,6 +36,9 @@
     <dimen name="input_box_to_left_side_for_scrolling_bar">8dp</dimen>
     <dimen name="input_box_left_padding">18dp</dimen>
 
+    <dimen name="input_box_dropdown_left_padding">16dp</dimen>
+    <dimen name="icon_arrow_dropdown_to_right">8dp</dimen>
+
 
     <!-- buttons -->
     <dimen name="button_big_width">200dp</dimen>
@@ -66,7 +69,6 @@
     <dimen name="location_selection_text_line_feed">10dp</dimen>
     <dimen name="dropdown_menu_to_text">12dp</dimen>
     <dimen name="icon_arrow_box_open_to_right">15dp</dimen>
-    <dimen name="icon_arrow_dropdown_to_right">10dp</dimen>
 
     <dimen name="dropdown_day_width">150dp</dimen>
     <dimen name="dropdown_time_width">85dp</dimen>

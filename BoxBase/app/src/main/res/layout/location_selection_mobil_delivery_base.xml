@@ -67,6 +67,7 @@
     <!-- selection of a location as reference for the MDB -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_selection_mobile_delivery_base"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible"
@@ -77,13 +78,13 @@
             android:id="@+id/location_selection_button_hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/location_selection_text_to_left"
             android:layout_marginLeft="@dimen/location_selection_text_to_left"
             android:layout_marginTop="10dp"
             android:text="@string/location_selection_mdb_hint"
             android:textAppearance="@style/text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="@dimen/location_selection_text_to_left" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/view1"
@@ -209,8 +210,6 @@
             android:layout_marginLeft="24dp"
             android:background="@drawable/shape_box_text_input"
             android:spinnerMode="dropdown"
-            android:textAppearance="@style/text"
-            android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="@+id/set_time_slot_hint"
             app:layout_constraintEnd_toEndOf="@+id/button_point_on_map"
             app:layout_constraintStart_toEndOf="@+id/set_time_slot_hint"
@@ -234,17 +233,15 @@
         <Spinner
             android:id="@+id/time_slot_selection_to"
             android:layout_width="0dp"
-            app:layout_constraintHorizontal_weight="1"
             android:layout_height="@dimen/input_box_height"
             android:layout_marginTop="@dimen/input_box_to_box_small"
             android:layout_marginBottom="7dp"
             android:background="@drawable/shape_box_text_input"
             android:spinnerMode="dropdown"
-            android:textAppearance="@style/text"
-            android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/time_slot_selection_day"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/time_slot_selection_text_to"
             app:layout_constraintTop_toBottomOf="@+id/time_slot_selection_day" />
 
@@ -287,8 +284,6 @@
             android:layout_marginRight="@dimen/dropdown_menu_to_text"
             android:background="@drawable/shape_box_text_input"
             android:spinnerMode="dropdown"
-            android:textAppearance="@style/text"
-            android:textColor="@color/colorText"
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_to"
             app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_text_to"
             app:layout_constraintHorizontal_bias="0.5"
@@ -311,14 +306,14 @@
             android:id="@+id/time_slot_selection_text_from"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/location_selection_text_line_feed"
             android:layout_marginLeft="@dimen/location_selection_text_line_feed"
             android:text="@string/dropdown_hint_from"
             android:textAppearance="@style/text"
             app:layout_constraintBottom_toBottomOf="@+id/time_slot_selection_text_to"
             app:layout_constraintEnd_toStartOf="@+id/time_slot_selection_from"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/set_time_slot_hint"
-            android:layout_marginStart="@dimen/location_selection_text_line_feed" />
+            app:layout_constraintStart_toStartOf="@+id/set_time_slot_hint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
