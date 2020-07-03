@@ -112,6 +112,8 @@ public class SetPointOnMapActivity extends AppCompatActivity {
                 userLocation.setTitle("You are here");
                 mapController.setCenter(startPoint);
                 map.getOverlays().add(userLocation);
+                locationManager.removeUpdates(this);
+                locationManager = null;
             }
 
             @Override
