@@ -41,6 +41,46 @@ app.post('/login', async function (req, res) {
   const token = jwt.sign(tokenData, privateKey, { algorithm: 'RS256' });
   res.send({ jwt: token, id: answer.uid });
 });
+app.post('/register', async function (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  let email = req.body.username;
+  let password = req.body.password;
+  let possibleExistingUser = db
+    .get('users')
+    .filter({ username: email })
+    .take(1)
+    .value();
+
+  if (possibleExistingUser.length !== 0) {
+    res.status(403).send('User exists already');
+    return;
+  }
+
+  let highest_id_user = db.get('users').sortBy('id').reverse().take(1).value();
+  let id = highest_id_user[0].id + 1;
+  console.log(highest_id_user);
+  db.get('users')
+    .push({
+      id: id,
+      username: email,
+      password: hashPassword(password),
+    })
+    .write();
+  const tokenData = {
+    sub: id,
+    name: id,
+    'https://hasura.io/jwt/claims': {
+      'x-hasura-allowed-roles': ['user'],
+      'x-hasura-default-role': 'user',
+      'x-hasura-role': 'user',
+      'x-hasura-user-id': id,
+    },
+  };
+
+  const token = jwt.sign(tokenData, privateKey, { algorithm: 'RS256' });
+  res.send({ jwt: token, id: id });
+});
+
 app.post('/get_package', async function (req, ress) {
   code = await generatCode(10);
   res.send(code);
