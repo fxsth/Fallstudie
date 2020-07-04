@@ -30,6 +30,20 @@ public class LoginDataSource {
         }
     }
 
+    public Result<LoggedInUser> register(String username, String password, String name) {
+        if(username.isEmpty() || password.isEmpty() || name.isEmpty())
+            return new Result.Error(new SecurityException("Missing Data"));
+        try {
+            return new RegistrationTask().execute(username, password, name).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return new Result.Error(e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return new Result.Error(e);
+        }
+    }
+
     public void logout() {
         // TODO: revoke authentication
     }
@@ -65,7 +79,7 @@ public class LoginDataSource {
     class AuthentificationTask extends AsyncTask<String, Void, Result<LoggedInUser>> {
         protected Result<LoggedInUser> doInBackground(String... pair) {
             String response = "";
-                String json = HttpUtilities.getJsonPost(pair[0], pair[1]);
+                String json = HttpUtilities.getAuthJsonPost(pair[0], pair[1]);
             try {
                 response = HttpUtilities.doPostRequest(HttpUtilities.getAuthServiceUrl(), json);
                 return new Result.Success<>(new LoggedInUser(getId(response), pair[0], getToken(response)));
@@ -76,5 +90,18 @@ public class LoginDataSource {
         }
     }
 
+    class RegistrationTask extends AsyncTask<String, Void, Result<LoggedInUser>> {
+        protected Result<LoggedInUser> doInBackground(String... pair) {
+            String response = "";
+            String json = HttpUtilities.getAuthJsonPost(pair[0], pair[1]);
+            try {
+                response = HttpUtilities.doPostRequest(HttpUtilities.getRegisterServiceUrl(), json);
+                return new Result.Success<>(new LoggedInUser(getId(response), pair[0], pair[2], getToken(response)));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new Result.Error(e);
+            }
+        }
+    }
 }
 

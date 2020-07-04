@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -34,6 +35,8 @@ import java.util.List;
 import okhttp3.OkHttpClient;
 
 public class MainMenuActivity extends AppCompatActivity {
+    LoggedInUser user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,15 @@ public class MainMenuActivity extends AppCompatActivity {
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView settings = findViewById(R.id.settings_view);
+        TextView account_name = findViewById(R.id.account_name);
+        TextView account_mail = findViewById(R.id.account_mail);
         final Button settings_button_logout = findViewById(R.id.settings_button_logout);
+
+        if (LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
+            user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+            account_name.setText(user.getDisplayName());
+            account_mail.setText(user.getEmail());
+        }
 
         settings_button_logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +126,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private void refreshTab(int position) {
 
         if (LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
-            LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+            user = LoginRepository.getInstance(new LoginDataSource()).getUser();
             OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
             ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).subscriptionTransportFactory(
                     new WebSocketSubscriptionTransport.Factory(HttpUtilities.getGraphQLUrl(), httpClient)
