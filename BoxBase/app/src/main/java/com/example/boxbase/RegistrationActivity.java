@@ -56,7 +56,6 @@ public class RegistrationActivity extends AppCompatActivity {
         EditText box_city = findViewById(R.id.box_city);
         EditText box_email = findViewById(R.id.box_email);
         EditText box_set_password = findViewById(R.id.box_set_password);
-        EditText box_repeat_password = findViewById(R.id.box_repeat_password);
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override

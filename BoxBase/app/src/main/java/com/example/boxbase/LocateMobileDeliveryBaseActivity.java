@@ -2,6 +2,7 @@ package com.example.boxbase;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
@@ -14,6 +15,10 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -32,18 +37,47 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SetPointOnMapActivity extends AppCompatActivity {
-
+public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
-    private MapView map = null;
+    MapView map;
     LocationManager locationManager;
-    GeoPoint ownLocation;
-    IMapController mapController;
     LocationListener locationListener;
+    IMapController mapController;
+    GeoPoint ownLocationPoint;
+    GeoPoint destinationPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_locate_mobile_delivery_base);
+
+        LinearLayout delivery_to_redirect = findViewById(R.id.delivery_to_redirect);
+        TextView delivery_sender = findViewById(R.id.delivery_sender);
+        TextView delivery_destination = findViewById(R.id.delivery_destination);
+        TextView delivery_status = findViewById(R.id.delivery_status);
+        ImageView delivery_status_image = findViewById(R.id.delivery_status_icon);
+        ImageView arrow_to_open_box = findViewById(R.id.arrow_to_open_box);
+        Button button_open_compartment = findViewById(R.id.button_open_compartment);
+
+        Intent intent = getIntent();
+        delivery_sender.setText(intent.getStringExtra("sender"));
+        delivery_destination.setText(intent.getStringExtra("destination"));
+        delivery_status.setText(intent.getStringExtra("status"));
+        delivery_status_image.setImageDrawable(LocateMobileDeliveryBaseActivity.this.getResources().getDrawable(intent.getIntExtra("statusImage", 0)));
+        arrow_to_open_box.setVisibility(View.INVISIBLE);
+
+        button_open_compartment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openCompartmentIntent = new Intent(LocateMobileDeliveryBaseActivity.this, OpenCompartmentActivity.class);
+                openCompartmentIntent.putExtra("statusImage", intent.getIntExtra("statusImage", 0));
+                openCompartmentIntent.putExtra("sender", intent.getStringExtra("sender"));
+                openCompartmentIntent.putExtra("destination", intent.getStringExtra("destination"));
+                openCompartmentIntent.putExtra("status", intent.getStringExtra("status"));
+                LocateMobileDeliveryBaseActivity.this.startActivity(openCompartmentIntent);
+            }
+        });
+
         // Benötigt für Geocoder
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -51,16 +85,6 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         //load/initialize the osmdroid configuration, this can be done
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        //setting this before the layout is inflated is a good idea
-        //it 'should' ensure that the map has a writable location for the map cache, even without permissions
-        //if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
-        //see also StorageUtils
-        //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's
-        //tile servers will get you banned based on this string
-
-        setContentView(R.layout.activity_set_point_on_map);
-
-
         map = (MapView) findViewById(R.id.map);
         // MapView und Scrollview streiten sich um vertikales Scrollen
         // Lösung: Bei Touch auf MapView wird Scrollview abgeschaltet
@@ -86,72 +110,42 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         GeoPoint startPoint = new GeoPoint(51.51, 7.4684);
         mapController.setCenter(startPoint);
 
-        Button button_discard = findViewById(R.id.button_discard);
-        Button button_location_confirm = findViewById(R.id.button_location_confirm);
         EditText box_street = findViewById(R.id.box_street);
         EditText box_number = findViewById(R.id.box_number);
         EditText box_postcode = findViewById(R.id.box_postcode);
         EditText box_city = findViewById(R.id.box_city);
+        Button button_close = findViewById(R.id.button_close);
 
-        button_discard.setOnClickListener(new View.OnClickListener() {
+        button_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SetPointOnMapActivity.this.finish();
+                LocateMobileDeliveryBaseActivity.this.finish();
             }
         });
 
         Marker desiredAddressMarker = new Marker(map);
-        button_location_confirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String desiredAddress = box_street.getText().toString() + " " +
-                        box_number.getText().toString() + ", " +
-                        box_postcode.getText().toString() + " " +
-                        box_city.getText().toString();
-                GeocoderNominatim geocoderNominatim = new GeocoderNominatim("TestUserAgent");
-                List<Address> addresses = null;
-                try {
-                    addresses = geocoderNominatim.getFromLocationName(desiredAddress, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
-                if (!addresses.isEmpty()) {
-                    GeoPoint desiredAddressPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-                    desiredAddressMarker.setPosition(desiredAddressPoint);
-                    desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                    desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
-                    desiredAddressMarker.setTitle("Some Point to show it's working");
-                    map.getOverlays().add(desiredAddressMarker);
-                    ArrayList<GeoPoint> positions = new ArrayList<GeoPoint>();
-                    positions.add(ownLocation);
-                    positions.add(desiredAddressPoint);
-                    map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true, 100, 17, 1500L);
-                    map.invalidate();   // MapView aktualisieren
-                }
-            }
-        });
+        GeocoderNominatim geocoderNominatim = new GeocoderNominatim("TestUserAgent");
+        List<Address> addresses = null;
+        try {
+            addresses = geocoderNominatim.getFromLocationName(delivery_destination.getText().toString(), 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    }//onCreate
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
-        map.onResume(); //needed for compass, my location overlays, v6.0.0 and up
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().save(this, prefs);
-        map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
+        if (!addresses.isEmpty()) {
+            destinationPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+            desiredAddressMarker.setPosition(destinationPoint);
+            desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
+            desiredAddressMarker.setTitle("Destination");
+            map.getOverlays().add(desiredAddressMarker);
+            map.invalidate();   // MapView aktualisieren
+        }
+        else
+        {
+            Toast.makeText(LocateMobileDeliveryBaseActivity.this, "Couldnt find destination on map", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -174,31 +168,36 @@ public class SetPointOnMapActivity extends AppCompatActivity {
                     this,
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-        else{
+        } else {
             // Zugriffe bereits erlaubt
             mark_user_location();
         }
     }
 
-    private void mark_user_location()
-    {
+    private void mark_user_location() {
 
         Marker userLocation = new Marker(map);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                ownLocation = new GeoPoint(location.getLatitude(), location.getLongitude());
+                ownLocationPoint = new GeoPoint(location.getLatitude(), location.getLongitude());
                 mapController.setZoom(16);
-                userLocation.setPosition(ownLocation);
+                userLocation.setPosition(ownLocationPoint);
                 userLocation.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                 userLocation.setIcon(getResources().getDrawable(R.drawable.icon_avatar));
                 userLocation.setTitle("You are here");
-                mapController.setCenter(ownLocation);
+                mapController.setCenter(ownLocationPoint);
                 map.getOverlays().add(userLocation);
                 locationManager.removeUpdates(this);
                 locationManager = null;
+                if(ownLocationPoint != null && destinationPoint != null) {
+                    ArrayList<GeoPoint> positions = new ArrayList<GeoPoint>();
+                    positions.add(ownLocationPoint);
+                    positions.add(destinationPoint);
+                    map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true, 100, 17, 1500L);
+                }
+                map.invalidate();   // MapView aktualisieren
             }
 
             @Override
@@ -230,6 +229,4 @@ public class SetPointOnMapActivity extends AppCompatActivity {
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
     }
-
 }
-
