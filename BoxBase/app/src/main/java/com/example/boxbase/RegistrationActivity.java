@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -67,6 +68,10 @@ public class RegistrationActivity extends AppCompatActivity {
                         box_city.getText().toString().trim();
                 String username = box_email.getText().toString().trim();
                 String password = box_set_password.getText().toString().trim();
+                if(!is_input_valid())
+                {
+                    return;
+                }
                 GeocoderNominatim geocoderNominatim = new GeocoderNominatim("userAgent");
                 double lat, lng;
                 try {
@@ -84,7 +89,6 @@ public class RegistrationActivity extends AppCompatActivity {
                     return;
                 }
                 loginViewModel.register(username, password, name);
-                loginViewModel.login(username,password);
                 if (LoginRepository.getInstance(new LoginDataSource()).isLoggedIn()) {
                     LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
                     Log.d("JWT", user.getToken());
@@ -109,6 +113,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         }
                     });
                 }else{
+                    Toast.makeText(RegistrationActivity.this, "username exists already", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -144,10 +149,13 @@ public class RegistrationActivity extends AppCompatActivity {
             return false;
         }
         // Benutzername ist Email
-        if (!loginViewModel.isUserNameValid(box_email.getText().toString()))
+        if (!loginViewModel.isUserNameValid(box_email.getText().toString())) {
+            box_email.setError("this is not a valid username");
             return false;
+        }
         // Passwort zweimal gleich eingegeben
-        if (box_set_password.getText().toString().trim() != box_repeat_password.getText().toString().trim()) {
+        if (!box_set_password.getText().toString().trim().equals(box_repeat_password.getText().toString().trim())) {
+            box_repeat_password.setError("passwords dont match");
             return false;
         }
         return true;
@@ -155,8 +163,10 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private boolean isEmpty(EditText... etTexts) {
         for (EditText editText : etTexts) {
-            if (editText.getText().toString().trim().length() == 0)
+            if (editText.getText().toString().trim().length() == 0) {
+                editText.setError("this field is mandatory");
                 return true;
+            }
         }
         return false;
 
