@@ -3,8 +3,8 @@
     package="com.example.boxbase">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"  />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SetPointOnMapActivity"></activity>
+        <activity android:name=".OpenCompartmentActivity"></activity>
+        <activity android:name=".LocateMobileDeliveryBaseActivity" />
+        <activity android:name=".SetPointOnMapActivity" />
         <activity
             android:name=".ui.RedirectActivity"
             android:screenOrientation="portrait" />

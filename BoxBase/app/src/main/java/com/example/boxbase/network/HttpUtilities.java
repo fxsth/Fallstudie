@@ -22,6 +22,11 @@ public class HttpUtilities {
         return "http://roman.technology:3000/login";
     }
 
+    public static String getRegisterServiceUrl()
+    {
+        return "http://roman.technology:3000/register";
+    }
+
     public static OkHttpClient getHttpAuthorizationClient(String token) {
         return new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
@@ -33,7 +38,7 @@ public class HttpUtilities {
                 .build();
     }
 
-    public static String getJsonPost(String username, String password) {
+    public static String getAuthJsonPost(String username, String password) {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("username", username);

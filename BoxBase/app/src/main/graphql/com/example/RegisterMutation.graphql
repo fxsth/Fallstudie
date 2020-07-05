@@ -1,0 +1,5 @@
+mutation RegisterMutation($userid: Int, $name: String, $adresse: String, $lat: numeric, $lng: numeric) {
+  insert_person_one(object: {name: $name, ort: {data: {adresse: $adresse, lat: $lat, long: $lng}}, id: $userid}) {
+    id
+  }
+}

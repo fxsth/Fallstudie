@@ -65,7 +65,7 @@
 
                     <include
                         android:id="@+id/map_view_layout"
-                        layout="@layout/mobil_delivery_base_on_map"
+                        layout="@layout/point_on_map"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/input_box_to_upper_title" />

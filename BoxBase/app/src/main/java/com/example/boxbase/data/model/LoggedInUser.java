@@ -8,9 +8,16 @@ public class LoggedInUser {
     private int userId;
     private String displayName;
     private String token;
+    private String email = "";
 
     public LoggedInUser(int userId, String displayName, String token) {
         this.userId = userId;
+        this.displayName = displayName;
+        this.token = token;
+    }
+    public LoggedInUser(int userId, String email, String displayName, String token) {
+        this.userId = userId;
+        this.email = email;
         this.displayName = displayName;
         this.token = token;
     }
@@ -24,4 +31,6 @@ public class LoggedInUser {
     }
 
     public String getToken(){return token;}
+
+    public String getEmail(){return email;}
 }

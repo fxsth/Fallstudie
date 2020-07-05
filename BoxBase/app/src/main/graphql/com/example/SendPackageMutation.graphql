@@ -1,0 +1,8 @@
+mutation InsertSendPackage($name: String, $adresse: String, $lat: numeric, $lng: numeric, $empfaenger_id: Int, $groesse: Int, $absender_id: Int, $fach_nummer: Int, $interaktion_bis: timestamptz, $interaktion_von: timestamptz, $wunschort_id: Int, $zustellbasis_id: Int) {
+  insert_person_one(object: {name: $name, ort: {data: {adresse: $adresse, lat: $lat, long: $lng}}, id: $empfaenger_id}) {
+    id
+  }
+  insert_pakete_one(object: {groesse: $groesse, empfaenger_id: $empfaenger_id, absender_id: $absender_id, fach_nummer: $fach_nummer, interaktion_bis: $interaktion_bis, interaktion_von: $interaktion_von, wunschort_id: $wunschort_id, zustellbasis_id: $zustellbasis_id}) {
+    zugestellt
+  }
+}

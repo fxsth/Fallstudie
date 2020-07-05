@@ -77,6 +77,18 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
             }
         });
 
+        view.findViewById(R.id.button_delivery_details).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent detailPackageIntent = new Intent(mCtx, LocateMobileDeliveryBaseActivity.class);
+                detailPackageIntent.putExtra("statusImage", incoming_deliveries.getDelivery_status_image());
+                detailPackageIntent.putExtra("sender", incoming_deliveries.getDelivery_sender());
+                detailPackageIntent.putExtra("destination", incoming_deliveries.getDelivery_destination());
+                detailPackageIntent.putExtra("status", incoming_deliveries.getDelivery_status());
+                mCtx.startActivity(detailPackageIntent);
+            }
+        });
+
         view.findViewById(R.id.button_delivery_action).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -127,18 +127,16 @@
                 android:id="@+id/account_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/text"
-                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
-                android:text="Maria Musterfrau" />
+                android:layout_marginTop="10dp"
+                android:textAppearance="@style/text" />
 
             <TextView
                 android:id="@+id/account_mail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/box_text_hint"
                 android:layout_gravity="center"
-                android:text="marina.musterfrau@web.de" />
+                android:textAppearance="@style/box_text_hint" />
 
             <Button
                 android:id="@+id/settings_button_account"
