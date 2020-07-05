@@ -14,6 +14,7 @@ numpy = "*"
 sqlalchemy = "*"
 psycopg2 = "*"
 sklearn = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.7"
