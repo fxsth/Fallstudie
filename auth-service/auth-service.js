@@ -34,7 +34,7 @@ app.post('/login', async function (req, res) {
       'x-hasura-allowed-roles': ['user'],
       'x-hasura-default-role': 'user',
       'x-hasura-role': 'user',
-      'x-hasura-user-id': answer.uid,
+      'x-hasura-user-id': answer.uid.toString(),
     },
   };
   res.setHeader('Content-Type', 'application/json');
@@ -67,13 +67,13 @@ app.post('/register', async function (req, res) {
     })
     .write();
   const tokenData = {
-    sub: id,
-    name: id,
+    sub: id.toString(),
+    name: id.toString(),
     'https://hasura.io/jwt/claims': {
       'x-hasura-allowed-roles': ['user'],
       'x-hasura-default-role': 'user',
       'x-hasura-role': 'user',
-      'x-hasura-user-id': id,
+      'x-hasura-user-id': id.toString(),
     },
   };
 

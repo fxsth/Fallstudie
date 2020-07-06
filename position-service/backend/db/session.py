@@ -4,7 +4,7 @@ from sqlalchemy.ext.automap import automap_base
 
 
 engine_postgres = create_engine(
-    "postgresql+psycopg2://postgres@localhost:5432/test")
+    "postgresql+psycopg2://postgres:postgrespassword@localhost:6432/postgres")
 
 Base = automap_base()
 Base.prepare(engine_postgres, reflect=True)
@@ -15,6 +15,7 @@ Pakete = Base.classes.pakete
 Person = Base.classes.person
 Zustellbasis = Base.classes.zustellbasis
 Zustellbasisart = Base.classes.zustellbasisart
+
 
 SessionLocal = sessionmaker(
     autocommit=False, autoflush=False, bind=engine_postgres)
