@@ -57,9 +57,14 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
         delivery_status.setText(incoming_deliveries.getDelivery_status());
         delivery_status_icon.setImageDrawable(mCtx.getResources().getDrawable(incoming_deliveries.getDelivery_status_image()));
 
-        if(delivery_status.getText().equals("pickup is being prepared") || delivery_status.getText().equals("delivered"))
+        if(delivery_status.getText().equals("pick up is being prepared") || delivery_status.getText().equals("delivered"))
         {
             button_delivery_action.setVisibility(View.GONE);
+        }
+
+        if(delivery_status.getText().equals("ready for pick up"))
+        {
+            button_delivery_action.setText("pick up");
         }
 
         /* define what happen if the button is clicked */
@@ -77,7 +82,7 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
                     button_delivery_action.setVisibility(View.VISIBLE);
                     arrow_to_open_box.setVisibility(View.GONE);
                     arrow_to_close_box.setVisibility(View.VISIBLE);
-                    if(delivery_status.getText().equals("pickup is being prepared") || delivery_status.getText().equals("delivered"))
+                    if(delivery_status.getText().equals("pick up is being prepared") || delivery_status.getText().equals("delivered"))
                     {
                         button_delivery_action.setVisibility(View.GONE);
                     }

@@ -140,7 +140,7 @@
             android:layout_width="@dimen/button_small_width"
             android:layout_height="@dimen/button_small_height"
             android:background="@drawable/shape_button_small_primary_color_bright"
-            android:text="redirect"
+            android:text="@string/button_main_menu_delivery_incoming_action"
             android:textAppearance="@style/button_small"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/button_delivery_details"

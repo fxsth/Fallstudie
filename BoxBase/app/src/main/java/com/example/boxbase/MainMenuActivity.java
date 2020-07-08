@@ -212,10 +212,10 @@ public class MainMenuActivity extends AppCompatActivity {
             String destination;
             if (paket.zustellbasis_id() != null) {
                 if (paket.fach_nummer() != null) {
-                    delivery_status = "ready for pickup";
+                    delivery_status = "ready for pick up";
                     drawable = R.drawable.icon_delivery_status_boxbase;
                 } else {
-                    delivery_status = "pickup is being prepared";
+                    delivery_status = "pick up is being prepared";
                     drawable = R.drawable.icon_delivery_status_truck;
                 }
                 destination = "mobile delivery base " + paket.zustellbasis_id();
