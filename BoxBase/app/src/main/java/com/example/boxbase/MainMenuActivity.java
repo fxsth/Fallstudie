@@ -268,9 +268,11 @@ public class MainMenuActivity extends AppCompatActivity {
                     drawable = R.drawable.icon_delivery_status_truck;
                 }
             } else {
-                delivery_status = "home delivery";
+                delivery_status = "delivery is pending";
                 drawable = R.drawable.icon_delivery_status_home;
             }
+            if(paket.zugestellt())
+                delivery_status = "delivered";
             outgoing_deliveriesList.add(
                     new outgoing_deliveries(
                             drawable,
