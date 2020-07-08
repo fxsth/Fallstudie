@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,6 +31,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
             public void onClick(View v) {
 //                Intent goToPaymentIntent = new Intent(SendPackageActivity.this, MainMenu.class);
 //                SendPackageActivity.this.startActivity(goToPaymentIntent);
+                Toast.makeText(SendPackageActivity.this, "This one's for free. You're welcome!",Toast.LENGTH_LONG).show();
                 finish();
             }
         });
