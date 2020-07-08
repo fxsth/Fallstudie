@@ -221,11 +221,13 @@ public class MainMenuActivity extends AppCompatActivity {
                 destination = "mobile delivery base " + paket.zustellbasis_id();
             } else {
                 delivery_status = "delivery is pending";
-                drawable = R.drawable.icon_delivery_status_home;
+                drawable = R.drawable.icon_delivery_status_truck;
                 destination = paket.empfaenger().ort().adresse();
             }
-            if(paket.zugestellt())
+            if(paket.zugestellt()) {
                 delivery_status = "delivered";
+                drawable = R.drawable.icon_delivery_status_home;
+            }
             incoming_deliveriesList.add(
                     new incoming_deliveries(
                             drawable,
