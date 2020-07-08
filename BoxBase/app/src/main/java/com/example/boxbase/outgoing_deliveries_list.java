@@ -40,6 +40,8 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
         ImageView delivery_status_icon = view.findViewById(R.id.delivery_status_icon);
         Button button_delivery_details = view.findViewById(R.id.button_delivery_details);
         Button button_delivery_action = view.findViewById(R.id.button_delivery_action);
+        ImageView arrow_to_open_box = view.findViewById(R.id.arrow_to_open_box);
+        ImageView arrow_to_close_box = view.findViewById(R.id.arrow_to_close_box);
 
         outgoing_deliveries outgoing_deliveries = outgoing_deliveriesList.get(position);
         delivery_receiver.setText(outgoing_deliveries.getDelivery_receiver());
@@ -54,9 +56,13 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
                 if (button_delivery_details.getVisibility() == View.VISIBLE) {
                     button_delivery_details.setVisibility(View.GONE);
                     button_delivery_action.setVisibility(View.GONE);
+                    arrow_to_open_box.setVisibility(View.VISIBLE);
+                    arrow_to_close_box.setVisibility(View.GONE);
                 } else {
                     button_delivery_details.setVisibility(View.VISIBLE);
                     button_delivery_action.setVisibility(View.VISIBLE);
+                    arrow_to_open_box.setVisibility(View.GONE);
+                    arrow_to_close_box.setVisibility(View.VISIBLE);
                 }
 
             }
