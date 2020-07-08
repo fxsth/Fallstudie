@@ -44,7 +44,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         /* BUTTONS */
         final Button sendPackageButton = findViewById(R.id.button_send_package);
-        final Button refreshButton = findViewById(R.id.button_refresh);
         final ImageView imageViewAvatar = findViewById(R.id.top_bar_avatar);
         final TabLayout packagesTabLayout = findViewById(R.id.packagesTabLayout);
         ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
@@ -77,12 +76,6 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent sendPackageIntent = new Intent(MainMenuActivity.this, SendPackageActivity.class);
                 MainMenuActivity.this.startActivity(sendPackageIntent);
-            }
-        });
-
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
             }
         });
 
