@@ -58,6 +58,11 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
         ImageView delivery_status_image = findViewById(R.id.delivery_status_icon);
         ImageView arrow_to_open_box = findViewById(R.id.arrow_to_open_box);
         Button button_open_compartment = findViewById(R.id.button_open_compartment);
+        EditText box_street = findViewById(R.id.box_street);
+        EditText box_number = findViewById(R.id.box_number);
+        EditText box_postcode = findViewById(R.id.box_postcode);
+        EditText box_city = findViewById(R.id.box_city);
+        Button button_close = findViewById(R.id.button_close);
 
         Intent intent = getIntent();
         delivery_sender.setText(intent.getStringExtra("sender"));
@@ -65,6 +70,11 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
         delivery_status.setText(intent.getStringExtra("status"));
         delivery_status_image.setImageDrawable(LocateMobileDeliveryBaseActivity.this.getResources().getDrawable(intent.getIntExtra("statusImage", 0)));
         arrow_to_open_box.setVisibility(View.INVISIBLE);
+        String[] felder = getAddressFields(delivery_destination.getText().toString());
+        box_street.setText(felder[0]);
+        box_number.setText(felder[1]);
+        box_postcode.setText(felder[2]);
+        box_city.setText(felder[3]);
 
         button_open_compartment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +85,12 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
                 openCompartmentIntent.putExtra("destination", intent.getStringExtra("destination"));
                 openCompartmentIntent.putExtra("status", intent.getStringExtra("status"));
                 LocateMobileDeliveryBaseActivity.this.startActivity(openCompartmentIntent);
+            }
+        });
+        button_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocateMobileDeliveryBaseActivity.this.finish();
             }
         });
 
@@ -110,19 +126,6 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
         GeoPoint startPoint = new GeoPoint(51.51, 7.4684);
         mapController.setCenter(startPoint);
 
-        EditText box_street = findViewById(R.id.box_street);
-        EditText box_number = findViewById(R.id.box_number);
-        EditText box_postcode = findViewById(R.id.box_postcode);
-        EditText box_city = findViewById(R.id.box_city);
-        Button button_close = findViewById(R.id.button_close);
-
-        button_close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LocateMobileDeliveryBaseActivity.this.finish();
-            }
-        });
-
         Marker desiredAddressMarker = new Marker(map);
 
         GeocoderNominatim geocoderNominatim = new GeocoderNominatim("TestUserAgent");
@@ -137,7 +140,7 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
             destinationPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
             desiredAddressMarker.setPosition(destinationPoint);
             desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
+            desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_delivery_status_home));
             desiredAddressMarker.setTitle("Destination");
             map.getOverlays().add(desiredAddressMarker);
             map.invalidate();   // MapView aktualisieren
@@ -228,5 +231,29 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
+    }
+
+    public String[] getAddressFields(String address)
+    {
+        String[] felder = new String[4];
+        if (address.contains(",")) {
+            int index = address.indexOf(",");
+            String streetandnr = address.substring(0, index).trim();
+            for(int i = 0; i<streetandnr.length(); i++)
+            {
+                if(Character.isDigit(streetandnr.charAt(i)))
+                {
+                    felder[0] = streetandnr.substring(0,i-1);
+                    felder[1] = streetandnr.substring(i);
+                    break;
+                }
+            }
+            String postcodeandcity = address.substring(index + 1, address.length()).trim();
+            int i = postcodeandcity.indexOf(' ');
+            felder[2] = postcodeandcity.substring(0,i-1);
+            felder[3] = postcodeandcity.substring(i);
+            return felder;
+        }
+        return null;
     }
 }
