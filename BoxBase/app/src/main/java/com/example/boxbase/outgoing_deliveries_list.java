@@ -48,6 +48,11 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
         delivery_status.setText(outgoing_deliveries.getDelivery_status());
         delivery_status_icon.setImageDrawable(mCtx.getResources().getDrawable(outgoing_deliveries.getDelivery_status_image()));
 
+        if(delivery_status.getText().equals("delivery is pending") || delivery_status.getText().equals("will be collected soon") || delivery_status.getText().equals("delivered"))
+        {
+            button_delivery_action.setVisibility(View.GONE);
+        }
+
         /* define what happen if the button is clicked */
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +68,10 @@ public class outgoing_deliveries_list extends ArrayAdapter<outgoing_deliveries> 
                     button_delivery_action.setVisibility(View.VISIBLE);
                     arrow_to_open_box.setVisibility(View.GONE);
                     arrow_to_close_box.setVisibility(View.VISIBLE);
+                    if(delivery_status.getText().equals("delivery is pending") || delivery_status.getText().equals("will be collected soon") || delivery_status.getText().equals("delivered"))
+                    {
+                        button_delivery_action.setVisibility(View.GONE);
+                    }
                 }
 
             }
