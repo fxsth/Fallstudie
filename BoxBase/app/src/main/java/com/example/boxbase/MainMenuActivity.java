@@ -256,18 +256,20 @@ public class MainMenuActivity extends AppCompatActivity {
             String delivery_status;
             if (paket.zustellbasis_id() != null) {
                 if (paket.fach_nummer() != null) {
-                    delivery_status = "ready for pickup";
+                    delivery_status = "will be collected soon";
                     drawable = R.drawable.icon_delivery_status_boxbase;
                 } else {
-                    delivery_status = "delivery is pending";
-                    drawable = R.drawable.icon_delivery_status_truck;
+                    delivery_status = "ready for drop off";
+                    drawable = R.drawable.icon_delivery_status_home;
                 }
             } else {
                 delivery_status = "delivery is pending";
-                drawable = R.drawable.icon_delivery_status_home;
+                drawable = R.drawable.icon_delivery_status_truck;
             }
-            if(paket.zugestellt())
+            if(paket.zugestellt()) {
                 delivery_status = "delivered";
+                drawable = R.drawable.icon_delivery_status_delivered;
+            }
             outgoing_deliveriesList.add(
                     new outgoing_deliveries(
                             drawable,
