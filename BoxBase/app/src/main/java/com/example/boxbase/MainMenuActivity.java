@@ -218,7 +218,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     delivery_status = "delivery is pending";
                     drawable = R.drawable.icon_delivery_status_truck;
                 }
-                destination = "Zustellbasis " + paket.zustellbasis_id();
+                destination = "mobile delivery base " + paket.zustellbasis_id();
             } else {
                 delivery_status = "delivery is pending";
                 drawable = R.drawable.icon_delivery_status_home;
