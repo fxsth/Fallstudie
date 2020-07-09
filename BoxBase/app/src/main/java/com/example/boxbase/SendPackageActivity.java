@@ -1,21 +1,37 @@
 package com.example.boxbase;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class SendPackageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+    // Variablen für Mutation
+    String name;
+    String address;
+    int package_size;
 
+    // Variablen für Timestamp
+    Date von, bis;
+    Spinner spinner_day_selection;
+    Spinner spinner_time_selection_from;
+    Spinner spinner_time_selection_to;
 
     // Declaration for dropdown menus
     private static final String[] paths_day_selection = {"today", "tomorrow", "in 2 days", "in 3 days", "in 4 days", "in 5 days"};
@@ -34,12 +50,22 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
         ConstraintLayout button_size_l = findViewById(R.id.button_package_size_l);
         ConstraintLayout button_point_on_map = findViewById(R.id.button_point_on_map);
         ConstraintLayout button_home_address = findViewById(R.id.button_home_address);
+        EditText box_receiver = findViewById(R.id.box_receiver);
+        EditText box_street = findViewById(R.id.box_street);
+        EditText box_number = findViewById(R.id.box_number);
+        EditText box_postcode = findViewById(R.id.box_postcode);
+        EditText box_city = findViewById(R.id.box_city);
+        EditText box_country = findViewById(R.id.box_country);
 
         goToPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent goToPaymentIntent = new Intent(SendPackageActivity.this, MainMenu.class);
-//                SendPackageActivity.this.startActivity(goToPaymentIntent);
+                name = box_receiver.getText().toString().trim();
+                address = box_street.getText().toString().trim() + " " +
+                        box_number.getText().toString().trim() + ", " +
+                        box_postcode.getText().toString().trim() + " " +
+                        box_city.getText().toString().trim();
+
                 Toast.makeText(SendPackageActivity.this, "This one's for free. You're welcome!",Toast.LENGTH_LONG).show();
                 finish();
             }
@@ -151,21 +177,28 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
 
 
     // Cases of the dropdown menus
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Date now = Date.from(Instant.now());
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        c1.setTime(now);
+        c2.setTime(now);
 
-        switch (position) {
-            case 0:
-                // TODO Whatever you want to happen when the first item gets selected
-                break;
-            case 1:
-                // TODO Whatever you want to happen when the second item gets selected
-                break;
-            case 2:
-                // TODO Whatever you want to happen when the third item gets selected
-                break;
+        c1.add(Calendar.DATE, spinner_day_selection.getSelectedItemPosition());
+        c2.add(Calendar.DATE, spinner_day_selection.getSelectedItemPosition());
 
-        }
+        c1.set(Calendar.HOUR_OF_DAY, spinner_time_selection_from.getSelectedItemPosition()+4);   // +4 entspricht +6h und Umrechnung auf UTC
+        c1.set(Calendar.MINUTE, 0);
+        c1.set(Calendar.SECOND, 0);
+
+        c2.set(Calendar.HOUR_OF_DAY, spinner_time_selection_to.getSelectedItemPosition()+5);
+        c2.set(Calendar.MINUTE, 0);
+        c2.set(Calendar.SECOND, 0);
+
+        von = c1.getTime();
+        bis = c2.getTime();
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

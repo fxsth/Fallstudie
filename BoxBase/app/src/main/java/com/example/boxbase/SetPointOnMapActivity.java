@@ -104,22 +104,10 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         button_discard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String desiredAddress = box_street.getText().toString() + " " +
-                        box_number.getText().toString() + ", " +
-                        box_postcode.getText().toString() + " " +
-                        box_city.getText().toString();
                 Intent returnIntent = new Intent();
-                if(desiredAddressPoint != null) {
-                    returnIntent.putExtra("adress", desiredAddress);
-                    returnIntent.putExtra("lat", desiredAddressPoint.getLatitude());
-                    returnIntent.putExtra("lng", desiredAddressPoint.getLongitude());
-                    setResult(Activity.RESULT_OK,returnIntent);
-                } else {
-                    setResult(Activity.RESULT_CANCELED, returnIntent);
-                }
+                setResult(Activity.RESULT_CANCELED, returnIntent);
                 finish();
-                SetPointOnMapActivity.this.finish();
-            }
+                }
         });
 
         Marker desiredAddressMarker = new Marker(map);

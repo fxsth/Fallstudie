@@ -57,10 +57,10 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
     String destinationAddress;
     double lat, lng;
     int wunschortid;
-    Date von, bis;
     int paketid;
     int LAUNCH_SETPOINTONMAP = 1;
     // Timestamp eintragen
+    Date von, bis;
     Spinner spinner_day_selection;
     Spinner spinner_time_selection_from;
     Spinner spinner_time_selection_to;
