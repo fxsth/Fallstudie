@@ -31,9 +31,11 @@ import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.model.LoggedInUser;
 import com.example.boxbase.network.HttpUtilities;
+import com.example.boxbase.ui.RedirectActivity;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
@@ -184,8 +186,15 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
         });
 
         goToPaymentButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
+                Date nowUTC = Date.from(Instant.now().minus(Duration.ofHours(3)));
+                if(bis.before(nowUTC))
+                {
+                    Toast.makeText(SendPackageActivity.this, "invalid time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 name = box_receiver.getText().toString().trim();
                 destinationAddress = box_street.getText().toString().trim() + " " +
                         box_number.getText().toString().trim() + ", " +
@@ -208,7 +217,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                             Log.d("GraphQL", "Query erfolgreich");
                             if (response.getData().person().size() > 0) {
                                 reciever_id = response.getData().person().get(0).id();
-                                reciever_ort_id = response.getData().person().get(0).ort().id();
+                                setWunschortidAndInsertPackage(reciever_id, user.getUserId(), von.toString(), bis.toString(), package_size);
                             } else
                             {
                                 // Wenn es den Empfänger noch nciht gibt, fügen wir ihn hinzu
@@ -222,7 +231,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                                         } else {
                                             Log.d("GraphQL", "InsertEmpfänger Mutation erfolgreich");
                                             reciever_id = response.getData().insert_person_one().id();
-                                            reciever_ort_id = response.getData().insert_person_one().ort_id();
+                                            setWunschortidAndInsertPackage(reciever_id, user.getUserId(), von.toString(), bis.toString(), package_size);
                                         }
                                     }
 
@@ -232,57 +241,6 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                                     }
                                 });
                             }
-
-                            // Prüfen welcher Drop-Off-Wunschort eingetragen wurde und entsprechende OrtId aus der Datenbank nehmen
-                            if(desiredAddress != null && !desiredAddress.isEmpty()) {
-                                InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(desiredAddress).lat(lat).lng(lng).build();
-                                apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
-                                    @RequiresApi(api = Build.VERSION_CODES.O)
-                                    @Override
-                                    public void onResponse(@NotNull Response<InsertOrtMutation.Data> response) {
-                                        if (response.hasErrors()) {
-                                            Log.d("GraphQL", "Wunschort eintragen - Mutation fehlerhaft");
-                                            Log.d("GraphQL", response.getErrors().get(0).getMessage());
-                                        } else {
-                                            wunschortid = response.getData().insert_ort_one().id();
-                                            Log.d("GraphQL", "Mutation erfolgreich");
-                                            insertPackage(reciever_id, user.getUserId(), wunschortid, von.toString(), bis.toString(), package_size);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(@NotNull ApolloException e) {
-                                        Log.d("GraphQL", "Wunschort eintragen - Mutation fehlerhaft");
-                                    }
-                                });
-                            } else
-                            {
-                                UserQuery userQuery = UserQuery.builder().userid(user.getUserId()).build();
-                                apolloClient.query(userQuery).enqueue(new ApolloCall.Callback<UserQuery.Data>() {
-                                    @Override
-                                    public void onResponse(@NotNull Response<UserQuery.Data> response) {
-                                        if (response.hasErrors()) {
-                                            Log.d("GraphQL", "Query fehlerhaft");
-                                            Log.d("GraphQL", response.getErrors().get(0).getMessage());
-                                        } else {
-                                            // Prüfe vorher, ob Person in der Db vorhanden und auch eine Adresse vorhanden
-                                            if(response.getData().person().size()>0 && !response.getData().person().get(0).ort().adresse().isEmpty()) {
-                                                wunschortid = response.getData().person().get(0).ort().id();
-                                                Log.d("GraphQL", "Query erfolgreich");
-                                                insertPackage(reciever_id, user.getUserId(), wunschortid, von.toString(), bis.toString(), package_size);
-                                            }else {
-                                                Log.d("GraphQL", "Benutzer nicht gefunden");
-                                            }
-                                        }
-                                    }
-                                    @Override
-                                    public void onFailure(@NotNull ApolloException e) {
-                                        Log.d("GraphQL", "Mutation fehlerhaft");
-                                    }
-                                });
-                            }
-
-
                         }
                     }
 
@@ -393,5 +351,60 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                 Log.d("GraphQL", "InsertSendPackageMutation fehlerhaft");
             }
         });
+    }
+
+    void setWunschortidAndInsertPackage(int reciever_id, int userid, String timestamp_von, String timestamp_bis, int groesse)
+    {
+        LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+        OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
+        ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
+        // Prüfen welcher Drop-Off-Wunschort eingetragen wurde und entsprechende OrtId aus der Datenbank nehmen
+        if(desiredAddress != null && !desiredAddress.isEmpty()) {
+            InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(desiredAddress).lat(lat).lng(lng).build();
+            apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onResponse(@NotNull Response<InsertOrtMutation.Data> response) {
+                    if (response.hasErrors()) {
+                        Log.d("GraphQL", "Wunschort eintragen - Mutation fehlerhaft");
+                        Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                    } else {
+                        wunschortid = response.getData().insert_ort_one().id();
+                        Log.d("GraphQL", "Mutation erfolgreich");
+                        insertPackage(reciever_id, user.getUserId(), wunschortid, timestamp_von, timestamp_bis, package_size);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull ApolloException e) {
+                    Log.d("GraphQL", "Wunschort eintragen - Mutation fehlerhaft");
+                }
+            });
+        } else
+        {
+            UserQuery userQuery = UserQuery.builder().userid(user.getUserId()).build();
+            apolloClient.query(userQuery).enqueue(new ApolloCall.Callback<UserQuery.Data>() {
+                @Override
+                public void onResponse(@NotNull Response<UserQuery.Data> response) {
+                    if (response.hasErrors()) {
+                        Log.d("GraphQL", "Query fehlerhaft");
+                        Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                    } else {
+                        // Prüfe vorher, ob Person in der Db vorhanden und auch eine Adresse vorhanden
+                        if(response.getData().person().size()>0 && !response.getData().person().get(0).ort().adresse().isEmpty()) {
+                            wunschortid = response.getData().person().get(0).ort().id();
+                            Log.d("GraphQL", "Query erfolgreich");
+                            insertPackage(reciever_id, user.getUserId(), wunschortid, timestamp_von, timestamp_bis, package_size);
+                        }else {
+                            Log.d("GraphQL", "Benutzer nicht gefunden");
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(@NotNull ApolloException e) {
+                    Log.d("GraphQL", "Mutation fehlerhaft");
+                }
+            });
+        }
     }
 }
