@@ -53,4 +53,7 @@ dependencies {
 
 apollo {
     generateKotlinModels.set(false) // false for Java models
+    customTypeMapping = [
+            "timestampz" : "java.util.Date"
+    ]
 }

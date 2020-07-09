@@ -2,6 +2,7 @@ package com.example.boxbase.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -33,6 +35,11 @@ import com.example.boxbase.network.HttpUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DateFormat;
+import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
+
 import okhttp3.OkHttpClient;
 
 public class RedirectActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -49,9 +56,15 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
     String destinationAddress;
     double lat, lng;
     int wunschortid;
+    Date von, bis;
     int paketid;
     int LAUNCH_SETPOINTONMAP = 1;
+    // Timestamp eintragen
+    Date now;
+    Calendar c1 = Calendar.getInstance();
+    Calendar c2 = Calendar.getInstance();
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +84,11 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         ImageView arrow_to_close_mdb_box = findViewById(R.id.arrow_to_close_mdb_box);
         ImageView arrow_to_open_mdb_box = findViewById(R.id.arrow_to_open_mdb_box);
         ConstraintLayout cl_selection_mobile_delivery_base = findViewById(R.id.cl_selection_mobile_delivery_base);
+
+        now = Date.from(Instant.now());
+        c1.setTime(now);
+        c2.setTime(now);
+
         arrow_to_close_mdb_box.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,11 +132,23 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
                 if(paketid != -1) {
                     LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
                     OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
+
+
+//                    var ISO8601 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ")
+                    //Initializing the date formatter
+                    DateFormat Date = DateFormat.getDateInstance();
+                    //Initializing Calender Object
+                    Calendar cals = Calendar.getInstance();
+                    //Using format() method for conversion
+                    String currentDate = Date.format(cals.getTime());
+
                     ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
+
                     // Bei gültiger Adresse -> Wunschort eintragen, ansonsten -> Wunschort löschen
                     if(destinationAddress!= null && !destinationAddress.isEmpty()) {
                         InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(destinationAddress).lat(lat).lng(lng).build();
                         apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
+                            @RequiresApi(api = Build.VERSION_CODES.O)
                             @Override
                             public void onResponse(@NotNull Response<InsertOrtMutation.Data> response) {
                                 if (response.hasErrors()) {
@@ -129,7 +159,7 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
                                     Log.d("GraphQL", "Mutation erfolgreich");
 
                                     // Im erfolgreichen Fall die Update-Mutation
-                                    RedirectMutation redirectMutation = RedirectMutation.builder().paketid(paketid).wunschortid(wunschortid).build();
+                                    RedirectMutation redirectMutation = RedirectMutation.builder().paketid(paketid).wunschortid(wunschortid).timestamp_von(von.toString()).timestamp_bis(bis.toString()).build();
                                     apolloClient.mutate(redirectMutation).enqueue(new ApolloCall.Callback<RedirectMutation.Data>() {
                                         @Override
                                         public void onResponse(@NotNull Response<RedirectMutation.Data> response) {
@@ -171,16 +201,16 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
                             @Override
                             public void onResponse(@NotNull Response<UserQuery.Data> response) {
                                 if (response.hasErrors()) {
-                                    Log.d("GraphQL", "Mutation fehlerhaft");
+                                    Log.d("GraphQL", "Query fehlerhaft");
                                     Log.d("GraphQL", response.getErrors().get(0).getMessage());
                                 } else {
                                     // Prüfe vorher, ob Person in der Db vorhanden und auch eine Adresse vorhanden
                                     if(response.getData().person().size()>0 && !response.getData().person().get(0).ort().adresse().isEmpty()) {
                                         wunschortid = response.getData().person().get(0).ort().id();
-                                        Log.d("GraphQL", "Mutation erfolgreich");
+                                        Log.d("GraphQL", "Query erfolgreich");
 
                                         // Im erfolgreichen Fall die Update-Mutation
-                                        RedirectMutation redirectMutation = RedirectMutation.builder().paketid(paketid).wunschortid(wunschortid).build();
+                                        RedirectMutation redirectMutation = RedirectMutation.builder().paketid(paketid).wunschortid(wunschortid).timestamp_von(von.toString()).timestamp_bis(bis.toString()).build();
                                         apolloClient.mutate(redirectMutation).enqueue(new ApolloCall.Callback<RedirectMutation.Data>() {
                                             @Override
                                             public void onResponse(@NotNull Response<RedirectMutation.Data> response) {
@@ -265,21 +295,28 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
 
 
     // Cases of the dropdown menus
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        switch (position) {
-            case 0:
-                // TODO Whatever you want to happen when the first item gets selected
+        int parentId = parent.getId();
+        switch (parent.getId()){
+            case R.id.time_slot_selection_day:
+                c1.add(Calendar.DATE, 1);
+                c2.add(Calendar.DATE, 1);
                 break;
-            case 1:
-                // TODO Whatever you want to happen when the second item gets selected
+            case R.id.time_slot_selection_from:
+                c1.set(Calendar.HOUR_OF_DAY, position+4);
+                c1.set(Calendar.MINUTE, 0);
+                c1.set(Calendar.SECOND, 0);
                 break;
-            case 2:
-                // TODO Whatever you want to happen when the third item gets selected
+            case R.id.time_slot_selection_to:
+                c2.set(Calendar.HOUR_OF_DAY, position+5);
+                c2.set(Calendar.MINUTE, 0);
+                c2.set(Calendar.SECOND, 0);
                 break;
-
         }
+        von = c1.getTime();
+        bis = c2.getTime();
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
