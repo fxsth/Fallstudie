@@ -57,7 +57,7 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
         delivery_status.setText(incoming_deliveries.getDelivery_status());
         delivery_status_icon.setImageDrawable(mCtx.getResources().getDrawable(incoming_deliveries.getDelivery_status_image()));
 
-        if(delivery_status.getText().equals("ready for pickup") || delivery_status.getText().equals("delivered"))
+        if(!delivery_status.getText().equals("ready for pick up") && !delivery_status.getText().equals("delivery is pending"))
         {
             button_delivery_action.setVisibility(View.GONE);
         }
@@ -82,7 +82,7 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
                     button_delivery_action.setVisibility(View.VISIBLE);
                     arrow_to_open_box.setVisibility(View.GONE);
                     arrow_to_close_box.setVisibility(View.VISIBLE);
-                    if(delivery_status.getText().equals("ready for pickup") || delivery_status.getText().equals("delivered"))
+                    if(!delivery_status.getText().equals("ready for pick up") && !delivery_status.getText().equals("delivery is pending"))
                     {
                         button_delivery_action.setVisibility(View.GONE);
                     }
