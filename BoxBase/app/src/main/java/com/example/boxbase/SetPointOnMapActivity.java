@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -60,7 +61,10 @@ public class SetPointOnMapActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_set_point_on_map);
 
-
+        // arrow to open delivery box for action buttons will disappear
+        ImageView arrow_to_open_box = findViewById(R.id.arrow_to_open_box);
+        arrow_to_open_box.setVisibility(View.INVISIBLE);
+        
         map = (MapView) findViewById(R.id.map);
         // MapView und Scrollview streiten sich um vertikales Scrollen
         // Lösung: Bei Touch auf MapView wird Scrollview abgeschaltet
