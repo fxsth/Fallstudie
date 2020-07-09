@@ -1,0 +1,8 @@
+mutation HomeRedirection($paketid: Int!, $zustellbasisid: Int, $fachnummer: Int, $wunschortid: Int) {
+  update_pakete_by_pk(pk_columns: {id: $paketid}, _set: {zustellbasis_id: $zustellbasisid, wunschort_id: $wunschortid, fach_nummer: $fachnummer}) {
+    id
+    fach_nummer
+    zustellbasis_id
+    wunschort_id
+  }
+}

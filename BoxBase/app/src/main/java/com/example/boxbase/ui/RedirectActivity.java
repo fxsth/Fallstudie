@@ -21,6 +21,7 @@ import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.example.HomeRedirectionMutation;
 import com.example.InsertOrtMutation;
 import com.example.RedirectMutation;
 import com.example.boxbase.R;
@@ -102,6 +103,7 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View v) {
                 button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
                 button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
+                destinationAddress = "";    // Heimadresse wird als Destination übernommen
             }
         });
 
@@ -111,57 +113,89 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View v) {
                 erfolgreicheQuery = false;
                 // Prüfen ob gültige PaketId übergeben wurde
-                if(paketid != -1 && lat != 0.0 && lng != 0.0) {
+                if(paketid != -1) {
                     LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
                     OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
                     ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
-                    InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(destinationAddress).lat(lat).lng(lng).build();
-                    apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
-                        @Override
-                        public void onResponse(@NotNull Response<InsertOrtMutation.Data> response) {
-                            if (response.hasErrors()) {
-                                Log.d("GraphQL", "Mutation fehlerhaft");
-                                Log.d("GraphQL", response.getErrors().get(0).getMessage());
-                            } else {
-                                wunschortid = response.getData().insert_ort_one().id();
-                                Log.d("GraphQL", "Mutation erfolgreich");
+                    // Bei gültiger Adresse -> Wunschort eintragen, ansonsten -> Wunschort löschen
+                    if(!destinationAddress.isEmpty()) {
+                        InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(destinationAddress).lat(lat).lng(lng).build();
+                        apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
+                            @Override
+                            public void onResponse(@NotNull Response<InsertOrtMutation.Data> response) {
+                                if (response.hasErrors()) {
+                                    Log.d("GraphQL", "Mutation fehlerhaft");
+                                    Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                } else {
+                                    wunschortid = response.getData().insert_ort_one().id();
+                                    Log.d("GraphQL", "Mutation erfolgreich");
 
-                                // Im erfolgreichen Fall die Update-Mutation
-                                RedirectMutation redirectMutation = RedirectMutation.builder().paketid(paketid).wunschortid(wunschortid).build();
-                                apolloClient.mutate(redirectMutation).enqueue(new ApolloCall.Callback<RedirectMutation.Data>() {
-                                    @Override
-                                    public void onResponse(@NotNull Response<RedirectMutation.Data> response) {
-                                        if (response.hasErrors()) {
-                                            Log.d("GraphQL", "Mutation fehlerhaft");
-                                            Log.d("GraphQL", response.getErrors().get(0).getMessage());
-                                            Toast.makeText(RedirectActivity.this, "Redirection  not successful", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Log.d("GraphQL", "Mutation erfolgreich");
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Toast.makeText(RedirectActivity.this, "Redirection successful", Toast.LENGTH_SHORT).show();
-                                                    finish();
-                                                }
-                                            });
+                                    // Im erfolgreichen Fall die Update-Mutation
+                                    RedirectMutation redirectMutation = RedirectMutation.builder().paketid(paketid).wunschortid(wunschortid).build();
+                                    apolloClient.mutate(redirectMutation).enqueue(new ApolloCall.Callback<RedirectMutation.Data>() {
+                                        @Override
+                                        public void onResponse(@NotNull Response<RedirectMutation.Data> response) {
+                                            if (response.hasErrors()) {
+                                                Log.d("GraphQL", "Mutation fehlerhaft");
+                                                Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                                Toast.makeText(RedirectActivity.this, "Redirection  not successful", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Log.d("GraphQL", "Mutation erfolgreich");
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        Toast.makeText(RedirectActivity.this, "Redirection successful", Toast.LENGTH_SHORT).show();
+                                                        finish();
+                                                    }
+                                                });
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onFailure(@NotNull ApolloException e) {
-                                        Log.d("GraphQL", "Mutation fehlerhaft");
-                                        Toast.makeText(RedirectActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                        @Override
+                                        public void onFailure(@NotNull ApolloException e) {
+                                            Log.d("GraphQL", "Mutation fehlerhaft");
+                                            Toast.makeText(RedirectActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(@NotNull ApolloException e) {
-                            Log.d("GraphQL", "Mutation fehlerhaft");
-                            Toast.makeText(RedirectActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(@NotNull ApolloException e) {
+                                Log.d("GraphQL", "Mutation fehlerhaft");
+                                Toast.makeText(RedirectActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else
+                    {
+                        // Home Redirection
+                        HomeRedirectionMutation homeRedirectionMutation = HomeRedirectionMutation.builder().paketid(paketid).build();
+                        apolloClient.mutate(homeRedirectionMutation).enqueue(new ApolloCall.Callback<HomeRedirectionMutation.Data>() {
+                            @Override
+                            public void onResponse(@NotNull Response<HomeRedirectionMutation.Data> response) {
+                                if (response.hasErrors()) {
+                                    Log.d("GraphQL", "Mutation fehlerhaft");
+                                    Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                    Toast.makeText(RedirectActivity.this, "Redirection  not successful", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Log.d("GraphQL", "Mutation erfolgreich");
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(RedirectActivity.this, "Redirection successful - Destination: Home", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(@NotNull ApolloException e) {
+                                Log.d("GraphQL", "Mutation fehlerhaft");
+                                Toast.makeText(RedirectActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -244,6 +278,7 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
                 button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 lat = 0.0;
                 lng = 0.0;
+                destinationAddress ="";
             }
         }
     }//onActivityResult

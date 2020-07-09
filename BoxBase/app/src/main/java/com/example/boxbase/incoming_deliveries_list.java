@@ -91,28 +91,27 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
             }
         });
 
-        view.findViewById(R.id.button_delivery_details).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent detailPackageIntent = new Intent(mCtx, LocateMobileDeliveryBaseActivity.class);
-                detailPackageIntent.putExtra("statusImage", incoming_deliveries.getDelivery_status_image());
-                detailPackageIntent.putExtra("sender", incoming_deliveries.getDelivery_sender());
-                detailPackageIntent.putExtra("destination", incoming_deliveries.getDelivery_destination());
-                detailPackageIntent.putExtra("status", incoming_deliveries.getDelivery_status());
-                mCtx.startActivity(detailPackageIntent);
-            }
-        });
-
         view.findViewById(R.id.button_delivery_action).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent redirectPackageIntent = new Intent(mCtx, RedirectActivity.class);
-                redirectPackageIntent.putExtra("paketid", incoming_deliveries.getPackageid());
-                redirectPackageIntent.putExtra("statusImage", incoming_deliveries.getDelivery_status_image());
-                redirectPackageIntent.putExtra("sender", incoming_deliveries.getDelivery_sender());
-                redirectPackageIntent.putExtra("destination", incoming_deliveries.getDelivery_destination());
-                redirectPackageIntent.putExtra("status", incoming_deliveries.getDelivery_status());
-                mCtx.startActivity(redirectPackageIntent);
+                if(delivery_status.getText().equals("ready for pick up")) {
+                    Intent detailPackageIntent = new Intent(mCtx, LocateMobileDeliveryBaseActivity.class);
+                    detailPackageIntent.putExtra("paketid", incoming_deliveries.getPackageid());
+                    detailPackageIntent.putExtra("statusImage", incoming_deliveries.getDelivery_status_image());
+                    detailPackageIntent.putExtra("statusImage", incoming_deliveries.getDelivery_status_image());
+                    detailPackageIntent.putExtra("sender", incoming_deliveries.getDelivery_sender());
+                    detailPackageIntent.putExtra("destination", incoming_deliveries.getDelivery_destination());
+                    detailPackageIntent.putExtra("status", incoming_deliveries.getDelivery_status());
+                    mCtx.startActivity(detailPackageIntent);
+                }else {
+                    Intent redirectPackageIntent = new Intent(mCtx, RedirectActivity.class);
+                    redirectPackageIntent.putExtra("paketid", incoming_deliveries.getPackageid());
+                    redirectPackageIntent.putExtra("statusImage", incoming_deliveries.getDelivery_status_image());
+                    redirectPackageIntent.putExtra("sender", incoming_deliveries.getDelivery_sender());
+                    redirectPackageIntent.putExtra("destination", incoming_deliveries.getDelivery_destination());
+                    redirectPackageIntent.putExtra("status", incoming_deliveries.getDelivery_status());
+                    mCtx.startActivity(redirectPackageIntent);
+                }
             }
         });
 

@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +50,6 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locate_mobile_delivery_base);
 
-        LinearLayout delivery_to_redirect = findViewById(R.id.delivery_to_redirect);
         TextView delivery_sender = findViewById(R.id.delivery_sender);
         TextView delivery_destination = findViewById(R.id.delivery_destination);
         TextView delivery_status = findViewById(R.id.delivery_status);
@@ -70,11 +68,16 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
         delivery_status.setText(intent.getStringExtra("status"));
         delivery_status_image.setImageDrawable(LocateMobileDeliveryBaseActivity.this.getResources().getDrawable(intent.getIntExtra("statusImage", 0)));
         arrow_to_open_box.setVisibility(View.INVISIBLE);
-        String[] felder = getAddressFields(delivery_destination.getText().toString());
-        box_street.setText(felder[0]);
-        box_number.setText(felder[1]);
-        box_postcode.setText(felder[2]);
-        box_city.setText(felder[3]);
+        if(!delivery_destination.getText().equals("") && getAddressFields(delivery_destination.getText().toString())!= null) {
+            String[] felder = getAddressFields(delivery_destination.getText().toString());
+            box_street.setText(felder[0]);
+            box_number.setText(felder[1]);
+            box_postcode.setText(felder[2]);
+            box_city.setText(felder[3]);
+        } else
+        {
+
+        }
 
         button_open_compartment.setOnClickListener(new View.OnClickListener() {
             @Override
