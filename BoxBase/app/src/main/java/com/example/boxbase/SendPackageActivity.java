@@ -235,7 +235,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
 
                             // Prüfen welcher Drop-Off-Wunschort eingetragen wurde und entsprechende OrtId aus der Datenbank nehmen
                             if(desiredAddress != null && !desiredAddress.isEmpty()) {
-                                InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(destinationAddress).lat(lat).lng(lng).build();
+                                InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(desiredAddress).lat(lat).lng(lng).build();
                                 apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
                                     @RequiresApi(api = Build.VERSION_CODES.O)
                                     @Override
@@ -246,6 +246,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                                         } else {
                                             wunschortid = response.getData().insert_ort_one().id();
                                             Log.d("GraphQL", "Mutation erfolgreich");
+                                            insertPackage(reciever_id, user.getUserId(), wunschortid, von.toString(), bis.toString(), package_size);
                                         }
                                     }
 
@@ -268,6 +269,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                                             if(response.getData().person().size()>0 && !response.getData().person().get(0).ort().adresse().isEmpty()) {
                                                 wunschortid = response.getData().person().get(0).ort().id();
                                                 Log.d("GraphQL", "Query erfolgreich");
+                                                insertPackage(reciever_id, user.getUserId(), wunschortid, von.toString(), bis.toString(), package_size);
                                             }else {
                                                 Log.d("GraphQL", "Benutzer nicht gefunden");
                                             }
@@ -280,40 +282,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                                 });
                             }
 
-                            // Anschließend das Paket in die Datenbank mit allen benötigten Daten eintragen
-                            InsertSendPackageMutation insertSendPackageMutation =
-                                    InsertSendPackageMutation
-                                            .builder()
-                                            .empfaenger_id(reciever_id)
-                                            .absender_id(user.getUserId())
-                                            .wunschort_id(wunschortid)
-                                            .interaktion_von(von.toString())
-                                            .interaktion_bis(bis.toString())
-                                            .groesse(package_size)
-                                            .build();
-                            apolloClient.mutate(insertSendPackageMutation).enqueue(new ApolloCall.Callback<InsertSendPackageMutation.Data>() {
-                                @Override
-                                public void onResponse(@NotNull Response<InsertSendPackageMutation.Data> response) {
-                                    if (response.hasErrors()) {
-                                        Log.d("GraphQL", "Mutation fehlerhaft");
-                                        Log.d("GraphQL", response.getErrors().get(0).getMessage());
-                                    } else {
-                                        Log.d("GraphQL", "Mutation erfolgreich");
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(SendPackageActivity.this, "Send package successful", Toast.LENGTH_SHORT).show();
-                                                finish();
-                                            }
-                                        });
-                                    }
-                                }
 
-                                @Override
-                                public void onFailure(@NotNull ApolloException e) {
-                                    Log.d("GraphQL", "InsertSendPackageMutation fehlerhaft");
-                                }
-                            });
                         }
                     }
 
@@ -384,4 +353,45 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
             }
         }
     }//onActivityResult
+
+    void insertPackage(int reciever_id, int userid, int wunschortid, String timestamp_von, String timestamp_bis, int groesse)
+    {
+        LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+        OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
+        ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
+        // Anschließend das Paket in die Datenbank mit allen benötigten Daten eintragen
+        InsertSendPackageMutation insertSendPackageMutation =
+                InsertSendPackageMutation
+                        .builder()
+                        .empfaenger_id(reciever_id)
+                        .absender_id(userid)
+                        .wunschort_id(wunschortid)
+                        .interaktion_von(timestamp_von)
+                        .interaktion_bis(timestamp_bis)
+                        .groesse(groesse)
+                        .build();
+        apolloClient.mutate(insertSendPackageMutation).enqueue(new ApolloCall.Callback<InsertSendPackageMutation.Data>() {
+            @Override
+            public void onResponse(@NotNull Response<InsertSendPackageMutation.Data> response) {
+                if (response.hasErrors()) {
+                    Log.d("GraphQL", "Mutation fehlerhaft");
+                    Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                } else {
+                    Log.d("GraphQL", "Mutation erfolgreich");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(SendPackageActivity.this, "Send package successful", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull ApolloException e) {
+                Log.d("GraphQL", "InsertSendPackageMutation fehlerhaft");
+            }
+        });
+    }
 }
