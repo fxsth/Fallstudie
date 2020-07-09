@@ -44,6 +44,7 @@ public class SetPointOnMapActivity extends AppCompatActivity {
     GeoPoint desiredAddressPoint;
     IMapController mapController;
     LocationListener locationListener;
+    boolean validAddress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,30 +126,51 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         button_location_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String desiredAddress = box_street.getText().toString() + " " +
-                        box_number.getText().toString() + ", " +
-                        box_postcode.getText().toString() + " " +
-                        box_city.getText().toString();
-                GeocoderNominatim geocoderNominatim = new GeocoderNominatim("TestUserAgent");
-                List<Address> addresses = null;
-                try {
-                    addresses = geocoderNominatim.getFromLocationName(desiredAddress, 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                if(!validAddress) {
+                    String desiredAddress = box_street.getText().toString() + " " +
+                            box_number.getText().toString() + ", " +
+                            box_postcode.getText().toString() + " " +
+                            box_city.getText().toString();
+                    GeocoderNominatim geocoderNominatim = new GeocoderNominatim("TestUserAgent");
+                    List<Address> addresses = null;
+                    try {
+                        addresses = geocoderNominatim.getFromLocationName(desiredAddress, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
-                if (!addresses.isEmpty()) {
-                    desiredAddressPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-                    desiredAddressMarker.setPosition(desiredAddressPoint);
-                    desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-                    desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
-                    desiredAddressMarker.setTitle("Some Point to show it's working");
-                    map.getOverlays().add(desiredAddressMarker);
-                    ArrayList<GeoPoint> positions = new ArrayList<GeoPoint>();
-                    positions.add(ownLocation);
-                    positions.add(desiredAddressPoint);
-                    map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true, 100, 17, 1500L);
-                    map.invalidate();   // MapView aktualisieren
+                    if (!addresses.isEmpty()) {
+                        desiredAddressPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+                        desiredAddressMarker.setPosition(desiredAddressPoint);
+                        desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                        desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
+                        desiredAddressMarker.setTitle("Some Point to show it's working");
+                        map.getOverlays().add(desiredAddressMarker);
+                        ArrayList<GeoPoint> positions = new ArrayList<GeoPoint>();
+                        positions.add(ownLocation);
+                        positions.add(desiredAddressPoint);
+                        map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true, 100, 17, 1500L);
+                        map.invalidate();   // MapView aktualisieren
+                        validAddress = true;
+                        button_location_confirm.setText("confirm and save");
+                    }
+                } else
+                {
+                    String desiredAddress = box_street.getText().toString() + " " +
+                            box_number.getText().toString() + ", " +
+                            box_postcode.getText().toString() + " " +
+                            box_city.getText().toString();
+                    Intent returnIntent = new Intent();
+                    if(desiredAddressPoint != null) {
+                        returnIntent.putExtra("adress", desiredAddress);
+                        returnIntent.putExtra("lat", desiredAddressPoint.getLatitude());
+                        returnIntent.putExtra("lng", desiredAddressPoint.getLongitude());
+                        setResult(Activity.RESULT_OK,returnIntent);
+                    } else {
+                        setResult(Activity.RESULT_CANCELED, returnIntent);
+                    }
+                    finish();
+                    SetPointOnMapActivity.this.finish();
                 }
             }
         });
