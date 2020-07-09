@@ -211,6 +211,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateIncomingDeliveryList(List<IncomingSubSubscription.Pakete> pakete) {
         List<incoming_deliveries> incoming_deliveriesList = new ArrayList<>();
         for (IncomingSubSubscription.Pakete paket : pakete) {
