@@ -14,5 +14,6 @@ subscription OutgoingSub($user: Int) {
       name
     }
     zugestellt
+    updated_at
   }
 }
