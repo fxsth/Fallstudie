@@ -126,7 +126,7 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         button_redirection_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date nowUTC = Date.from(Instant.now().minus(Duration.ofHours(2)));
+                Date nowUTC = Date.from(Instant.now().minus(Duration.ofHours(3)));
                 if(bis.before(nowUTC))
                 {
                     Toast.makeText(RedirectActivity.this, "invalid time", Toast.LENGTH_SHORT).show();

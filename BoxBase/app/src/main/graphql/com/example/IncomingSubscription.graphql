@@ -18,5 +18,6 @@ subscription IncomingSub($user: Int) {
     }
     zustellbasis_id
     wunschort_id
+    updated_at
   }
 }
