@@ -235,6 +235,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 delivery_status = "delivered";
             incoming_deliveriesList.add(
                     new incoming_deliveries(
+                            paket.id(),
                             drawable,
                             paket.sender().name(),
                             destination,

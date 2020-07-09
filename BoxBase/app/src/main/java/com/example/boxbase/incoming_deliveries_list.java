@@ -102,6 +102,7 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
             @Override
             public void onClick(View view) {
                 Intent redirectPackageIntent = new Intent(mCtx, RedirectActivity.class);
+                redirectPackageIntent.putExtra("paketid", incoming_deliveries.getPackageid());
                 redirectPackageIntent.putExtra("statusImage", incoming_deliveries.getDelivery_status_image());
                 redirectPackageIntent.putExtra("sender", incoming_deliveries.getDelivery_sender());
                 redirectPackageIntent.putExtra("destination", incoming_deliveries.getDelivery_destination());

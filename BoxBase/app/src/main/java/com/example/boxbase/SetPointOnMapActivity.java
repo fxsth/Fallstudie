@@ -1,7 +1,9 @@
 package com.example.boxbase;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
@@ -38,6 +40,7 @@ public class SetPointOnMapActivity extends AppCompatActivity {
     private MapView map = null;
     LocationManager locationManager;
     GeoPoint ownLocation;
+    GeoPoint desiredAddressPoint;
     IMapController mapController;
     LocationListener locationListener;
 
@@ -96,6 +99,20 @@ public class SetPointOnMapActivity extends AppCompatActivity {
         button_discard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String desiredAddress = box_street.getText().toString() + " " +
+                        box_number.getText().toString() + ", " +
+                        box_postcode.getText().toString() + " " +
+                        box_city.getText().toString();
+                Intent returnIntent = new Intent();
+                if(desiredAddressPoint != null) {
+                    returnIntent.putExtra("adress", desiredAddress);
+                    returnIntent.putExtra("lat", desiredAddressPoint.getLatitude());
+                    returnIntent.putExtra("lng", desiredAddressPoint.getLongitude());
+                    setResult(Activity.RESULT_OK,returnIntent);
+                } else {
+                    setResult(Activity.RESULT_CANCELED, returnIntent);
+                }
+                finish();
                 SetPointOnMapActivity.this.finish();
             }
         });
@@ -117,7 +134,7 @@ public class SetPointOnMapActivity extends AppCompatActivity {
                 }
 
                 if (!addresses.isEmpty()) {
-                    GeoPoint desiredAddressPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+                    desiredAddressPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
                     desiredAddressMarker.setPosition(desiredAddressPoint);
                     desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
                     desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));

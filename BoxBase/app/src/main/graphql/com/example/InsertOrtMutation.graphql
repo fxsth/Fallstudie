@@ -1,0 +1,5 @@
+mutation InsertOrt($adresse: String, $lat: numeric, $lng: numeric) {
+  insert_ort_one(object: {adresse: $adresse, lat: $lat, long: $lng}) {
+    id
+  }
+}

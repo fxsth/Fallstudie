@@ -1,29 +1,56 @@
 package com.example.boxbase.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.ApolloClient;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
+import com.example.InsertOrtMutation;
+import com.example.RedirectMutation;
 import com.example.boxbase.R;
 import com.example.boxbase.SetPointOnMapActivity;
+import com.example.boxbase.data.LoginDataSource;
+import com.example.boxbase.data.LoginRepository;
+import com.example.boxbase.data.model.LoggedInUser;
+import com.example.boxbase.network.HttpUtilities;
+
+import org.jetbrains.annotations.NotNull;
+
+import okhttp3.OkHttpClient;
 
 public class RedirectActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-
+    ConstraintLayout button_point_on_map;
+    ConstraintLayout button_home_address;
 
     // Declaration for dropdown menus
     private static final String[] paths_day_selection = {"tomorrow", "in 2 days", "in 3 days", "in 4 days", "in 5 days"};
     private static final String[] paths_time_selection_from = {"6 am", "7 am", "8 am", "9 am", "10 am", "11 am", "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm", "6 pm", "7 pm", "8 pm"};
     private static final String[] paths_time_selection_to = {"7 am", "8 am", "9 am", "10 am", "11 am", "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm", "6 pm", "7 pm", "8 pm", "9 pm"};
 
+
+    // Ergebnisse aus dem Geocoding
+    String destinationAddress;
+    double lat, lng;
+    int wunschortid;
+    boolean erfolgreicheQuery;
+    int paketid;
+    int LAUNCH_SETPOINTONMAP = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +62,10 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         TextView delivery_status = findViewById(R.id.delivery_status);
         ImageView delivery_status_image = findViewById(R.id.delivery_status_icon);
         ImageView arrow_to_open_box = findViewById(R.id.arrow_to_open_box);
-        ConstraintLayout button_point_on_map = findViewById(R.id.button_point_on_map);
-        ConstraintLayout button_home_address = findViewById(R.id.button_home_address);
+        button_point_on_map = findViewById(R.id.button_point_on_map);
+        button_home_address = findViewById(R.id.button_home_address);
+        Button button_redirection_confirm = findViewById(R.id.button_redirection_confirm);
+        Button button_discard = findViewById(R.id.button_discard);
 
         //location_selection_mobile_delivery_base
         ImageView arrow_to_close_mdb_box = findViewById(R.id.arrow_to_close_mdb_box);
@@ -63,8 +92,9 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View v) {
                 button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
                 button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
+
                 Intent SetPointOnMapIntent = new Intent(RedirectActivity.this, SetPointOnMapActivity.class);
-                RedirectActivity.this.startActivity(SetPointOnMapIntent);
+                startActivityForResult(SetPointOnMapIntent, LAUNCH_SETPOINTONMAP);
             }
         });
         button_home_address.setOnClickListener(new View.OnClickListener() {
@@ -72,13 +102,79 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View v) {
                 button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
                 button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
-                // TODO: set up home address as desired address
             }
         });
 
 
+        button_redirection_confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                erfolgreicheQuery = false;
+                // Prüfen ob gültige PaketId übergeben wurde
+                if(paketid != -1 && lat != 0.0 && lng != 0.0) {
+                    LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+                    OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
+                    ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
+                    InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(destinationAddress).lat(lat).lng(lng).build();
+                    apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
+                        @Override
+                        public void onResponse(@NotNull Response<InsertOrtMutation.Data> response) {
+                            if (response.hasErrors()) {
+                                Log.d("GraphQL", "Mutation fehlerhaft");
+                                Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                            } else {
+                                wunschortid = response.getData().insert_ort_one().id();
+                                Log.d("GraphQL", "Mutation erfolgreich");
+
+                                // Im erfolgreichen Fall die Update-Mutation
+                                RedirectMutation redirectMutation = RedirectMutation.builder().paketid(paketid).wunschortid(wunschortid).build();
+                                apolloClient.mutate(redirectMutation).enqueue(new ApolloCall.Callback<RedirectMutation.Data>() {
+                                    @Override
+                                    public void onResponse(@NotNull Response<RedirectMutation.Data> response) {
+                                        if (response.hasErrors()) {
+                                            Log.d("GraphQL", "Mutation fehlerhaft");
+                                            Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                            Toast.makeText(RedirectActivity.this, "Redirection  not successful", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.d("GraphQL", "Mutation erfolgreich");
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(RedirectActivity.this, "Redirection successful", Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NotNull ApolloException e) {
+                                        Log.d("GraphQL", "Mutation fehlerhaft");
+                                        Toast.makeText(RedirectActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull ApolloException e) {
+                            Log.d("GraphQL", "Mutation fehlerhaft");
+                            Toast.makeText(RedirectActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
+        button_discard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Intent intent = getIntent();
+        paketid = intent.getIntExtra("paketid", -1);
         delivery_sender.setText(intent.getStringExtra("sender"));
         delivery_destination.setText(intent.getStringExtra("destination"));
         delivery_status.setText(intent.getStringExtra("status"));
@@ -132,4 +228,23 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
     public void onNothingSelected(AdapterView<?> parent) {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_SETPOINTONMAP) {
+            if(resultCode == Activity.RESULT_OK){
+                destinationAddress = data.getStringExtra("adress");
+                lat=data.getDoubleExtra("lat", 0);
+                lng=data.getDoubleExtra("lng", 0);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
+                button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
+                lat = 0.0;
+                lng = 0.0;
+            }
+        }
+    }//onActivityResult
 }
