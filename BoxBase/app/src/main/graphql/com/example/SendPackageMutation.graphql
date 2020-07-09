@@ -1,4 +1,4 @@
-mutation InsertSendPackage($groesse: Int, $empfaenger_id: Int, $absender_id: Int, $interaktion_bis: timestamptz, $interaktion_von: timestamptz, $wunschort_id: Int) {
+mutation InsertSendPackage($groesse: Int!, $empfaenger_id: Int!, $absender_id: Int!, $interaktion_bis: timestamptz, $interaktion_von: timestamptz, $wunschort_id: Int) {
   insert_pakete_one(object: {groesse: $groesse, empfaenger_id: $empfaenger_id, absender_id: $absender_id, interaktion_bis: $interaktion_bis, interaktion_von: $interaktion_von, wunschort_id: $wunschort_id}) {
     wunschort_id
   }

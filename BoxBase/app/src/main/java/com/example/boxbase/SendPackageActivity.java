@@ -23,7 +23,10 @@ import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 import com.example.InsertEmpfaengerMutation;
+import com.example.InsertOrtMutation;
+import com.example.InsertSendPackageMutation;
 import com.example.UserIdByNameAndAddressQuery;
+import com.example.UserQuery;
 import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
 import com.example.boxbase.data.model.LoggedInUser;
@@ -43,7 +46,8 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
     String name;
     String destinationAddress;
     int reciever_id;
-    int package_size;
+    int reciever_ort_id;
+    int package_size = 1;
 
     // Variablen für Timestamp
     Date von, bis;
@@ -54,8 +58,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
     // Ergebnisse aus dem Geocoding
     String desiredAddress;
     double lat, lng;
-    int wunschortid;
-    int paketid;
+    int wunschortid = -1;
     int LAUNCH_SETPOINTONMAP = 1;
 
     // Declaration for dropdown menus
@@ -86,9 +89,9 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
         reciever_id = -1;
 
         // Function of the dropdown menus
-        Spinner spinner_day_selection = (Spinner) findViewById(R.id.time_slot_selection_day);
-        Spinner spinner_time_selection_from = (Spinner) findViewById(R.id.time_slot_selection_from);
-        Spinner spinner_time_selection_to = (Spinner) findViewById(R.id.time_slot_selection_to);
+        spinner_day_selection = (Spinner) findViewById(R.id.time_slot_selection_day);
+        spinner_time_selection_from = (Spinner) findViewById(R.id.time_slot_selection_from);
+        spinner_time_selection_to = (Spinner) findViewById(R.id.time_slot_selection_to);
         // day selection
         ArrayAdapter<String> adapter_day_selection = new ArrayAdapter<>(SendPackageActivity.this,
                 R.layout.spinner_layout, paths_day_selection);
@@ -117,7 +120,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                 button_size_s.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
                 button_size_m.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 button_size_l.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
-                // TODO: save package size s
+                package_size = 1;
             }
         });
         button_size_m.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +130,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                 button_size_s.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 button_size_m.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
                 button_size_l.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
-                // TODO: save package size m
+                package_size = 2;
             }
         });
         button_size_l.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +140,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                 button_size_s.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 button_size_m.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 button_size_l.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
-                // TODO: save package size l
+                package_size = 3;
             }
         });
 
@@ -205,7 +208,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                             Log.d("GraphQL", "Query erfolgreich");
                             if (response.getData().person().size() > 0) {
                                 reciever_id = response.getData().person().get(0).id();
-                                // TODO: Ort-ID abfragen
+                                reciever_ort_id = response.getData().person().get(0).ort().id();
                             } else
                             {
                                 // Wenn es den Empfänger noch nciht gibt, fügen wir ihn hinzu
@@ -214,42 +217,111 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                                     @Override
                                     public void onResponse(@NotNull Response<InsertEmpfaengerMutation.Data> response) {
                                         if (response.hasErrors()) {
-                                            Log.d("GraphQL", "Mutation fehlerhaft");
+                                            Log.d("GraphQL", "InsertEmpfänger Mutation fehlerhaft");
                                             Log.d("GraphQL", response.getErrors().get(0).getMessage());
-                                            Toast.makeText(SendPackageActivity.this, "Redirection  not successful", Toast.LENGTH_SHORT).show();
                                         } else {
-                                            Log.d("GraphQL", "Mutation erfolgreich");
+                                            Log.d("GraphQL", "InsertEmpfänger Mutation erfolgreich");
                                             reciever_id = response.getData().insert_person_one().id();
-                                            // TODO: Ort-ID abfragen
-                                            runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Toast.makeText(SendPackageActivity.this, "Redirection successful", Toast.LENGTH_SHORT).show();
-                                                    finish();
-                                                }
-                                            });
+                                            reciever_ort_id = response.getData().insert_person_one().ort_id();
                                         }
                                     }
 
                                     @Override
                                     public void onFailure(@NotNull ApolloException e) {
-                                        Log.d("GraphQL", "Mutation fehlerhaft");
-                                        Toast.makeText(SendPackageActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
+                                        Log.d("GraphQL", "InsertEmpfänger Mutation fehlerhaft");
                                     }
                                 });
                             }
-                            // TODO: Paket einfügen -> Mutation
+
+                            // Prüfen welcher Drop-Off-Wunschort eingetragen wurde und entsprechende OrtId aus der Datenbank nehmen
+                            if(desiredAddress != null && !desiredAddress.isEmpty()) {
+                                InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(destinationAddress).lat(lat).lng(lng).build();
+                                apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
+                                    @RequiresApi(api = Build.VERSION_CODES.O)
+                                    @Override
+                                    public void onResponse(@NotNull Response<InsertOrtMutation.Data> response) {
+                                        if (response.hasErrors()) {
+                                            Log.d("GraphQL", "Wunschort eintragen - Mutation fehlerhaft");
+                                            Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                        } else {
+                                            wunschortid = response.getData().insert_ort_one().id();
+                                            Log.d("GraphQL", "Mutation erfolgreich");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NotNull ApolloException e) {
+                                        Log.d("GraphQL", "Wunschort eintragen - Mutation fehlerhaft");
+                                    }
+                                });
+                            } else
+                            {
+                                UserQuery userQuery = UserQuery.builder().userid(user.getUserId()).build();
+                                apolloClient.query(userQuery).enqueue(new ApolloCall.Callback<UserQuery.Data>() {
+                                    @Override
+                                    public void onResponse(@NotNull Response<UserQuery.Data> response) {
+                                        if (response.hasErrors()) {
+                                            Log.d("GraphQL", "Query fehlerhaft");
+                                            Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                        } else {
+                                            // Prüfe vorher, ob Person in der Db vorhanden und auch eine Adresse vorhanden
+                                            if(response.getData().person().size()>0 && !response.getData().person().get(0).ort().adresse().isEmpty()) {
+                                                wunschortid = response.getData().person().get(0).ort().id();
+                                                Log.d("GraphQL", "Query erfolgreich");
+                                            }else {
+                                                Log.d("GraphQL", "Benutzer nicht gefunden");
+                                            }
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(@NotNull ApolloException e) {
+                                        Log.d("GraphQL", "Mutation fehlerhaft");
+                                    }
+                                });
+                            }
+
+                            // Anschließend das Paket in die Datenbank mit allen benötigten Daten eintragen
+                            InsertSendPackageMutation insertSendPackageMutation =
+                                    InsertSendPackageMutation
+                                            .builder()
+                                            .empfaenger_id(reciever_id)
+                                            .absender_id(user.getUserId())
+                                            .wunschort_id(wunschortid)
+                                            .interaktion_von(von.toString())
+                                            .interaktion_bis(bis.toString())
+                                            .groesse(package_size)
+                                            .build();
+                            apolloClient.mutate(insertSendPackageMutation).enqueue(new ApolloCall.Callback<InsertSendPackageMutation.Data>() {
+                                @Override
+                                public void onResponse(@NotNull Response<InsertSendPackageMutation.Data> response) {
+                                    if (response.hasErrors()) {
+                                        Log.d("GraphQL", "Mutation fehlerhaft");
+                                        Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                    } else {
+                                        Log.d("GraphQL", "Mutation erfolgreich");
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(SendPackageActivity.this, "Send package successful", Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            }
+                                        });
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(@NotNull ApolloException e) {
+                                    Log.d("GraphQL", "InsertSendPackageMutation fehlerhaft");
+                                }
+                            });
                         }
                     }
 
                     @Override
                     public void onFailure(@NotNull ApolloException e) {
-                        Log.d("GraphQL", "Mutation fehlerhaft");
-                        Toast.makeText(SendPackageActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
+                        Log.d("GraphQL", "UserIdByNameAndAddressQuery fehlerhaft");
                     }
                 });
-                Toast.makeText(SendPackageActivity.this, "This one's for free. You're welcome!",Toast.LENGTH_LONG).show();
-                finish();
             }
         });
 
@@ -266,25 +338,27 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Date now = Date.from(Instant.now());
-        Calendar c1 = Calendar.getInstance();
-        Calendar c2 = Calendar.getInstance();
-        c1.setTime(now);
-        c2.setTime(now);
+        if(spinner_day_selection != null && spinner_time_selection_from != null && spinner_time_selection_to != null) {
+            Date now = Date.from(Instant.now());
+            Calendar c1 = Calendar.getInstance();
+            Calendar c2 = Calendar.getInstance();
+            c1.setTime(now);
+            c2.setTime(now);
 
-        c1.add(Calendar.DATE, spinner_day_selection.getSelectedItemPosition());
-        c2.add(Calendar.DATE, spinner_day_selection.getSelectedItemPosition());
+            c1.add(Calendar.DATE, spinner_day_selection.getSelectedItemPosition());
+            c2.add(Calendar.DATE, spinner_day_selection.getSelectedItemPosition());
 
-        c1.set(Calendar.HOUR_OF_DAY, spinner_time_selection_from.getSelectedItemPosition()+4);   // +4 entspricht +6h und Umrechnung auf UTC
-        c1.set(Calendar.MINUTE, 0);
-        c1.set(Calendar.SECOND, 0);
+            c1.set(Calendar.HOUR_OF_DAY, spinner_time_selection_from.getSelectedItemPosition() + 4);   // +4 entspricht +6h und Umrechnung auf UTC
+            c1.set(Calendar.MINUTE, 0);
+            c1.set(Calendar.SECOND, 0);
 
-        c2.set(Calendar.HOUR_OF_DAY, spinner_time_selection_to.getSelectedItemPosition()+5);
-        c2.set(Calendar.MINUTE, 0);
-        c2.set(Calendar.SECOND, 0);
+            c2.set(Calendar.HOUR_OF_DAY, spinner_time_selection_to.getSelectedItemPosition() + 5);
+            c2.set(Calendar.MINUTE, 0);
+            c2.set(Calendar.SECOND, 0);
 
-        von = c1.getTime();
-        bis = c2.getTime();
+            von = c1.getTime();
+            bis = c2.getTime();
+        }
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -297,7 +371,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
 
         if (requestCode == LAUNCH_SETPOINTONMAP) {
             if(resultCode == Activity.RESULT_OK){
-                destinationAddress = data.getStringExtra("adress");
+                desiredAddress = data.getStringExtra("adress");
                 lat=data.getDoubleExtra("lat", 0);
                 lng=data.getDoubleExtra("lng", 0);
             }
@@ -306,7 +380,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                 button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 lat = 0.0;
                 lng = 0.0;
-                destinationAddress ="";
+                desiredAddress ="";
             }
         }
     }//onActivityResult
