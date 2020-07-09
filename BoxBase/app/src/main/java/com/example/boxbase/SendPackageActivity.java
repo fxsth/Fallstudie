@@ -1,10 +1,12 @@
 package com.example.boxbase;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,6 +32,8 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
         ConstraintLayout button_size_s = findViewById(R.id.button_package_size_s);
         ConstraintLayout button_size_m = findViewById(R.id.button_package_size_m);
         ConstraintLayout button_size_l = findViewById(R.id.button_package_size_l);
+        ConstraintLayout button_point_on_map = findViewById(R.id.button_point_on_map);
+        ConstraintLayout button_home_address = findViewById(R.id.button_home_address);
 
         goToPaymentButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +106,45 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                 button_size_m.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 button_size_l.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
                 // TODO: save package size l
+            }
+        });
+
+
+        //location_selection_mobile_delivery_base
+        ImageView arrow_to_close_mdb_box = findViewById(R.id.arrow_to_close_mdb_box);
+        ImageView arrow_to_open_mdb_box = findViewById(R.id.arrow_to_open_mdb_box);
+        ConstraintLayout cl_selection_mobile_delivery_base = findViewById(R.id.cl_selection_mobile_delivery_base);
+        arrow_to_close_mdb_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cl_selection_mobile_delivery_base.setVisibility(View.GONE);
+                arrow_to_close_mdb_box.setVisibility(View.INVISIBLE);
+                arrow_to_open_mdb_box.setVisibility(View.VISIBLE);
+            }
+        });
+        arrow_to_open_mdb_box.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cl_selection_mobile_delivery_base.setVisibility(View.VISIBLE);
+                arrow_to_close_mdb_box.setVisibility(View.VISIBLE);
+                arrow_to_open_mdb_box.setVisibility(View.INVISIBLE);
+            }
+        });
+        button_point_on_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
+                button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
+                Intent SetPointOnMapIntent = new Intent(SendPackageActivity.this, SetPointOnMapActivity.class);
+                SendPackageActivity.this.startActivity(SetPointOnMapIntent);
+            }
+        });
+        button_home_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
+                button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
+                // TODO: set up home address as desired address
             }
         });
     }
