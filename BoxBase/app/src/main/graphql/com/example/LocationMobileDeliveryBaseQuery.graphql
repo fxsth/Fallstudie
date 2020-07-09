@@ -1,0 +1,9 @@
+query LocationMobileDeliveryBaseQuery($paketid: Int!) {
+  pakete_by_pk(id: $paketid) {
+    zustellbasis {
+      id
+      lat
+      long
+    }
+  }
+}

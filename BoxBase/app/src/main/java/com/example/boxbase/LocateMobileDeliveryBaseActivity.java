@@ -4,27 +4,36 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.ApolloClient;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
+import com.example.LocationMobileDeliveryBaseQuery;
+import com.example.boxbase.data.LoginDataSource;
+import com.example.boxbase.data.LoginRepository;
+import com.example.boxbase.data.model.LoggedInUser;
+import com.example.boxbase.network.HttpUtilities;
+
+import org.jetbrains.annotations.NotNull;
 import org.osmdroid.api.IMapController;
-import org.osmdroid.bonuspack.location.GeocoderNominatim;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
@@ -32,9 +41,10 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
-import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
+
+import okhttp3.OkHttpClient;
 
 public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
@@ -50,6 +60,8 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_locate_mobile_delivery_base);
 
+        int paketid;
+
         TextView delivery_sender = findViewById(R.id.delivery_sender);
         TextView delivery_destination = findViewById(R.id.delivery_destination);
         TextView delivery_status = findViewById(R.id.delivery_status);
@@ -63,12 +75,13 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
         Button button_close = findViewById(R.id.button_close);
 
         Intent intent = getIntent();
+        paketid = intent.getIntExtra("paketid", -1);
         delivery_sender.setText(intent.getStringExtra("sender"));
         delivery_destination.setText(intent.getStringExtra("destination"));
         delivery_status.setText(intent.getStringExtra("status"));
         delivery_status_image.setImageDrawable(LocateMobileDeliveryBaseActivity.this.getResources().getDrawable(intent.getIntExtra("statusImage", 0)));
         arrow_to_open_box.setVisibility(View.INVISIBLE);
-        if(!delivery_destination.getText().equals("") && getAddressFields(delivery_destination.getText().toString())!= null) {
+        if(!delivery_destination.getText().equals("") && isValidAddress(delivery_destination.getText().toString())) {
             String[] felder = getAddressFields(delivery_destination.getText().toString());
             box_street.setText(felder[0]);
             box_number.setText(felder[1]);
@@ -131,27 +144,46 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
 
         Marker desiredAddressMarker = new Marker(map);
 
-        GeocoderNominatim geocoderNominatim = new GeocoderNominatim("TestUserAgent");
-        List<Address> addresses = null;
-        try {
-            addresses = geocoderNominatim.getFromLocationName(delivery_destination.getText().toString(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        if (!addresses.isEmpty()) {
-            destinationPoint = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-            desiredAddressMarker.setPosition(destinationPoint);
-            desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_delivery_status_home));
-            desiredAddressMarker.setTitle("Destination");
-            map.getOverlays().add(desiredAddressMarker);
-            map.invalidate();   // MapView aktualisieren
-        }
-        else
-        {
-            Toast.makeText(LocateMobileDeliveryBaseActivity.this, "Couldnt find destination on map", Toast.LENGTH_LONG).show();
-        }
+        LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+        OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
+        ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
+        LocationMobileDeliveryBaseQuery locationMobileDeliveryBaseQuery = LocationMobileDeliveryBaseQuery.builder().paketid(paketid).build();
+        apolloClient.query(locationMobileDeliveryBaseQuery).enqueue(new ApolloCall.Callback<LocationMobileDeliveryBaseQuery.Data>() {
+            @Override
+            public void onResponse(@NotNull Response<LocationMobileDeliveryBaseQuery.Data> response) {
+                if (response.hasErrors()) {
+                    Log.d("GraphQL", "Query fehlerhaft");
+                    Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                } else {
+                    // Ist überhaupt eine Zustellbasis-Id bei dem Paket eingetragen?
+                    if(response.getData().pakete_by_pk() != null) {
+                        {
+                            BigDecimal latBD = (BigDecimal) response.getData().pakete_by_pk().zustellbasis().lat();
+                            BigDecimal lngBD = (BigDecimal) response.getData().pakete_by_pk().zustellbasis().lat();
+                            double lat = latBD.doubleValue();
+                            double lng = lngBD.doubleValue();
+                            if(lat != 0.0 && lng != 0.0) {
+                                destinationPoint = new GeoPoint(lat, lng);
+                                desiredAddressMarker.setPosition(destinationPoint);
+                                desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+                                desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
+                                desiredAddressMarker.setTitle(delivery_destination.getText().toString());
+                                map.getOverlays().add(desiredAddressMarker);
+                                map.invalidate();   // MapView aktualisieren
+                            }
+                        }
+                    }else {
+                        Log.d("GraphQL", "Person nicht gefunden");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull ApolloException e) {
+                Log.d("GraphQL", "Mutation fehlerhaft");
+            }
+        });
     }
 
     @Override
@@ -258,5 +290,10 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
             return felder;
         }
         return null;
+    }
+
+    private boolean isValidAddress(String address)
+    {
+        return address.contains(",");
     }
 }
