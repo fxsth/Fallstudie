@@ -21,9 +21,9 @@ import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-import com.example.HomeRedirectionMutation;
 import com.example.InsertOrtMutation;
 import com.example.RedirectMutation;
+import com.example.UserQuery;
 import com.example.boxbase.R;
 import com.example.boxbase.SetPointOnMapActivity;
 import com.example.boxbase.data.LoginDataSource;
@@ -118,7 +118,7 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
                     OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
                     ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
                     // Bei gültiger Adresse -> Wunschort eintragen, ansonsten -> Wunschort löschen
-                    if(!destinationAddress.isEmpty()) {
+                    if(destinationAddress!= null && !destinationAddress.isEmpty()) {
                         InsertOrtMutation insertOrtMutation = InsertOrtMutation.builder().adresse(destinationAddress).lat(lat).lng(lng).build();
                         apolloClient.mutate(insertOrtMutation).enqueue(new ApolloCall.Callback<InsertOrtMutation.Data>() {
                             @Override
@@ -168,24 +168,49 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
                         });
                     } else
                     {
-                        // Home Redirection
-                        HomeRedirectionMutation homeRedirectionMutation = HomeRedirectionMutation.builder().paketid(paketid).build();
-                        apolloClient.mutate(homeRedirectionMutation).enqueue(new ApolloCall.Callback<HomeRedirectionMutation.Data>() {
+                        UserQuery userQuery = UserQuery.builder().userid(user.getUserId()).build();
+                        apolloClient.query(userQuery).enqueue(new ApolloCall.Callback<UserQuery.Data>() {
                             @Override
-                            public void onResponse(@NotNull Response<HomeRedirectionMutation.Data> response) {
+                            public void onResponse(@NotNull Response<UserQuery.Data> response) {
                                 if (response.hasErrors()) {
                                     Log.d("GraphQL", "Mutation fehlerhaft");
                                     Log.d("GraphQL", response.getErrors().get(0).getMessage());
-                                    Toast.makeText(RedirectActivity.this, "Redirection  not successful", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    Log.d("GraphQL", "Mutation erfolgreich");
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(RedirectActivity.this, "Redirection successful - Destination: Home", Toast.LENGTH_SHORT).show();
-                                            finish();
-                                        }
-                                    });
+                                    // Prüfe vorher, ob Person in der Db vorhanden und auch eine Adresse vorhanden
+                                    if(response.getData().person().size()>0 && !response.getData().person().get(0).ort().adresse().isEmpty()) {
+                                        wunschortid = response.getData().person().get(0).ort().id();
+                                        Log.d("GraphQL", "Mutation erfolgreich");
+
+                                        // Im erfolgreichen Fall die Update-Mutation
+                                        RedirectMutation redirectMutation = RedirectMutation.builder().paketid(paketid).wunschortid(wunschortid).build();
+                                        apolloClient.mutate(redirectMutation).enqueue(new ApolloCall.Callback<RedirectMutation.Data>() {
+                                            @Override
+                                            public void onResponse(@NotNull Response<RedirectMutation.Data> response) {
+                                                if (response.hasErrors()) {
+                                                    Log.d("GraphQL", "Mutation fehlerhaft");
+                                                    Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                                    Toast.makeText(RedirectActivity.this, "Redirection  not successful", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    Log.d("GraphQL", "Mutation erfolgreich");
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Toast.makeText(RedirectActivity.this, "Redirection successful", Toast.LENGTH_SHORT).show();
+                                                            finish();
+                                                        }
+                                                    });
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(@NotNull ApolloException e) {
+                                                Log.d("GraphQL", "Mutation fehlerhaft");
+                                                Toast.makeText(RedirectActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }else {
+                                        Log.d("GraphQL", "Person nicht gefunden");
+                                    }
                                 }
                             }
 
