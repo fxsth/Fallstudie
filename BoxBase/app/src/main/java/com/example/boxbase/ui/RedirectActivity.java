@@ -36,6 +36,7 @@ import com.example.boxbase.network.HttpUtilities;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DateFormat;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
@@ -60,9 +61,9 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
     int paketid;
     int LAUNCH_SETPOINTONMAP = 1;
     // Timestamp eintragen
-    Date now;
-    Calendar c1 = Calendar.getInstance();
-    Calendar c2 = Calendar.getInstance();
+    Spinner spinner_day_selection;
+    Spinner spinner_time_selection_from;
+    Spinner spinner_time_selection_to;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -85,9 +86,7 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         ImageView arrow_to_open_mdb_box = findViewById(R.id.arrow_to_open_mdb_box);
         ConstraintLayout cl_selection_mobile_delivery_base = findViewById(R.id.cl_selection_mobile_delivery_base);
 
-        now = Date.from(Instant.now());
-        c1.setTime(now);
-        c2.setTime(now);
+
 
         arrow_to_close_mdb_box.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +127,12 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         button_redirection_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Date nowUTC = Date.from(Instant.now().minus(Duration.ofHours(2)));
+                if(bis.before(nowUTC))
+                {
+                    Toast.makeText(RedirectActivity.this, "invalid time", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // Prüfen ob gültige PaketId übergeben wurde
                 if(paketid != -1) {
                     LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
@@ -270,9 +275,9 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
 
 
         // Function of the dropdown menus
-        Spinner spinner_day_selection = (Spinner) findViewById(R.id.time_slot_selection_day);
-        Spinner spinner_time_selection_from = (Spinner) findViewById(R.id.time_slot_selection_from);
-        Spinner spinner_time_selection_to = (Spinner) findViewById(R.id.time_slot_selection_to);
+        spinner_day_selection = (Spinner) findViewById(R.id.time_slot_selection_day);
+        spinner_time_selection_from = (Spinner) findViewById(R.id.time_slot_selection_from);
+        spinner_time_selection_to = (Spinner) findViewById(R.id.time_slot_selection_to);
         // day selection
         ArrayAdapter<String> adapter_day_selection = new ArrayAdapter<>(RedirectActivity.this,
                 R.layout.spinner_layout, paths_day_selection);
@@ -298,23 +303,23 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        int parentId = parent.getId();
-        switch (parent.getId()){
-            case R.id.time_slot_selection_day:
-                c1.add(Calendar.DATE, 1);
-                c2.add(Calendar.DATE, 1);
-                break;
-            case R.id.time_slot_selection_from:
-                c1.set(Calendar.HOUR_OF_DAY, position+4);
-                c1.set(Calendar.MINUTE, 0);
-                c1.set(Calendar.SECOND, 0);
-                break;
-            case R.id.time_slot_selection_to:
-                c2.set(Calendar.HOUR_OF_DAY, position+5);
-                c2.set(Calendar.MINUTE, 0);
-                c2.set(Calendar.SECOND, 0);
-                break;
-        }
+        Date now = Date.from(Instant.now());
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        c1.setTime(now);
+        c2.setTime(now);
+
+        c1.add(Calendar.DATE, spinner_day_selection.getSelectedItemPosition());
+        c2.add(Calendar.DATE, spinner_day_selection.getSelectedItemPosition());
+
+        c1.set(Calendar.HOUR_OF_DAY, spinner_time_selection_from.getSelectedItemPosition()+4);   // +4 entspricht +6h und Umrechnung auf UTC
+        c1.set(Calendar.MINUTE, 0);
+        c1.set(Calendar.SECOND, 0);
+
+        c2.set(Calendar.HOUR_OF_DAY, spinner_time_selection_to.getSelectedItemPosition()+5);
+        c2.set(Calendar.MINUTE, 0);
+        c2.set(Calendar.SECOND, 0);
+
         von = c1.getTime();
         bis = c2.getTime();
     }
