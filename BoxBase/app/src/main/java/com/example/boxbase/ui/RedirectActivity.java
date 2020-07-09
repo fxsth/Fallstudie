@@ -35,7 +35,6 @@ import com.example.boxbase.network.HttpUtilities;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.DateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Calendar;
@@ -137,16 +136,6 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
                 if(paketid != -1) {
                     LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
                     OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
-
-
-//                    var ISO8601 = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ")
-                    //Initializing the date formatter
-                    DateFormat Date = DateFormat.getDateInstance();
-                    //Initializing Calender Object
-                    Calendar cals = Calendar.getInstance();
-                    //Using format() method for conversion
-                    String currentDate = Date.format(cals.getTime());
-
                     ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
 
                     // Bei gültiger Adresse -> Wunschort eintragen, ansonsten -> Wunschort löschen

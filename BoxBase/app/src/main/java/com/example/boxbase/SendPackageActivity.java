@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,15 +18,30 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.apollographql.apollo.ApolloCall;
+import com.apollographql.apollo.ApolloClient;
+import com.apollographql.apollo.api.Response;
+import com.apollographql.apollo.exception.ApolloException;
+import com.example.UserIdByNameAndAddressQuery;
+import com.example.boxbase.data.LoginDataSource;
+import com.example.boxbase.data.LoginRepository;
+import com.example.boxbase.data.model.LoggedInUser;
+import com.example.boxbase.network.HttpUtilities;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
+
+import okhttp3.OkHttpClient;
 
 
 public class SendPackageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     // Variablen für Mutation
     String name;
     String destinationAddress;
+    int reciever_id;
     int package_size;
 
     // Variablen für Timestamp
@@ -149,7 +165,7 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                 button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
                 button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
                 Intent SetPointOnMapIntent = new Intent(SendPackageActivity.this, SetPointOnMapActivity.class);
-                SendPackageActivity.this.startActivity(SetPointOnMapIntent);
+                startActivityForResult(SetPointOnMapIntent, LAUNCH_SETPOINTONMAP);
             }
         });
         button_home_address.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +186,32 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                         box_postcode.getText().toString().trim() + " " +
                         box_city.getText().toString().trim();
 
+                LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
+                OkHttpClient httpClient = HttpUtilities.getHttpAuthorizationClient(user.getToken());
+                ApolloClient apolloClient = ApolloClient.builder().serverUrl(HttpUtilities.getGraphQLUrl()).okHttpClient(httpClient).build();
+
+                // Erst prüfen ob es bereits eine Person in der Datenbank mit dieser Adresse gibt
+                UserIdByNameAndAddressQuery userQuery = UserIdByNameAndAddressQuery.builder().adresse(destinationAddress).name(name).build();
+                apolloClient.query(userQuery).enqueue(new ApolloCall.Callback<UserIdByNameAndAddressQuery.Data>() {
+                    @Override
+                    public void onResponse(@NotNull Response<UserIdByNameAndAddressQuery.Data> response) {
+                        if (response.hasErrors()) {
+                            Log.d("GraphQL", "Query fehlerhaft");
+                            Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                        } else {
+                            Log.d("GraphQL", "Query erfolgreich");
+                            if (response.getData().person().size() > 0) {
+                                reciever_id = response.getData().person().get(0).id();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull ApolloException e) {
+                        Log.d("GraphQL", "Mutation fehlerhaft");
+                        Toast.makeText(SendPackageActivity.this, "unsuccessful", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 Toast.makeText(SendPackageActivity.this, "This one's for free. You're welcome!",Toast.LENGTH_LONG).show();
                 finish();
             }
