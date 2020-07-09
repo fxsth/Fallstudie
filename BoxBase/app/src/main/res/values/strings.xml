@@ -48,6 +48,8 @@
     <string name="button_redirection_confirm">confirm redirection</string>
     <string name="button_discard">discard</string>
     <string name="button_main_menu_delivery_details">details</string>
+    <string name="button_main_menu_delivery_outgoing_action">drop off</string>
+    <string name="button_main_menu_delivery_incoming_action">redirect</string>
     <string name="button_create_account">create account</string>
     <string name="button_reset_password">reset password</string>
     <string name="button_confirm_location">confirm location</string>

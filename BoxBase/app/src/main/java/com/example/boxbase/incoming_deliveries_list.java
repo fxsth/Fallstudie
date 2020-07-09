@@ -62,6 +62,11 @@ public class incoming_deliveries_list extends ArrayAdapter<incoming_deliveries> 
             button_delivery_action.setVisibility(View.GONE);
         }
 
+        if(delivery_status.getText().equals("ready for pick up"))
+        {
+            button_delivery_action.setText("pick up");
+        }
+
         /* define what happen if the button is clicked */
         view.setOnClickListener(new View.OnClickListener() {
             @Override

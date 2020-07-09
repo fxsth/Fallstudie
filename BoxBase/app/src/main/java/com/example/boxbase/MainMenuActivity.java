@@ -44,7 +44,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
         /* BUTTONS */
         final Button sendPackageButton = findViewById(R.id.button_send_package);
-        final Button refreshButton = findViewById(R.id.button_refresh);
         final ImageView imageViewAvatar = findViewById(R.id.top_bar_avatar);
         final TabLayout packagesTabLayout = findViewById(R.id.packagesTabLayout);
         ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
@@ -77,12 +76,6 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent sendPackageIntent = new Intent(MainMenuActivity.this, SendPackageActivity.class);
                 MainMenuActivity.this.startActivity(sendPackageIntent);
-            }
-        });
-
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
             }
         });
 
@@ -219,20 +212,22 @@ public class MainMenuActivity extends AppCompatActivity {
             String destination;
             if (paket.zustellbasis_id() != null) {
                 if (paket.fach_nummer() != null) {
-                    delivery_status = "ready for pickup";
+                    delivery_status = "ready for pick up";
                     drawable = R.drawable.icon_delivery_status_boxbase;
                 } else {
-                    delivery_status = "delivery is pending";
+                    delivery_status = "pick up is being prepared";
                     drawable = R.drawable.icon_delivery_status_truck;
                 }
-                destination = "Zustellbasis " + paket.zustellbasis_id();
+                destination = "mobile delivery base " + paket.zustellbasis_id();
             } else {
                 delivery_status = "delivery is pending";
-                drawable = R.drawable.icon_delivery_status_home;
+                drawable = R.drawable.icon_delivery_status_truck;
                 destination = paket.empfaenger().ort().adresse();
             }
-            if(paket.zugestellt())
+            if(paket.zugestellt()) {
                 delivery_status = "delivered";
+                drawable = R.drawable.icon_delivery_status_home;
+            }
             incoming_deliveriesList.add(
                     new incoming_deliveries(
                             paket.id(),
@@ -262,18 +257,20 @@ public class MainMenuActivity extends AppCompatActivity {
             String delivery_status;
             if (paket.zustellbasis_id() != null) {
                 if (paket.fach_nummer() != null) {
-                    delivery_status = "ready for pickup";
+                    delivery_status = "will be collected soon";
                     drawable = R.drawable.icon_delivery_status_boxbase;
                 } else {
-                    delivery_status = "delivery is pending";
-                    drawable = R.drawable.icon_delivery_status_truck;
+                    delivery_status = "ready for drop off";
+                    drawable = R.drawable.icon_delivery_status_home;
                 }
             } else {
                 delivery_status = "delivery is pending";
-                drawable = R.drawable.icon_delivery_status_home;
+                drawable = R.drawable.icon_delivery_status_truck;
             }
-            if(paket.zugestellt())
+            if(paket.zugestellt()) {
                 delivery_status = "delivered";
+                drawable = R.drawable.icon_delivery_status_delivered;
+            }
             outgoing_deliveriesList.add(
                     new outgoing_deliveries(
                             drawable,
