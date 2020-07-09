@@ -1,6 +1,7 @@
 package com.example.boxbase;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -30,6 +32,9 @@ import com.google.android.material.tabs.TabLayout;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -134,6 +139,7 @@ public class MainMenuActivity extends AppCompatActivity {
                             Log.d("GraphQLAntwort", response.getData().toString());
                             response.getData();
                             MainMenuActivity.this.runOnUiThread(new Runnable() {
+
                                 @Override
                                 public void run() {
                                     updateIncomingDeliveryList(response.getData().pakete());
@@ -204,6 +210,7 @@ public class MainMenuActivity extends AppCompatActivity {
         }
     }
 
+
     public void updateIncomingDeliveryList(List<IncomingSubSubscription.Pakete> pakete) {
         List<incoming_deliveries> incoming_deliveriesList = new ArrayList<>();
         for (IncomingSubSubscription.Pakete paket : pakete) {
@@ -242,9 +249,12 @@ public class MainMenuActivity extends AppCompatActivity {
                             drawable,
                             paket.sender().name(),
                             destination,
-                            delivery_status)
+                            delivery_status,
+                            paket.updated_at().toString()
+                    )
             );
         }
+        incoming_deliveriesList.sort(Comparator.comparing(incoming_deliveries::getLast_updated).reversed());
         ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
         incoming_deliveries_ListView.post(new Runnable() {
                                               @Override
