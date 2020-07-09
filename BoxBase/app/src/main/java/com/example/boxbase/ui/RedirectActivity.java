@@ -49,7 +49,6 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
     String destinationAddress;
     double lat, lng;
     int wunschortid;
-    boolean erfolgreicheQuery;
     int paketid;
     int LAUNCH_SETPOINTONMAP = 1;
 
@@ -111,7 +110,6 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         button_redirection_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                erfolgreicheQuery = false;
                 // Prüfen ob gültige PaketId übergeben wurde
                 if(paketid != -1) {
                     LoggedInUser user = LoginRepository.getInstance(new LoginDataSource()).getUser();
