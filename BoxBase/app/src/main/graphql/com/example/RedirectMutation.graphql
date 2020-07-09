@@ -1,5 +1,5 @@
-mutation RedirectMutation($paketid: Int!, $wunschortid: Int) {
-  update_pakete_by_pk(pk_columns: {id: $paketid}, _set: {wunschort_id: $wunschortid}) {
+mutation RedirectMutation($paketid: Int!, $wunschortid: Int, $timestamp_bis: timestamptz, $timestamp_von: timestamptz) {
+  update_pakete_by_pk(pk_columns: {id: $paketid}, _set: {wunschort_id: $wunschortid, interaktion_bis: $timestamp_bis, interaktion_von: $timestamp_von}) {
     wunschort_id
   }
 }
