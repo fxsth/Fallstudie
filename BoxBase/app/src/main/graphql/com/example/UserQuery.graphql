@@ -2,6 +2,7 @@ query User($userid: Int) {
   person(where: {id: {_eq: $userid}}) {
     name
     ort {
+      id
       adresse
     }
   }
