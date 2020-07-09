@@ -1,5 +1,6 @@
-mutation InsertEmpfaengerMutation($name: String, $adresse: String, $lat: numeric, $lng: numeric, $empfaenger_id: Int) {
-  insert_person_one(object: {name: $name, ort: {data: {adresse: $adresse, lat: $lat, long: $lng}}, id: $empfaenger_id}) {
+mutation InsertEmpfaengerMutation($name: String, $adresse: String, $lat: numeric, $lng: numeric) {
+  insert_person_one(object: {name: $name, ort: {data: {adresse: $adresse, lat: $lat, long: $lng}}}) {
     ort_id
+    id
   }
 }

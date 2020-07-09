@@ -1,5 +1,8 @@
 query UserIdByNameAndAddress($name: String, $adresse:String) {
   person(where: {name: {_eq: $name}, ort: {adresse: {_eq: $adresse}}}) {
     id
+    ort {
+          id
+        }
   }
 }

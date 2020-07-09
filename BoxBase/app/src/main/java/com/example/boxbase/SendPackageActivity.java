@@ -22,6 +22,7 @@ import com.apollographql.apollo.ApolloCall;
 import com.apollographql.apollo.ApolloClient;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
+import com.example.InsertEmpfaengerMutation;
 import com.example.UserIdByNameAndAddressQuery;
 import com.example.boxbase.data.LoginDataSource;
 import com.example.boxbase.data.LoginRepository;
@@ -81,6 +82,8 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
         EditText box_postcode = findViewById(R.id.box_postcode);
         EditText box_city = findViewById(R.id.box_city);
         EditText box_country = findViewById(R.id.box_country);
+
+        reciever_id = -1;
 
         // Function of the dropdown menus
         Spinner spinner_day_selection = (Spinner) findViewById(R.id.time_slot_selection_day);
@@ -202,7 +205,40 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                             Log.d("GraphQL", "Query erfolgreich");
                             if (response.getData().person().size() > 0) {
                                 reciever_id = response.getData().person().get(0).id();
+                                // TODO: Ort-ID abfragen
+                            } else
+                            {
+                                // Wenn es den Empfänger noch nciht gibt, fügen wir ihn hinzu
+                                InsertEmpfaengerMutation insertEmpfaengerMutation = InsertEmpfaengerMutation.builder().adresse(destinationAddress).lat(lat).lng(lng).name(name).build();
+                                apolloClient.mutate(insertEmpfaengerMutation).enqueue(new ApolloCall.Callback<InsertEmpfaengerMutation.Data>() {
+                                    @Override
+                                    public void onResponse(@NotNull Response<InsertEmpfaengerMutation.Data> response) {
+                                        if (response.hasErrors()) {
+                                            Log.d("GraphQL", "Mutation fehlerhaft");
+                                            Log.d("GraphQL", response.getErrors().get(0).getMessage());
+                                            Toast.makeText(SendPackageActivity.this, "Redirection  not successful", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.d("GraphQL", "Mutation erfolgreich");
+                                            reciever_id = response.getData().insert_person_one().id();
+                                            // TODO: Ort-ID abfragen
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(SendPackageActivity.this, "Redirection successful", Toast.LENGTH_SHORT).show();
+                                                    finish();
+                                                }
+                                            });
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(@NotNull ApolloException e) {
+                                        Log.d("GraphQL", "Mutation fehlerhaft");
+                                        Toast.makeText(SendPackageActivity.this, "Redirection not successful", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
+                            // TODO: Paket einfügen -> Mutation
                         }
                     }
 
