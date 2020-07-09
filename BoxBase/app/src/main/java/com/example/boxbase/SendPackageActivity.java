@@ -1,5 +1,6 @@
 package com.example.boxbase;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ import java.util.Date;
 public class SendPackageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     // Variablen für Mutation
     String name;
-    String address;
+    String destinationAddress;
     int package_size;
 
     // Variablen für Timestamp
@@ -33,11 +34,19 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
     Spinner spinner_time_selection_from;
     Spinner spinner_time_selection_to;
 
+    // Ergebnisse aus dem Geocoding
+    String desiredAddress;
+    double lat, lng;
+    int wunschortid;
+    int paketid;
+    int LAUNCH_SETPOINTONMAP = 1;
+
     // Declaration for dropdown menus
     private static final String[] paths_day_selection = {"today", "tomorrow", "in 2 days", "in 3 days", "in 4 days", "in 5 days"};
     private static final String[] paths_time_selection_from = {"6 am", "7 am", "8 am", "9 am", "10 am", "11 am", "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm", "6 pm", "7 pm", "8 pm"};
     private static final String[] paths_time_selection_to = {"7 am", "8 am", "9 am", "10 am", "11 am", "12 pm", "1 pm", "2 pm", "3 pm", "4 pm", "5 pm", "6 pm", "7 pm", "8 pm", "9 pm"};
-
+    ConstraintLayout button_point_on_map;
+    ConstraintLayout button_home_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,28 +65,6 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
         EditText box_postcode = findViewById(R.id.box_postcode);
         EditText box_city = findViewById(R.id.box_city);
         EditText box_country = findViewById(R.id.box_country);
-
-        goToPaymentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name = box_receiver.getText().toString().trim();
-                address = box_street.getText().toString().trim() + " " +
-                        box_number.getText().toString().trim() + ", " +
-                        box_postcode.getText().toString().trim() + " " +
-                        box_city.getText().toString().trim();
-
-                Toast.makeText(SendPackageActivity.this, "This one's for free. You're welcome!",Toast.LENGTH_LONG).show();
-                finish();
-            }
-        });
-
-        discardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
 
         // Function of the dropdown menus
         Spinner spinner_day_selection = (Spinner) findViewById(R.id.time_slot_selection_day);
@@ -173,6 +160,27 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
                 // TODO: set up home address as desired address
             }
         });
+
+        goToPaymentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name = box_receiver.getText().toString().trim();
+                destinationAddress = box_street.getText().toString().trim() + " " +
+                        box_number.getText().toString().trim() + ", " +
+                        box_postcode.getText().toString().trim() + " " +
+                        box_city.getText().toString().trim();
+
+                Toast.makeText(SendPackageActivity.this, "This one's for free. You're welcome!",Toast.LENGTH_LONG).show();
+                finish();
+            }
+        });
+
+        discardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
 
@@ -204,4 +212,24 @@ public class SendPackageActivity extends AppCompatActivity implements AdapterVie
     public void onNothingSelected(AdapterView<?> parent) {
         // TODO Auto-generated method stub
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == LAUNCH_SETPOINTONMAP) {
+            if(resultCode == Activity.RESULT_OK){
+                destinationAddress = data.getStringExtra("adress");
+                lat=data.getDoubleExtra("lat", 0);
+                lng=data.getDoubleExtra("lng", 0);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                button_home_address.setBackgroundResource(R.drawable.shape_button_big_primary_color_bright);
+                button_point_on_map.setBackgroundResource(R.drawable.shape_button_big_primary_color_dark);
+                lat = 0.0;
+                lng = 0.0;
+                destinationAddress ="";
+            }
+        }
+    }//onActivityResult
 }

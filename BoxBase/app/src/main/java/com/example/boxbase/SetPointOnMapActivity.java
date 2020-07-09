@@ -137,10 +137,12 @@ public class SetPointOnMapActivity extends AppCompatActivity {
                         ArrayList<GeoPoint> positions = new ArrayList<GeoPoint>();
                         positions.add(ownLocation);
                         positions.add(desiredAddressPoint);
-                        map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true, 100, 17, 1500L);
-                        map.invalidate();   // MapView aktualisieren
-                        validAddress = true;
-                        button_location_confirm.setText("save and go back");
+                        if(ownLocation != null && desiredAddress != null) {
+                            map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true, 100, 17, 1500L);
+                            map.invalidate();   // MapView aktualisieren
+                            validAddress = true;
+                            button_location_confirm.setText("save and go back");
+                        }
                     }
                 } else
                 {
