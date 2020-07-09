@@ -294,9 +294,11 @@ public class MainMenuActivity extends AppCompatActivity {
                     new outgoing_deliveries(
                             drawable,
                             paket.empfaenger().name(),
-                            delivery_status)
+                            delivery_status,
+                            paket.updated_at().toString())
             );
         }
+        outgoing_deliveriesList.sort(Comparator.comparing(outgoing_deliveries::getLast_updated).reversed());
         ListView outgoing_deliveries_ListView = findViewById(R.id.outgoing_deliveries_ListView);
         outgoing_deliveries_ListView.post(new Runnable() {
                                               @Override
