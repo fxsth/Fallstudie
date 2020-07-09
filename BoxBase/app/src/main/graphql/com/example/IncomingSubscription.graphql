@@ -17,5 +17,6 @@ subscription IncomingSub($user: Int) {
       long
     }
     zustellbasis_id
+    wunschort_id
   }
 }

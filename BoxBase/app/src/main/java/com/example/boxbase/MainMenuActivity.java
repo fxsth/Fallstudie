@@ -220,9 +220,17 @@ public class MainMenuActivity extends AppCompatActivity {
                 }
                 destination = "mobile delivery base " + paket.zustellbasis_id();
             } else {
-                delivery_status = "delivery is pending";
+                if(paket.wunschort_id() != null) {
+                    delivery_status = "redirection in progress";
+                    destination = "closest mobile delivery base";
+                }
+                else {
+                    delivery_status = "delivery is pending";
+                    destination = paket.empfaenger().ort().adresse();
+                }
+
                 drawable = R.drawable.icon_delivery_status_truck;
-                destination = paket.empfaenger().ort().adresse();
+
             }
             if(paket.zugestellt()) {
                 delivery_status = "delivered";
