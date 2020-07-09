@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -37,6 +38,17 @@ public class RedirectActivity extends AppCompatActivity implements AdapterView.O
         ImageView arrow_to_open_box = findViewById(R.id.arrow_to_open_box);
         ConstraintLayout button_point_on_map = findViewById(R.id.button_point_on_map);
         ConstraintLayout button_home_address = findViewById(R.id.button_home_address);
+        final Button discardButton = findViewById(R.id.button_discard);
+
+
+        // go back button
+        discardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
         //location_selection_mobile_delivery_base
         ImageView arrow_to_close_mdb_box = findViewById(R.id.arrow_to_close_mdb_box);
