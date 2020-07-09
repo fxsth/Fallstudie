@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -142,6 +143,13 @@ public class SetPointOnMapActivity extends AppCompatActivity {
                             map.invalidate();   // MapView aktualisieren
                             validAddress = true;
                             button_location_confirm.setText("save and go back");
+                        } else {
+                            if(desiredAddressPoint == null) {
+                                Toast.makeText(ctx, "could not found address", Toast.LENGTH_SHORT).show();
+                            }
+                            if(ownLocation == null) {
+                                Toast.makeText(ctx, "could not determine own location", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 } else
