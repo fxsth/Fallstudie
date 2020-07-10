@@ -83,7 +83,7 @@ public class LoginDataSource {
             try {
                 response = HttpUtilities.doPostRequest(HttpUtilities.getAuthServiceUrl(), json);
                 return new Result.Success<>(new LoggedInUser(getId(response), pair[0], getToken(response)));
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return new Result.Error(e);
             }

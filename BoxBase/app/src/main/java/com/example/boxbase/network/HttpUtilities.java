@@ -56,8 +56,11 @@ public class HttpUtilities {
                 .post(body)
                 .build();
         okhttp3.Response response = new OkHttpClient().newCall(request).execute();
-        if(((int) response.code()) == 200)
+        if(((int) response.code()) == 200) {
             return response.body().string();
+        } else if(((int) response.code()) == 403){
+            throw new SecurityException("invalid login data");
+        }
         else
             throw new IOException(response.message().toString());
     }
