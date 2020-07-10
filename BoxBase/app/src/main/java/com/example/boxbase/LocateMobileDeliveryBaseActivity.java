@@ -160,7 +160,7 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
                     if(response.getData().pakete_by_pk() != null) {
                         {
                             BigDecimal latBD = (BigDecimal) response.getData().pakete_by_pk().zustellbasis().lat();
-                            BigDecimal lngBD = (BigDecimal) response.getData().pakete_by_pk().zustellbasis().lat();
+                            BigDecimal lngBD = (BigDecimal) response.getData().pakete_by_pk().zustellbasis().long_();
                             double lat = latBD.doubleValue();
                             double lng = lngBD.doubleValue();
                             if(lat != 0.0 && lng != 0.0) {
@@ -170,6 +170,17 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
                                 desiredAddressMarker.setIcon(getResources().getDrawable(R.drawable.icon_location_green));
                                 desiredAddressMarker.setTitle(delivery_destination.getText().toString());
                                 map.getOverlays().add(desiredAddressMarker);
+                                if(ownLocationPoint != null && destinationPoint != null) {
+                                    ArrayList<GeoPoint> positions = new ArrayList<GeoPoint>();
+                                    positions.add(ownLocationPoint);
+                                    positions.add(destinationPoint);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true, 100, 17, 1500L);
+                                        }
+                                    });
+                                }
                                 map.invalidate();   // MapView aktualisieren
                             }
                         }
