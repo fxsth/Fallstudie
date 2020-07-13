@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -34,6 +35,7 @@ import com.example.boxbase.network.HttpUtilities;
 
 import org.jetbrains.annotations.NotNull;
 import org.osmdroid.api.IMapController;
+import org.osmdroid.bonuspack.location.GeocoderNominatim;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.BoundingBox;
@@ -41,8 +43,10 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 
@@ -164,6 +168,23 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
                             double lat = latBD.doubleValue();
                             double lng = lngBD.doubleValue();
                             if(lat != 0.0 && lng != 0.0) {
+                                // Mittels Geocoder aus lat/lng Adresse eintragen
+                                GeocoderNominatim geocoderNominatim = new GeocoderNominatim("TestUserAgent");
+                                List<Address> addresses = null;
+                                try {
+                                    addresses = geocoderNominatim.getFromLocation(lat, lng, 1);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                int addresslines = addresses.get(0).getMaxAddressLineIndex();
+                                String street = "";
+                                String postcode = "";
+                                String city = "";
+                                if (addresslines >= 2) {
+                                    street = addresses.get(0).getAddressLine(0);
+                                    postcode = addresses.get(0).getAddressLine(1);
+                                    city = addresses.get(0).getAddressLine(2);
+                                }
                                 destinationPoint = new GeoPoint(lat, lng);
                                 desiredAddressMarker.setPosition(destinationPoint);
                                 desiredAddressMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
@@ -174,9 +195,18 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
                                     ArrayList<GeoPoint> positions = new ArrayList<GeoPoint>();
                                     positions.add(ownLocationPoint);
                                     positions.add(destinationPoint);
+                                    String finalStreet = street;
+                                    String finalCity = city;
+                                    String finalPostcode = postcode;
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
+                                            if(addresslines>=2)
+                                            {
+                                                box_street.setText(finalStreet);
+                                                box_city.setText(finalCity);
+                                                box_postcode.setText(finalPostcode);
+                                            }
                                             map.zoomToBoundingBox(BoundingBox.fromGeoPointsSafe(positions), true, 100, 17, 1500L);
                                         }
                                     });
@@ -278,6 +308,8 @@ public class LocateMobileDeliveryBaseActivity extends AppCompatActivity {
                 LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
 
     }
+
+
 
     public String[] getAddressFields(String address)
     {
