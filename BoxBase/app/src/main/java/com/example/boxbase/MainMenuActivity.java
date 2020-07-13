@@ -218,32 +218,39 @@ public class MainMenuActivity extends AppCompatActivity {
             int drawable;
             String delivery_status;
             String destination;
-            if (paket.zustellbasis_id() != null) {
-                if (paket.fach_nummer() != null) {
-                    delivery_status = "ready for pick up";
-                    drawable = R.drawable.icon_delivery_status_boxbase;
+            if (paket.arriving()) {
+                if (paket.zustellbasis_id() != null) {
+                    if (paket.fach_nummer() != null) {
+                        delivery_status = "ready for pick up";
+                        drawable = R.drawable.icon_delivery_status_boxbase;
+                    } else {
+                        delivery_status = "pick up is being prepared";
+                        drawable = R.drawable.icon_delivery_status_truck;
+                    }
+                    destination = "mobile delivery base " + paket.zustellbasis_id();
                 } else {
-                    delivery_status = "pick up is being prepared";
+                    if (paket.wunschort_id() != null) {
+                        delivery_status = "redirection in progress";
+                        destination = "closest mobile delivery base";
+                    } else {
+                        delivery_status = "delivery is pending";
+                        destination = paket.empfaenger().ort().adresse();
+                    }
+
                     drawable = R.drawable.icon_delivery_status_truck;
+
                 }
-                destination = "mobile delivery base " + paket.zustellbasis_id();
+                if (paket.zugestellt()) {
+                    delivery_status = "delivered";
+                    drawable = R.drawable.icon_delivery_status_home;
+                }
+
             } else {
-                if(paket.wunschort_id() != null) {
-                    delivery_status = "redirection in progress";
-                    destination = "closest mobile delivery base";
-                }
-                else {
-                    delivery_status = "delivery is pending";
-                    destination = paket.empfaenger().ort().adresse();
-                }
-
+                delivery_status = "delivery was created";
+                destination = paket.empfaenger().ort().adresse();
                 drawable = R.drawable.icon_delivery_status_truck;
+            }
 
-            }
-            if(paket.zugestellt()) {
-                delivery_status = "delivered";
-                drawable = R.drawable.icon_delivery_status_home;
-            }
             incoming_deliveriesList.add(
                     new incoming_deliveries(
                             paket.id(),
@@ -254,6 +261,7 @@ public class MainMenuActivity extends AppCompatActivity {
                             paket.updated_at().toString()
                     )
             );
+
         }
         incoming_deliveriesList.sort(Comparator.comparing(incoming_deliveries::getLast_updated).reversed());
         ListView incoming_deliveries_ListView = findViewById(R.id.incoming_deliveries_ListView);
